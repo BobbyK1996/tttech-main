@@ -19,7 +19,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="relative flex flex-col min-h-screen bg-primary-950 text-primary-100">
         <Header />
-        {children}
+        <div className="grid flex-1 px-8 py-12">
+          <main className="w-full mx-auto max-w-7xl">{children}</main>
+        </div>
       </body>
     </html>
   );
