@@ -83,10 +83,8 @@ const jobs = [
   },
 ];
 
+// const jobs = [];
 function JobList() {
-  // const devDesignJobs = jobs.filter((job) => job.category === 'dev&design');
-  // const supInfJobs = jobs.filter((job) => job.category === 'sup&inf');
-
   const { devDesignJobs, supInfJobs } = jobs.reduce(
     (acc, job) => {
       if (job.category === 'dev&design') {
@@ -99,18 +97,34 @@ function JobList() {
     { devDesignJobs: [], supInfJobs: [] }
   );
 
-  // console.log(devDesignJobs);
-  // console.log(supInfJobs);
-
   return (
     <div>
+      {jobs.length === 0 && (
+        <p className="mb-10 text-lg text-primary-200">
+          There doesn't appear to be any available jobs at the moment. Please
+          try again later
+        </p>
+      )}
+
       {devDesignJobs.length > 0 && (
         <>
           <h1>Development & Design</h1>
-          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:gap-12 xl:gap-14">
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12 xl:gap-14 4k:grid-cols-4">
             {devDesignJobs.map((job, index) => (
               <>
-                {/* <h1>job</h1> */}
+                <JobCard jobs={job} key={index} />
+              </>
+            ))}
+          </div>
+        </>
+      )}
+
+      {supInfJobs.length > 0 && (
+        <>
+          <h1>Support & Infrastructure</h1>
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12 xl:gap-14 4k:grid-cols-4">
+            {supInfJobs.map((job, index) => (
+              <>
                 <JobCard jobs={job} key={index} />
               </>
             ))}
