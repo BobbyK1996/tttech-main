@@ -1,3 +1,5 @@
+import JobCard from '@components/JobCard';
+
 const jobs = [
   {
     title: 'Golang Engineer 1',
@@ -106,8 +108,11 @@ function JobList() {
         <>
           <h1>Development & Design</h1>
           <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:gap-12 xl:gap-14">
-            {devDesignJobs.map((job) => (
-              <h1>job</h1>
+            {devDesignJobs.map((job, index) => (
+              <>
+                {/* <h1>job</h1> */}
+                <JobCard jobs={job} key={index} />
+              </>
             ))}
           </div>
         </>
