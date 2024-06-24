@@ -2,10 +2,12 @@
   "name": "tttech-main",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "prod": "next build && next start",
     "lint": "next lint"
   },
   "dependencies": {
