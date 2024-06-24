@@ -7,7 +7,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Remote', 'Development'],
   },
   {
     title: 'Golang Engineer 2',
@@ -15,7 +15,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Remote', 'Development'],
   },
   {
     title: 'Golang Engineer 3',
@@ -23,7 +23,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Remote', 'Development'],
   },
   {
     title: 'Golang Engineer 4',
@@ -31,7 +31,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Remote', 'Development'],
   },
   {
     title: 'Golang Engineer 5',
@@ -39,7 +39,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Remote', 'Development'],
   },
   {
     title: '2nd Line Support 1',
@@ -47,7 +47,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Hybrid', 'Support'],
   },
   {
     title: '2nd Line Support 2',
@@ -55,7 +55,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Hybrid', 'Support'],
   },
   {
     title: '2nd Line Support 3',
@@ -63,7 +63,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Hybrid', 'Support'],
   },
   {
     title: '2nd Line Support 4',
@@ -71,7 +71,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Hybrid', 'Support'],
   },
   {
     title: '2nd Line Support 5',
@@ -79,7 +79,7 @@ const jobs = [
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
-    technologies: ['Golang', 'GCP', 'AWS', 'Micro-services'],
+    tags: ['Fulltime', 'Hybrid', 'Support'],
   },
 ];
 
@@ -98,7 +98,7 @@ function JobList() {
   );
 
   return (
-    <div>
+    <div className="w-9/12 mx-auto min-w-[300px]">
       {jobs.length === 0 && (
         <p className="mb-10 text-lg text-primary-200">
           There doesn't appear to be any available jobs at the moment. Please
@@ -107,6 +107,32 @@ function JobList() {
       )}
 
       {devDesignJobs.length > 0 && (
+        <>
+          <h1>Development & Design</h1>
+          <div className="grid grid-cols-1 gap-8 ">
+            {devDesignJobs.map((job, index) => (
+              <>
+                <JobCard jobs={job} key={index} />
+              </>
+            ))}
+          </div>
+        </>
+      )}
+
+      {supInfJobs.length > 0 && (
+        <>
+          <h1>Support & Infrastructure</h1>
+          <div className="grid grid-cols-1 gap-8 ">
+            {supInfJobs.map((job, index) => (
+              <>
+                <JobCard jobs={job} key={index} />
+              </>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* {devDesignJobs.length > 0 && (
         <>
           <h1>Development & Design</h1>
           <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12 xl:gap-14 4k:grid-cols-4">
@@ -130,7 +156,7 @@ function JobList() {
             ))}
           </div>
         </>
-      )}
+      )} */}
     </div>
   );
 }
