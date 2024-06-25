@@ -16,7 +16,9 @@ function Page({ searchParams }) {
         vetted clients. See if anything appeals to you!
       </p>
 
-      <Filter />
+      <div className="flex justify-end gap-1 mb-8">
+        <Filter />
+      </div>
 
       <Suspense fallback={<Spinner />}>
         <JobList filter={filter} />
