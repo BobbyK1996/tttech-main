@@ -1,94 +1,99 @@
+'use client';
+
 import JobCard from '@components/JobCard';
+import { useJobs } from '@/app/context/JobsContext';
 
-const jobs = [
-  {
-    title: 'Golang Engineer 1',
-    category: 'devdesign',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Remote', 'Development'],
-  },
-  {
-    title: 'Golang Engineer 2',
-    category: 'devdesign',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Remote', 'Development'],
-  },
-  {
-    title: 'Golang Engineer 3',
-    category: 'devdesign',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Remote', 'Development'],
-  },
-  {
-    title: 'Golang Engineer 4',
-    category: 'devdesign',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Remote', 'Development'],
-  },
-  {
-    title: 'Golang Engineer 5',
-    category: 'devdesign',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Remote', 'Development'],
-  },
-  {
-    title: '2nd Line Support 1',
-    category: 'supinf',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Hybrid', 'Support'],
-  },
-  {
-    title: '2nd Line Support 2',
-    category: 'supinf',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Hybrid', 'Support'],
-  },
-  {
-    title: '2nd Line Support 3',
-    category: 'supinf',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Hybrid', 'Support'],
-  },
-  {
-    title: '2nd Line Support 4',
-    category: 'supinf',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Hybrid', 'Support'],
-  },
-  {
-    title: '2nd Line Support 5',
-    category: 'supinf',
-    salaryMin: 50000,
-    salaryMax: 60000,
-    location: 'London',
-    tags: ['Fulltime', 'Hybrid', 'Support'],
-  },
-];
+// const jobs = [
+//   {
+//     title: 'Golang Engineer 1',
+//     category: 'devdesign',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Remote', 'Development'],
+//   },
+//   {
+//     title: 'Golang Engineer 2',
+//     category: 'devdesign',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Remote', 'Development'],
+//   },
+//   {
+//     title: 'Golang Engineer 3',
+//     category: 'devdesign',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Remote', 'Development'],
+//   },
+//   {
+//     title: 'Golang Engineer 4',
+//     category: 'devdesign',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Remote', 'Development'],
+//   },
+//   {
+//     title: 'Golang Engineer 5',
+//     category: 'devdesign',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Remote', 'Development'],
+//   },
+//   {
+//     title: '2nd Line Support 1',
+//     category: 'supinf',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Hybrid', 'Support'],
+//   },
+//   {
+//     title: '2nd Line Support 2',
+//     category: 'supinf',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Hybrid', 'Support'],
+//   },
+//   {
+//     title: '2nd Line Support 3',
+//     category: 'supinf',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Hybrid', 'Support'],
+//   },
+//   {
+//     title: '2nd Line Support 4',
+//     category: 'supinf',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Hybrid', 'Support'],
+//   },
+//   {
+//     title: '2nd Line Support 5',
+//     category: 'supinf',
+//     salaryMin: 50000,
+//     salaryMax: 60000,
+//     location: 'London',
+//     tags: ['Fulltime', 'Hybrid', 'Support'],
+//   },
+// ];
 
-const categories = [
-  { categoryTitle: 'Development & Design', categoryTag: 'devdesign' },
-  { categoryTitle: 'Support & Infrastructure', categoryTag: 'supinf' },
-];
+// const categories = [
+//   { categoryTitle: 'Development & Design', categoryTag: 'devdesign' },
+//   { categoryTitle: 'Support & Infrastructure', categoryTag: 'supinf' },
+// ];
 
 function JobList({ filter }) {
+  const { categories, jobs } = useJobs();
+
   const categorizedJobs = categories.reduce((acc, cat) => {
     acc[cat.categoryTag] = [];
     return acc;

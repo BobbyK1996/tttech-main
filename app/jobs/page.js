@@ -2,6 +2,7 @@ import JobList from '@components/JobList';
 import { Suspense } from 'react';
 import Spinner from '@components/Spinner';
 import Filter from '@components/Filter';
+import { JobsProvider } from '@/app/context/JobsContext';
 
 function Page({ searchParams }) {
   const filter = searchParams?.category ?? 'all';
@@ -16,13 +17,15 @@ function Page({ searchParams }) {
         vetted clients. See if anything appeals to you!
       </p>
 
-      <div className="flex justify-end gap-1 mb-8">
-        <Filter />
-      </div>
+      <JobsProvider>
+        <div className="flex justify-end gap-1 mb-8">
+          <Filter />
+        </div>
 
-      <Suspense fallback={<Spinner />}>
-        <JobList filter={filter} />
-      </Suspense>
+        <Suspense fallback={<Spinner />}>
+          <JobList filter={filter} />
+        </Suspense>
+      </JobsProvider>
     </div>
   );
 }

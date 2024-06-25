@@ -1,8 +1,10 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useJobs } from '@/app/context/JobsContext';
 
 function Filter() {
+  const { categories } = useJobs();
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -23,22 +25,17 @@ function Filter() {
         handleFilter={handleFilter}
         activeFilter={activeFilter}
       >
-        All jobs
+        All
       </Button>
-      <Button
-        filter="devdesign"
-        handleFilter={handleFilter}
-        activeFilter={activeFilter}
-      >
-        Development & Design
-      </Button>
-      <Button
-        filter="supinf"
-        handleFilter={handleFilter}
-        activeFilter={activeFilter}
-      >
-        Support & Infrastructure
-      </Button>
+      {categories.map((cat) => (
+        <Button
+          filter={cat.categoryTag}
+          handleFilter={handleFilter}
+          activeFilter={activeFilter}
+        >
+          {cat.categoryTitle}
+        </Button>
+      ))}
     </div>
   );
 }
