@@ -43,7 +43,7 @@ function JobCard({ jobs }) {
 
       <Link
         href="/"
-        className="w-full px-6 py-4 text-center transition duration-300 ease-in-out rounded-md hover:bg-accent-400 bg-accent-500"
+        className="w-full px-6 py-4 text-center transition duration-300 ease-in-out rounded-md hover:bg-accent-300 bg-accent-500"
       >
         Apply
       </Link>

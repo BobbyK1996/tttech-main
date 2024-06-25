@@ -1,4 +1,6 @@
 import JobList from '@components/JobList';
+import { Suspense } from 'react';
+import Spinner from '@components/Spinner';
 
 function Page() {
   return (
@@ -10,8 +12,9 @@ function Page() {
         We're looking for passionate people to partner with our excited and
         vetted clients. See if anything appeals to you!
       </p>
-
-      <JobList />
+      <Suspense fallback={<Spinner />}>
+        <JobList />
+      </Suspense>
     </div>
   );
 }
