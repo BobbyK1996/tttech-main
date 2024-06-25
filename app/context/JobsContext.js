@@ -7,6 +7,7 @@ const JobsContext = createContext();
 function JobsProvider({ children }) {
   const jobs = [
     {
+      id: 1,
       title: 'Golang Engineer 1',
       category: 'devdesign',
       salaryMin: 50000,
@@ -15,7 +16,26 @@ function JobsProvider({ children }) {
       tags: ['Fulltime', 'Remote', 'Development'],
     },
     {
+      id: 1,
+      title: 'Golang Engineer 2',
+      category: 'devdesign',
+      salaryMin: 50000,
+      salaryMax: 60000,
+      location: 'London',
+      tags: ['Fulltime', 'Remote', 'Development'],
+    },
+    {
+      id: 1,
       title: '2nd Line Support 1',
+      category: 'supinf',
+      salaryMin: 50000,
+      salaryMax: 60000,
+      location: 'London',
+      tags: ['Fulltime', 'Hybrid', 'Support'],
+    },
+    {
+      id: 1,
+      title: '2nd Line Support 2',
       category: 'supinf',
       salaryMin: 50000,
       salaryMax: 60000,
@@ -27,7 +47,7 @@ function JobsProvider({ children }) {
   const categories = [
     { categoryTitle: 'Development & Design', categoryTag: 'devdesign' },
     { categoryTitle: 'Support & Infrastructure', categoryTag: 'supinf' },
-    // { categoryTitle: 'Data & SaaS', categoryTag: 'datasaas' },
+    { categoryTitle: 'Data & SaaS', categoryTag: 'datasaas' },
   ];
 
   const value = useMemo(() => ({ jobs, categories }), [jobs, categories]);

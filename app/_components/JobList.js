@@ -103,42 +103,55 @@ function JobList({ filter }) {
     if (categorizedJobs[job.category]) categorizedJobs[job.category].push(job);
   });
 
+  const renderCategory = (categoryTag, index) => {
+    if (categorizedJobs[categoryTag].length === 0 && filter === categoryTag) {
+      return (
+        <p className="flex justify-center mt-24 mb-10 text-lg font-bold text-accent-50">
+          There doesn't appear to be any jobs available at the moment. Please
+          try again later.
+        </p>
+      );
+    }
+
+    if (
+      (filter === 'all' || filter === categoryTag) &&
+      categorizedJobs[categoryTag].length !== 0
+    ) {
+      const categoryTitleSplit = categories
+        .find((cat) => cat.categoryTag === categoryTag)
+        .categoryTitle.split(' ');
+
+      const lastWord = categoryTitleSplit.pop();
+      const titleWithoutLastWord = categoryTitleSplit.join(' ');
+
+      return (
+        <div key={index} className="my-10">
+          <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
+            {titleWithoutLastWord}{' '}
+            <span className="text-accent-500">{lastWord}</span>
+          </h1>
+          <div className="grid grid-cols-1 gap-8 mb-16">
+            {categorizedJobs[categoryTag].map((jobs, index) => (
+              <JobCard jobs={jobs} key={index} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
-    <div className="w-9/12 mx-auto min-w-[300px]">
-      {jobs.length === 0 && (
+    <div>
+      {jobs.length === 0 && filter === 'all' && (
         <p className="flex justify-center mt-24 mb-10 text-lg font-bold text-accent-50">
           There doesn't appear to be any jobs available at the moment. Please
           try again later.
         </p>
       )}
-
-      {Object.keys(categorizedJobs).map((categoryTag, index) => {
-        if (
-          categorizedJobs[categoryTag].length > 0 &&
-          (filter === 'all' || filter === categoryTag)
-        ) {
-          const categoryTitleSplit = categories
-            .find((cat) => cat.categoryTag === categoryTag)
-            .categoryTitle.split(' ');
-
-          const lastWord = categoryTitleSplit.pop();
-          const titleWithoutLastWord = categoryTitleSplit.join(' ');
-
-          return (
-            <div key={index} className="my-10">
-              <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
-                {titleWithoutLastWord}{' '}
-                <span className="text-accent-500">{lastWord}</span>
-              </h1>
-              <div className="grid grid-cols-1 gap-8 mb-16">
-                {categorizedJobs[categoryTag].map((jobs, index) => (
-                  <JobCard jobs={jobs} key={index} />
-                ))}
-              </div>
-            </div>
-          );
-        }
-      })}
+      {Object.keys(categorizedJobs).map((categoryTag, index) =>
+        renderCategory(categoryTag, index)
+      )}
     </div>
   );
 }
