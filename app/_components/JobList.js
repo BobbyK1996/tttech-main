@@ -3,7 +3,7 @@ import JobCard from '@components/JobCard';
 const jobs = [
   {
     title: 'Golang Engineer 1',
-    category: 'dev&design',
+    category: 'devdesign',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -11,7 +11,7 @@ const jobs = [
   },
   {
     title: 'Golang Engineer 2',
-    category: 'dev&design',
+    category: 'devdesign',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -19,7 +19,7 @@ const jobs = [
   },
   {
     title: 'Golang Engineer 3',
-    category: 'dev&design',
+    category: 'devdesign',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -27,7 +27,7 @@ const jobs = [
   },
   {
     title: 'Golang Engineer 4',
-    category: 'dev&design',
+    category: 'devdesign',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -35,7 +35,7 @@ const jobs = [
   },
   {
     title: 'Golang Engineer 5',
-    category: 'dev&design',
+    category: 'devdesign',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -43,7 +43,7 @@ const jobs = [
   },
   {
     title: '2nd Line Support 1',
-    category: 'sup&inf',
+    category: 'supinf',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -51,7 +51,7 @@ const jobs = [
   },
   {
     title: '2nd Line Support 2',
-    category: 'sup&inf',
+    category: 'supinf',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -59,7 +59,7 @@ const jobs = [
   },
   {
     title: '2nd Line Support 3',
-    category: 'sup&inf',
+    category: 'supinf',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -67,7 +67,7 @@ const jobs = [
   },
   {
     title: '2nd Line Support 4',
-    category: 'sup&inf',
+    category: 'supinf',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -75,7 +75,7 @@ const jobs = [
   },
   {
     title: '2nd Line Support 5',
-    category: 'sup&inf',
+    category: 'supinf',
     salaryMin: 50000,
     salaryMax: 60000,
     location: 'London',
@@ -83,21 +83,20 @@ const jobs = [
   },
 ];
 
-// const jobs = [];
-function JobList({ filter }) {
-  const { devDesignJobs, supInfJobs } = jobs.reduce(
-    (acc, job) => {
-      if (job.category === 'dev&design') {
-        acc.devDesignJobs.push(job);
-      } else if (job.category === 'sup&inf') {
-        acc.supInfJobs.push(job);
-      }
-      return acc;
-    },
-    { devDesignJobs: [], supInfJobs: [] }
-  );
+const categories = [
+  { categoryTitle: 'Development & Design', categoryTag: 'devdesign' },
+  { categoryTitle: 'Support & Infrastructure', categoryTag: 'supinf' },
+];
 
-  console.log(filter);
+function JobList({ filter }) {
+  const categorizedJobs = categories.reduce((acc, cat) => {
+    acc[cat.categoryTag] = [];
+    return acc;
+  }, {});
+
+  jobs.forEach((job) => {
+    if (categorizedJobs[job.category]) categorizedJobs[job.category].push(job);
+  });
 
   return (
     <div className="w-9/12 mx-auto min-w-[300px]">
@@ -108,32 +107,33 @@ function JobList({ filter }) {
         </p>
       )}
 
-      {devDesignJobs.length > 0 &&
-        (filter === 'all' || filter === 'devdesign') && (
-          <>
-            <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
-              Development <span className="text-accent-500">& Design</span>
-            </h1>
-            <div className="grid grid-cols-1 gap-8 mb-16">
-              {devDesignJobs.map((job, index) => (
-                <JobCard jobs={job} key={index} />
-              ))}
-            </div>
-          </>
-        )}
+      {Object.keys(categorizedJobs).map((categoryTag, index) => {
+        if (
+          categorizedJobs[categoryTag].length > 0 &&
+          (filter === 'all' || filter === categoryTag)
+        ) {
+          const categoryTitleSplit = categories
+            .find((cat) => cat.categoryTag === categoryTag)
+            .categoryTitle.split(' ');
 
-      {supInfJobs.length > 0 && (filter === 'all' || filter === 'supinf') && (
-        <>
-          <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
-            Support <span className="text-accent-500">& Infrastructure</span>
-          </h1>
-          <div className="grid grid-cols-1 gap-8 ">
-            {supInfJobs.map((job, index) => (
-              <JobCard jobs={job} key={index} />
-            ))}
-          </div>
-        </>
-      )}
+          const lastWord = categoryTitleSplit.pop();
+          const titleWithoutLastWord = categoryTitleSplit.join(' ');
+
+          return (
+            <div key={index} className="my-10">
+              <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
+                {titleWithoutLastWord}{' '}
+                <span className="text-accent-500">{lastWord}</span>
+              </h1>
+              <div className="grid grid-cols-1 gap-8 mb-16">
+                {categorizedJobs[categoryTag].map((jobs, index) => (
+                  <JobCard jobs={jobs} key={index} />
+                ))}
+              </div>
+            </div>
+          );
+        }
+      })}
     </div>
   );
 }
