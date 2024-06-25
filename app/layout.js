@@ -17,7 +17,7 @@ const josefin = Josefin_Sans({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="relative flex flex-col min-h-screen bg-primary-950 text-primary-100">
+      <body className="relative flex flex-col min-h-screen bg-primary-950 text-accent-50">
         <Header />
         <div className="grid flex-1 px-4 py-12 sm:px-8">
           <main className="w-full mx-auto max-w-7xl">{children}</main>

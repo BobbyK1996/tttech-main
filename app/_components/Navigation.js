@@ -23,7 +23,7 @@ function Navigation() {
           <li>
             <Link
               href={item.address}
-              className="transition-colors hover:text-accent-400"
+              className="transition-colors hover:text-accent-500"
             >
               {item.name}
             </Link>

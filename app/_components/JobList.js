@@ -100,16 +100,18 @@ function JobList() {
   return (
     <div className="w-9/12 mx-auto min-w-[300px]">
       {jobs.length === 0 && (
-        <p className="mb-10 text-lg text-primary-200">
-          There doesn't appear to be any available jobs at the moment. Please
-          try again later
+        <p className="flex justify-center mt-24 mb-10 text-lg font-bold text-accent-50">
+          There doesn't appear to be any jobs available at the moment. Please
+          try again later.
         </p>
       )}
 
       {devDesignJobs.length > 0 && (
         <>
-          <h1>Development & Design</h1>
-          <div className="grid grid-cols-1 gap-8 ">
+          <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
+            Development <span className="text-accent-500">& Design</span>
+          </h1>
+          <div className="grid grid-cols-1 gap-8 mb-16">
             {devDesignJobs.map((job, index) => (
               <>
                 <JobCard jobs={job} key={index} />
@@ -121,7 +123,9 @@ function JobList() {
 
       {supInfJobs.length > 0 && (
         <>
-          <h1>Support & Infrastructure</h1>
+          <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
+            Support <span className="text-accent-500">& Infrastructure</span>
+          </h1>
           <div className="grid grid-cols-1 gap-8 ">
             {supInfJobs.map((job, index) => (
               <>
@@ -131,32 +135,6 @@ function JobList() {
           </div>
         </>
       )}
-
-      {/* {devDesignJobs.length > 0 && (
-        <>
-          <h1>Development & Design</h1>
-          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12 xl:gap-14 4k:grid-cols-4">
-            {devDesignJobs.map((job, index) => (
-              <>
-                <JobCard jobs={job} key={index} />
-              </>
-            ))}
-          </div>
-        </>
-      )}
-
-      {supInfJobs.length > 0 && (
-        <>
-          <h1>Support & Infrastructure</h1>
-          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-12 xl:gap-14 4k:grid-cols-4">
-            {supInfJobs.map((job, index) => (
-              <>
-                <JobCard jobs={job} key={index} />
-              </>
-            ))}
-          </div>
-        </>
-      )} */}
     </div>
   );
 }
