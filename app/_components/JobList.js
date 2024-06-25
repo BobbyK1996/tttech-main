@@ -84,7 +84,7 @@ const jobs = [
 ];
 
 // const jobs = [];
-function JobList() {
+function JobList({ filter }) {
   const { devDesignJobs, supInfJobs } = jobs.reduce(
     (acc, job) => {
       if (job.category === 'dev&design') {
@@ -97,6 +97,8 @@ function JobList() {
     { devDesignJobs: [], supInfJobs: [] }
   );
 
+  console.log(filter);
+
   return (
     <div className="w-9/12 mx-auto min-w-[300px]">
       {jobs.length === 0 && (
@@ -106,20 +108,21 @@ function JobList() {
         </p>
       )}
 
-      {devDesignJobs.length > 0 && (
-        <>
-          <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
-            Development <span className="text-accent-500">& Design</span>
-          </h1>
-          <div className="grid grid-cols-1 gap-8 mb-16">
-            {devDesignJobs.map((job, index) => (
-              <JobCard jobs={job} key={index} />
-            ))}
-          </div>
-        </>
-      )}
+      {devDesignJobs.length > 0 &&
+        (filter === 'all' || filter === 'devdesign') && (
+          <>
+            <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
+              Development <span className="text-accent-500">& Design</span>
+            </h1>
+            <div className="grid grid-cols-1 gap-8 mb-16">
+              {devDesignJobs.map((job, index) => (
+                <JobCard jobs={job} key={index} />
+              ))}
+            </div>
+          </>
+        )}
 
-      {supInfJobs.length > 0 && (
+      {supInfJobs.length > 0 && (filter === 'all' || filter === 'supinf') && (
         <>
           <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
             Support <span className="text-accent-500">& Infrastructure</span>

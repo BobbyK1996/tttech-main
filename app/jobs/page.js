@@ -1,8 +1,11 @@
 import JobList from '@components/JobList';
 import { Suspense } from 'react';
 import Spinner from '@components/Spinner';
+import Filter from '@components/Filter';
 
-function Page() {
+function Page({ searchParams }) {
+  const filter = searchParams?.category ?? 'all';
+
   return (
     <div>
       <h1 className="mb-5 font-medium text-white text-7xl">
@@ -12,8 +15,11 @@ function Page() {
         We're looking for passionate people to partner with our excited and
         vetted clients. See if anything appeals to you!
       </p>
+
+      <Filter />
+
       <Suspense fallback={<Spinner />}>
-        <JobList />
+        <JobList filter={filter} />
       </Suspense>
     </div>
   );
