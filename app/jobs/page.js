@@ -1,4 +1,4 @@
-import JobList from '../_components/JobList';
+import JobList from '@components/JobList';
 
 function Page() {
   return (

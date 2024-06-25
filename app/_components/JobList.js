@@ -113,9 +113,7 @@ function JobList() {
           </h1>
           <div className="grid grid-cols-1 gap-8 mb-16">
             {devDesignJobs.map((job, index) => (
-              <>
-                <JobCard jobs={job} key={index} />
-              </>
+              <JobCard jobs={job} key={index} />
             ))}
           </div>
         </>
@@ -128,9 +126,7 @@ function JobList() {
           </h1>
           <div className="grid grid-cols-1 gap-8 ">
             {supInfJobs.map((job, index) => (
-              <>
-                <JobCard jobs={job} key={index} />
-              </>
+              <JobCard jobs={job} key={index} />
             ))}
           </div>
         </>

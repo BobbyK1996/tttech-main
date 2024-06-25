@@ -5,13 +5,12 @@ import logo from '@/public/logo-white.png';
 function Logo() {
   return (
     <Link href="/" className="z-10">
-      {/* <img src="/logo.png" /> */}
       <Image
         src={logo}
-        width={320}
-        height={320}
+        width={160}
+        height={160}
         alt="TT Tech Logo"
-        className="h-auto w-80"
+        className="h-auto w-44"
       />
     </Link>
   );

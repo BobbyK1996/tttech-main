@@ -31,8 +31,11 @@ function JobCard({ jobs }) {
       </div>
 
       <div className="flex items-center col-span-2 gap-2 pl-2">
-        {tags.map((tag) => (
-          <span className="px-3 py-2 text-xs text-center rounded-md bg-accent-500">
+        {tags.map((tag, index) => (
+          <span
+            key={index}
+            className="px-3 py-2 text-xs text-center rounded-md bg-accent-500"
+          >
             {tag}
           </span>
         ))}
