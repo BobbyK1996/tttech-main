@@ -8,3 +8,11 @@ export function formatToK(number) {
   }
   return number.toString();
 }
+
+export function convertToObject(str) {
+  if (typeof str !== 'string') throw new Error('INPUT MUST BE A STRING');
+
+  const jsonString = str.replace(/'/g, '"').replace(/(\w+):/g, '"$1":');
+
+  return JSON.parse(jsonString);
+}

@@ -1,10 +1,8 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useJobs } from '@/app/context/JobsContext';
 
-function Filter() {
-  const { categories } = useJobs();
+function Filter({ categories }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -15,7 +13,10 @@ function Filter() {
     const params = new URLSearchParams(searchParams);
 
     params.set('category', filter);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`, {
+      scroll: false,
+      shallow: true,
+    });
   }
 
   return (
@@ -27,8 +28,9 @@ function Filter() {
       >
         All
       </Button>
-      {categories.map((cat) => (
+      {categories.map((cat, index) => (
         <Button
+          key={index}
           filter={cat.categoryTag}
           handleFilter={handleFilter}
           activeFilter={activeFilter}
