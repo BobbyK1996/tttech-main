@@ -1,8 +1,9 @@
-import { formatToK } from '@lib/helper';
 import Link from 'next/link';
 
 import { IoBriefcaseOutline } from 'react-icons/io5';
 import { RiMoneyPoundCircleLine } from 'react-icons/ri';
+
+import { formatToK } from '@lib/helper';
 
 function JobCard({ jobs }) {
   const { title, salaryMin, salaryMax, location, tags } = jobs;

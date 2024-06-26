@@ -1,10 +1,12 @@
-import Filter from '@components/Filter';
-import JobList from '@components/JobList';
-import Spinner from '@components/Spinner';
-import { getCategories, getJobs } from '@lib/data-services';
 import { Suspense } from 'react';
 
 import { unstable_cache } from 'next/cache';
+
+import { getCategories, getJobs } from '@lib/data-services';
+
+import Filter from '@components/Filter';
+import JobList from '@components/JobList';
+import Spinner from '@components/Spinner';
 
 const getCachedCategories = unstable_cache(
   async () => getCategories(),

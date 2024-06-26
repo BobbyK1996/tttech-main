@@ -1,7 +1,8 @@
 import '@/app/_styles/globals.css';
 
-import Header from '@components/Header';
 import { raleway } from '@lib/fonts';
+
+import Header from '@components/Header';
 
 export const metadata = {
   title: { template: '%s: TT Tech Talent', default: 'TT Tech Talent' },
