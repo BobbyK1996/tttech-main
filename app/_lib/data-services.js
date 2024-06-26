@@ -10,8 +10,6 @@ export async function getJobs() {
     console.error(error);
   }
 
-  console.log(data);
-
   return data;
 }
 
@@ -27,4 +25,20 @@ export async function getCategories() {
   const dataJSONified = data[0].categories.map(convertToObject);
 
   return dataJSONified;
+}
+
+export async function getJob(id) {
+  const { data, error } = await supabase
+    .from('jobs')
+    .select(
+      'id, created_date, title, salaryMin, salaryMax, location, tags, jobDescription'
+    )
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error(error);
+  }
+
+  return data;
 }

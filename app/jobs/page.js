@@ -41,7 +41,7 @@ async function Page({ searchParams }) {
         <Filter categories={categories} />
       </div>
 
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner />} key={filter}>
         <JobList filter={filter} jobs={jobs} categories={categories} />
       </Suspense>
     </div>

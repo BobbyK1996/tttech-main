@@ -6,7 +6,7 @@ import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 import { formatToK } from '@lib/helper';
 
 function JobCard({ jobs }) {
-  const { title, salaryMin, salaryMax, location, tags } = jobs;
+  const { title, salaryMin, salaryMax, location, tags, id } = jobs;
   return (
     <div className="grid grid-cols-3 px-8 py-6 transition duration-300 ease-in-out border-2 rounded-md border-primary-900 bg-primary-950 hover:scale-105 hover:border-white hover:shadow-2xl filter">
       <div className="grid grid-cols-[auto,1fr] col-span-2 grid-rows-[1fr,auto] gap-x-4 gap-y-2 p-2 text-xl font-bold place-items-start">
@@ -43,7 +43,7 @@ function JobCard({ jobs }) {
       </div>
 
       <Link
-        href="/"
+        href={`/jobs/${id}`}
         className="w-full px-6 py-4 text-center transition duration-300 ease-in-out rounded-md hover:bg-accent-300 bg-accent-500"
       >
         Apply
