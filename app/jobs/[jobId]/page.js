@@ -46,9 +46,105 @@ const TEMP_DATA = {
 };
 
 async function Page({ params }) {
-  const job = await getJob(params.jobId);
-  console.log(job);
-  return <div className="max-w-6xl">hello</div>;
+  const {
+    id,
+    created_date,
+    title,
+    salaryMin,
+    salaryMax,
+    location,
+    tags,
+    jobDescription,
+  } = TEMP_DATA;
+  // const job = await getJob(params.jobId);
+
+  const titleSplit = title.split(' ');
+  const lastWord = titleSplit.pop();
+  const titleWithoutLastWord = titleSplit.join(' ');
+
+  return (
+    <div className="grid max-w-6xl grid-cols-[1fr,16rem] mx-auto mt-8 gap-4 gap-y-16 p-2 place-items-start grid-rows-[auto,1fr] h-full">
+      <div className="grid grid-cols-[auto,1fr] gap-3 ">
+        <h1 className="col-span-2 font-bold text-7xl">
+          {titleWithoutLastWord}{' '}
+          <span className="text-accent-500">{lastWord}</span>
+        </h1>
+        <h2 className="col-span-2 pl-2 text-xl font-semibold">{location}</h2>
+        <div className="flex gap-4 place-items-start">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-4 py-2 border rounded-xl border-primary-600"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="flex items-center justify-end">{salaryMin}</div>
+      </div>
+
+      <div className="flex justify-center w-full h-full">test</div>
+
+      <div className="flex flex-col gap-8 text-lg text-primary-50">
+        <div>
+          <h1 className="inline-block mb-4 text-4xl border-b border-primary-200 text-accent-300">
+            About Us
+          </h1>
+          <p>{jobDescription.about}</p>
+        </div>
+        <div>
+          <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
+            Overview
+          </h1>
+          <p>{jobDescription.overview}</p>
+        </div>
+        <div>
+          <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
+            Responsibilities
+          </h1>
+          <ul className="pl-10">
+            {jobDescription.responsibilities.map((res, index) => (
+              <li className="list-disc" key={index}>
+                {res}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
+            Requirements
+          </h1>
+          <ul className="pl-10">
+            {jobDescription.requirements.map((req, index) => (
+              <li className="list-disc" key={index}>
+                {req}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
+            Benefits
+          </h1>
+          <ul className="pl-10">
+            {jobDescription.benefits.map((benefit, index) => (
+              <li className="list-disc" key={index}>
+                {benefit}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p>{jobDescription.ending}</p>
+
+        <p className="text-slate-400">
+          [Company Name] is an equal opportunity employer. We celebrate
+          diversity and are committed to creating an inclusive environment for
+          all employees.
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default Page;
