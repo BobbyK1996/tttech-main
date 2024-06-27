@@ -19,7 +19,7 @@ function JobCard({ jobs }) {
         </span>
       </div>
 
-      <div className="flex items-center gap-3 text-xl">
+      <div className="flex items-center justify-end gap-3 text-xl">
         <div className="text-3xl text-primary-400">
           <RiMoneyPoundCircleLine />
         </div>
