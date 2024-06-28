@@ -13,7 +13,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${raleway} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 font-raleway`}
+        className={`${raleway} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 font-raleway w-full`}
       >
         <Header />
         <div className="grid flex-1 px-4 py-12 sm:px-8">
