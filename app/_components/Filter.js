@@ -20,7 +20,7 @@ function Filter({ categories }) {
   }
 
   return (
-    <div className="flex border rounded-md border-primary-800">
+    <div className="flex flex-col border rounded-md border-primary-800">
       <Button
         filter="all"
         handleFilter={handleFilter}
