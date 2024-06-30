@@ -22,7 +22,6 @@ const navProps = {
     hoverText: 'hover:text-accent-500',
     currentNavColor: 'text-accent-200',
   },
-  responsiveWidth: 'w-[80%]',
 };
 
 function Header() {

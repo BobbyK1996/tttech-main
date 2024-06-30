@@ -27,11 +27,53 @@ function validateLinksArray(linksArray) {
   });
 }
 
+function validateColors(
+  colors,
+  defaultBackground,
+  hoverBackground,
+  hoverText,
+  defaultText,
+  currentNavColor
+) {
+  if (typeof colors !== 'object' || colors === null || Array.isArray(colors))
+    throw new Error('Please return an object for colors');
+
+  if (
+    typeof defaultBackground !== 'string' ||
+    typeof hoverBackground !== 'string' ||
+    typeof hoverText !== 'string' ||
+    typeof defaultText !== 'string' ||
+    typeof currentNavColor !== 'string'
+  )
+    throw new Error(
+      "All color properties must be strings in the form of 'hover:bg-' or 'bg-' or 'hover:text-' or 'text-'"
+    );
+}
+
 function Navigation({ navProps }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleNav = () => setMenuOpen(!menuOpen);
 
-  const { linksArray, colors, responsiveWidth = 'w-[80%]' } = navProps;
+  validateLinksArray(navProps.linksArray);
+
+  const {
+    linksArray = [
+      {
+        name: 'Page1',
+        address: '/page1',
+      },
+      {
+        name: 'Page2',
+        address: '/page2',
+      },
+      {
+        name: 'Page3',
+        address: '/page3',
+      },
+    ],
+    colors = {},
+    responsiveWidth = 'w-[80%]',
+  } = navProps;
 
   const {
     defaultBackground = 'bg-primary-800',
@@ -41,9 +83,16 @@ function Navigation({ navProps }) {
     currentNavColor = 'text-accent-200',
   } = colors;
 
-  const currentNav = findCurrentNav();
+  validateColors(
+    colors,
+    defaultBackground,
+    hoverBackground,
+    hoverText,
+    defaultText,
+    currentNavColor
+  );
 
-  validateLinksArray(linksArray);
+  const currentNav = findCurrentNav();
 
   return (
     <nav className="z-10 text-xl">
