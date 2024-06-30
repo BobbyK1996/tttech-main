@@ -6,24 +6,40 @@ import { useState } from 'react';
 import { RiMenu5Fill } from 'react-icons/ri';
 import { IoMdClose } from 'react-icons/io';
 
-const linksArray = [
-  {
-    name: 'About Us',
-    address: '/about',
-  },
-  {
-    name: 'Blogs',
-    address: '/blogs',
-  },
-  {
-    name: 'Live Jobs',
-    address: '/jobs',
-  },
-];
+function validateLinksArray(linksArray) {
+  if (!Array.isArray(linksArray) || linksArray.length === 0)
+    throw new Error(
+      'linksArray not present. Please include to use this component'
+    );
 
-function Navigation() {
+  linksArray.forEach((link) => {
+    if (
+      !link.name ||
+      typeof link.name !== 'string' ||
+      !link.address ||
+      typeof link.address !== 'string'
+    ) {
+      throw new Error(
+        "Please provide a linksArray with valid values in the form of a string. The format for linksArray should be [{name: '', address: ''}]"
+      );
+    }
+  });
+}
+
+function Navigation({ navProps }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleNav = () => setMenuOpen(!menuOpen);
+
+  const { linksArray, colors, responsiveWidth } = navProps;
+
+  validateLinksArray(linksArray);
+
+  let {
+    defaultBackground = 'bg-primary-800',
+    hoverBackground = 'bg-primary-600',
+    hoverText = 'hover:text-accent-500',
+    defaultText = 'text-inherit',
+  } = colors;
 
   return (
     <nav className="z-10 text-xl">
@@ -31,7 +47,7 @@ function Navigation() {
         {linksArray.map((item, index) => (
           <li
             key={index}
-            className="transition-colors duration-300 hover:text-accent-500"
+            className={`transition-colors duration-300 ${hoverText} ${defaultText}`}
           >
             <Link href={item.address}>{item.name}</Link>
           </li>
@@ -53,17 +69,31 @@ function Navigation() {
         }`}
         onClick={handleNav}
       >
-        <div className="h-full bg-primary-800 w-[80%] max-w-lg z-30 absolute">
+        <div
+          className={`h-full ${defaultBackground} w-[80%] max-w-lg z-30 absolute`}
+        >
           <ul className="flex flex-col items-center justify-end w-full pt-12 pb-4">
-            <li className="flex justify-center w-full py-4 transition-colors cursor-pointer hover:bg-primary-600 hover:shadow-2xl">
-              <Link href={'/'}>Home</Link>
+            <li
+              className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl`}
+            >
+              <Link
+                href={'/'}
+                className="flex justify-center w-full h-full py-4"
+              >
+                Home
+              </Link>
             </li>
             {linksArray.map((item, index) => (
               <li
                 key={index}
-                className="flex justify-center w-full py-4 transition-colors cursor-pointer hover:bg-primary-600 hover:shadow-2xl"
+                className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl`}
               >
-                <Link href={item.address}>{item.name}</Link>
+                <Link
+                  href={item.address}
+                  className="flex justify-center w-full h-full py-4"
+                >
+                  {item.name}
+                </Link>
               </li>
             ))}
           </ul>
