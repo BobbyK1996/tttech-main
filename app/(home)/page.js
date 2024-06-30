@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import bg from '@/public/landing-bg.jpg';
 import landingImage from '@/public/landing-image.png';
+import Button from '@components/reusable/Button';
 
 function Page() {
   return (
@@ -28,9 +29,7 @@ function Page() {
             alt="Astronaut"
           />
         </span>
-        <button className="flex self-start justify-center order-2 w-3/4 p-4 mx-auto text-3xl border-4 cursor-pointer min-w-40 max-w-80">
-          Jobs
-        </button>
+        <Button customCSS={'flex self-start order-2 mx-auto'}>Jobs</Button>
       </section>
       <section className="h-[2000px]"></section>
     </>
