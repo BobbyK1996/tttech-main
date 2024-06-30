@@ -4,9 +4,9 @@ import { unstable_cache } from 'next/cache';
 
 import { getCategories, getJobs } from '@lib/data-services';
 
-import Filter from '@components/Filter';
-import JobList from '@components/JobList';
-import Spinner from '@components/Spinner';
+import Filter from '@/app/_components/reusable/Filter';
+import JobList from '@/app/_components/reusable/JobList';
+import Spinner from '@/app/_components/reusable/Spinner';
 
 const getCachedCategories = unstable_cache(
   async () => getCategories(),

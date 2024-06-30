@@ -1,8 +1,7 @@
 import '@/app/_styles/globals.css';
 
-import { raleway } from '@lib/fonts';
-
-import Header from '@components/Header';
+import { quattrocento, marcellus, poppins } from '@lib/fonts';
+import { NavigationProvider } from '@/app/context/navigationContext';
 
 export const metadata = {
   title: { template: '%s: TT Tech Talent', default: 'TT Tech Talent' },
@@ -12,13 +11,13 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${raleway} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 font-raleway w-full`}
-      >
-        <Header />
-
-        {children}
-      </body>
+      <NavigationProvider>
+        <body
+          className={`${quattrocento} ${marcellus} ${poppins} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento`}
+        >
+          {children}
+        </body>
+      </NavigationProvider>
     </html>
   );
 }

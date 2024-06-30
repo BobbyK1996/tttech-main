@@ -1,4 +1,4 @@
-import JobCard from '@components/JobCard';
+import JobCard from '@/app/_components/reusable/JobCard';
 
 function JobList({ filter, jobs, categories }) {
   const categorizedJobs = categories.reduce((acc, cat) => {

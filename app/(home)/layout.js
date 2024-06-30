@@ -1,6 +1,7 @@
 import '@/app/_styles/globals.css';
+import { marcellus, quattrocento, raleway } from '@lib/fonts';
 
-import Header from '@components/Header';
+import Header from '@/app/_components/reusable/Header';
 
 export const metadata = {
   title: { template: '%s: TT Tech Talent', default: 'TT Tech Talent' },
@@ -10,8 +11,12 @@ export const metadata = {
 export default function Layout({ children }) {
   return (
     <>
-      <div className="absolute flex-1 w-full h-full px-4 py-12 sm:px-8">
-        <main className="flex-1 w-full px-4 py-12 mx-auto my-20 sm:px-8 max-w-7xl">
+      <Header border={false} />
+
+      <div className="absolute flex-1 w-full h-full">
+        <main
+          className={`flex-1 w-full h-full px-4 pt-24 mx-auto sm:px-8 sm:pt-28 max-w-7xl font-marcellus`}
+        >
           {children}
         </main>
       </div>

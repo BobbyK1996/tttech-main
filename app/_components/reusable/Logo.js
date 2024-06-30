@@ -8,9 +8,10 @@ function Logo() {
       <Image
         src={logoLarge}
         width={160}
-        height={160}
+        // height={160}
+        // layout="intrinsic"
         alt="TT Tech Logo"
-        className="w-40 h-auto sm:w-48"
+        className="h-auto sm:w-48"
       />
     </Link>
   );

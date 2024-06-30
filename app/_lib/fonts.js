@@ -1,9 +1,25 @@
-import { Raleway } from 'next/font/google';
+import { Marcellus, Poppins, Quattrocento_Sans } from 'next/font/google';
 
-const raleway_init = Raleway({
+const poppins_init = Poppins({
   subsets: ['latin'],
-  weight: '300',
-  variable: '--font-raleway',
+  weight: '400',
+  variable: '--font-poppins',
 });
 
-export const raleway = raleway_init.variable;
+const marcellus_init = Marcellus({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-marcellus',
+});
+
+const quattrocento_init = Quattrocento_Sans({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-quattrocento_sans',
+});
+
+export const poppins = poppins_init.variable;
+
+export const marcellus = marcellus_init.variable;
+
+export const quattrocento = quattrocento_init.variable;

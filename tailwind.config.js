@@ -11,7 +11,9 @@ module.exports = {
         '4k': '2200px',
       },
       fontFamily: {
-        raleway: ['var(--font-raleway)'],
+        poppins: ['var(--font-poppins)'],
+        marcellus: ['var(--font-marcellus)'],
+        quattrocento: ['var(--font-quattrocento_sans)'],
       },
       colors: {
         primary: {

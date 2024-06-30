@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { RiMenu5Fill } from 'react-icons/ri';
 import { IoMdClose } from 'react-icons/io';
 import { findCurrentNav } from '@lib/helperClient';
+import { useNavigation } from '@/app/context/navigationContext';
 
 function validateLinksArray(linksArray) {
   if (!Array.isArray(linksArray) || linksArray.length === 0)
@@ -50,9 +51,11 @@ function validateColors(
     );
 }
 
-function Navigation({ navProps }) {
+function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleNav = () => setMenuOpen(!menuOpen);
+
+  const { navProps } = useNavigation();
 
   validateLinksArray(navProps.linksArray);
 
