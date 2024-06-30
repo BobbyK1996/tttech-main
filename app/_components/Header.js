@@ -19,9 +19,10 @@ const navProps = {
   colors: {
     defaultBackground: 'bg-primary-800',
     hoverBackground: 'hover:bg-primary-600',
-    hoverText: 'hover:text-accent-900',
+    hoverText: 'hover:text-accent-500',
+    currentNavColor: 'text-accent-200',
   },
-  responsiveWidth: 80,
+  responsiveWidth: 'w-[80%]',
 };
 
 function Header() {

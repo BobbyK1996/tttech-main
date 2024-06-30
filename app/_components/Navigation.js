@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import { RiMenu5Fill } from 'react-icons/ri';
 import { IoMdClose } from 'react-icons/io';
+import { findCurrentNav } from '@lib/helperClient';
 
 function validateLinksArray(linksArray) {
   if (!Array.isArray(linksArray) || linksArray.length === 0)
@@ -30,16 +31,19 @@ function Navigation({ navProps }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleNav = () => setMenuOpen(!menuOpen);
 
-  const { linksArray, colors, responsiveWidth } = navProps;
+  const { linksArray, colors, responsiveWidth = 'w-[80%]' } = navProps;
 
-  validateLinksArray(linksArray);
-
-  let {
+  const {
     defaultBackground = 'bg-primary-800',
-    hoverBackground = 'bg-primary-600',
+    hoverBackground = 'hover:bg-primary-600',
     hoverText = 'hover:text-accent-500',
     defaultText = 'text-inherit',
+    currentNavColor = 'text-accent-200',
   } = colors;
+
+  const currentNav = findCurrentNav();
+
+  validateLinksArray(linksArray);
 
   return (
     <nav className="z-10 text-xl">
@@ -47,7 +51,9 @@ function Navigation({ navProps }) {
         {linksArray.map((item, index) => (
           <li
             key={index}
-            className={`transition-colors duration-300 ${hoverText} ${defaultText}`}
+            className={`transition-colors duration-300 ${hoverText} ${defaultText} ${
+              currentNav === item.address && currentNavColor
+            }`}
           >
             <Link href={item.address}>{item.name}</Link>
           </li>
@@ -74,7 +80,9 @@ function Navigation({ navProps }) {
         >
           <ul className="flex flex-col items-center justify-end w-full pt-12 pb-4">
             <li
-              className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl`}
+              className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
+                currentNav === '/' && currentNavColor
+              }`}
             >
               <Link
                 href={'/'}
@@ -86,7 +94,9 @@ function Navigation({ navProps }) {
             {linksArray.map((item, index) => (
               <li
                 key={index}
-                className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl`}
+                className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
+                  currentNav === item.address && currentNavColor
+                }`}
               >
                 <Link
                   href={item.address}
