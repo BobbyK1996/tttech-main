@@ -7,7 +7,18 @@ import LandingText from '@components/non-reusable/LandingText';
 import LandingBackgroundImage from '@components/non-reusable/LandingBackgroundImage';
 import Carousel from '../_components/reusable/Carousel';
 
-const cards = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+const cards = [
+  { id: 1, content: 'one' },
+  { id: 2, content: 'two' },
+  { id: 3, content: 'three' },
+  { id: 4, content: 'four' },
+  { id: 5, content: 'five' },
+  { id: 6, content: 'six' },
+  { id: 7, content: 'seven' },
+  { id: 8, content: 'eight' },
+  { id: 9, content: 'nine' },
+  { id: 10, content: 'ten' },
+];
 
 function Page() {
   return (
