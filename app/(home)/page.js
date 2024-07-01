@@ -3,8 +3,11 @@ import Image from 'next/image';
 import landingImage from '@/public/landing-image.png';
 import Button from '@components/reusable/Button';
 import DodgingImage from '@components/reusable/DodgingImage';
-import LandingText from '@components/non-reusable/landingText';
+import LandingText from '@components/non-reusable/LandingText';
 import LandingBackgroundImage from '@components/non-reusable/LandingBackgroundImage';
+import Carousel from '../_components/reusable/Carousel';
+
+const cards = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
 function Page() {
   return (
@@ -30,7 +33,9 @@ function Page() {
           Jobs
         </Button>
       </section>
-      <section className="h-[2000px] bg-slate-500 z-10"></section>
+      <section className="z-10 p-8 bg-slate-500">
+        <Carousel cards={cards} />
+      </section>
     </>
   );
 }

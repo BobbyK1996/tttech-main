@@ -4,11 +4,12 @@
 
 @layer components {
   * {
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
+    -ms-overflow-style: none; /*for Internet Explorer, Edge*/
+    scrollbar-width: none; /*for Firefox*/
+    -webkit-overflow-scrolling: touch;
   }
 
-  *::-webkit-scrollbar {
+  * ::-webkit-scrollbar {
     display: none;
   }
 
