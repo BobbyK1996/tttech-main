@@ -10,9 +10,9 @@ function DodgingImage({ className, children }) {
     const rect = imageWrapper.getBoundingClientRect();
 
     const offsetX =
-      (rect.width / 20) * Math.sign(rect.left + rect.width / 10 - e.clientX);
+      (rect.width / 80) * Math.sign(rect.left + rect.width / 50 - e.clientX);
     const offsetY =
-      (rect.height / 20) * Math.sign(rect.top + rect.height / 10 - e.clientY);
+      (rect.height / 80) * Math.sign(rect.top + rect.height / 50 - e.clientY);
 
     setPosition({ x: offsetX, y: offsetY });
   };
@@ -25,7 +25,7 @@ function DodgingImage({ className, children }) {
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative flex items-center justify-center transition-transform duration-500 ${className}`}
+      className={`flex items-center justify-center transition-transform duration-500 z-10 ${className} w-full mx-auto`}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
       }}

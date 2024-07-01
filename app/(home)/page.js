@@ -3,7 +3,7 @@ import Image from 'next/image';
 import bg from '@/public/landing-bg.jpg';
 import landingImage from '@/public/landing-image.png';
 import Button from '@components/reusable/Button';
-import DodgingImage from '../_components/non-reusable/heroImage';
+import DodgingImage from '@components/reusable/heroImage';
 
 function Page() {
   return (
@@ -19,24 +19,33 @@ function Page() {
         />
       </div>
 
-      <section className="h-full grid grid-cols-1 grid-rows-[1.5fr,auto,1fr] gap-4 z-10">
+      <section className="h-screen grid grid-cols-1 grid-rows-[1fr,auto,1.5fr] md:grid-rows-[1fr,auto,2fr] gap-4 z-10 md:text-xl">
         <h1 className="self-end order-1 mx-auto text-4xl sm:text-5xl md:text-6xl">
           Bringing <span className="text-accent-500">exceptional</span>{' '}
           companies <br /> and{' '}
           <span className="text-accent-500">exceptional</span> people, together
         </h1>
 
-        <span className="relative order-3 row-span-2 ">
+        <DodgingImage className="relative order-3 row-span-2">
           <Image
             src={landingImage}
             fill
             className="object-contain object-top"
             alt="Astronaut"
           />
-        </span>
+        </DodgingImage>
+
+        {/* <span className="relative order-3 row-span-2 ">
+          <Image
+            src={landingImage}
+            fill
+            className="object-contain object-top"
+            alt="Astronaut"
+          />
+        </span> */}
         <Button customCSS={'flex self-start order-2 mx-auto'}>Jobs</Button>
       </section>
-      <section className="h-[2000px]"></section>
+      <section className="h-[2000px] "></section>
     </>
   );
 }

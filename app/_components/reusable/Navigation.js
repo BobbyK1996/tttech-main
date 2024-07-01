@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { RiMenu5Fill } from 'react-icons/ri';
 import { IoMdClose } from 'react-icons/io';
-import { findCurrentNav } from '@lib/helperClient';
+import { useFindCurrentNav } from '@lib/helperClient';
 import { useNavigation } from '@/app/context/navigationContext';
 
 function validateLinksArray(linksArray) {
@@ -95,7 +95,7 @@ function Navigation() {
     currentNavColor
   );
 
-  const currentNav = findCurrentNav();
+  const currentNav = useFindCurrentNav();
 
   return (
     <nav className="z-10 text-xl">

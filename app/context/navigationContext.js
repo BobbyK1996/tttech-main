@@ -24,7 +24,7 @@ function NavigationProvider({ children }) {
       defaultBackground: 'bg-primary-800',
       hoverBackground: 'hover:bg-primary-600',
       hoverText: 'hover:text-accent-500',
-      currentNavColor: 'text-accent-200',
+      currentNavColor: 'text-accent-500',
     },
   };
 

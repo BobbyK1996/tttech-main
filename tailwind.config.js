@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        '4k': '2200px',
+        mdxl: '920px',
       },
       fontFamily: {
         poppins: ['var(--font-poppins)'],
