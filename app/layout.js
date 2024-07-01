@@ -15,6 +15,9 @@ export default async function RootLayout({ children }) {
         <body
           className={`${quattrocento} ${marcellus} ${poppins} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento`}
         >
+          {/* <body
+          className={`${quattrocento} ${marcellus} ${poppins} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento`}
+        > */}
           {children}
         </body>
       </NavigationProvider>

@@ -15,6 +15,9 @@ module.exports = {
         marcellus: ['var(--font-marcellus)'],
         quattrocento: ['var(--font-quattrocento_sans)'],
       },
+      gradientColorStopPositions: {
+        mh: '100vh',
+      },
       colors: {
         primary: {
           50: '#e9fffe',
@@ -41,6 +44,10 @@ module.exports = {
           800: '#1e5151',
           900: '#1d4443',
           950: '#0b2728',
+        },
+        space: {
+          900: '#070c12',
+          950: '#020204',
         },
 
         // primary: {
