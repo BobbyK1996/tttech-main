@@ -5,7 +5,7 @@ import Button from '@components/reusable/Button';
 import DodgingImage from '@components/reusable/DodgingImage';
 import LandingText from '@components/non-reusable/LandingText';
 import LandingBackgroundImage from '@components/non-reusable/LandingBackgroundImage';
-import Carousel from '../_components/reusable/Carousel';
+import Carousel from '@components/reusable/Carousel';
 
 const cards = [
   { id: 1, content: 'one' },
@@ -32,7 +32,7 @@ function Page() {
           <Image
             src={landingImage}
             fill
-            className="object-contain object-top lg:object-center"
+            className="object-contain object-top pointer-events-none lg:object-center"
             alt="Astronaut"
           />
         </DodgingImage>
@@ -44,8 +44,8 @@ function Page() {
           Jobs
         </Button>
       </section>
-      <section className="z-10 p-8 bg-slate-500">
-        <Carousel cards={cards} />
+      <section className="z-10 p-4 bg-slate-500">
+        <Carousel cards={cards}></Carousel>
       </section>
     </>
   );

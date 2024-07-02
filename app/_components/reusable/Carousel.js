@@ -1,15 +1,15 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 //For some reason, useReducer breaks this
 
-function Carousel({ cards }) {
+function Carousel({ cards, children }) {
   const carouselRef = useRef(null);
   const [dragging, setDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [currentCardId, setCurrentCardId] = useState(cards[0].id);
+  // const [currentCardId, setCurrentCardId] = useState(cards[0].id);
 
   const handleMouseDown = (e) => {
     if (!carouselRef.current) return;
@@ -20,10 +20,7 @@ function Carousel({ cards }) {
     setScrollLeft(carouselRef.current.scrollLeft);
   };
 
-  const handleMouseUp = () => {
-    setDragging(false);
-    if (!carouselRef.current) return;
-  };
+  const handleMouseUp = () => setDragging(false);
 
   const handleMouseMove = (e) => {
     if (!dragging) return;
@@ -37,47 +34,6 @@ function Carousel({ cards }) {
     carouselRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  const handleScroll = () => {
-    if (!carouselRef.current) return;
-
-    const containerWidth = carouselRef.current.clientWidth;
-    const scrollPosition = carouselRef.current.scrollLeft;
-
-    let totalWidth = 0;
-    let newCardId = 1;
-
-    cards.some((card, index) => {
-      const cardElement = carouselRef.current.children[index];
-      if (!cardElement) return true;
-
-      const cardWidth = cardElement.clientWidth;
-
-      if (
-        scrollPosition >= totalWidth &&
-        scrollPosition < totalWidth + cardWidth
-      ) {
-        newCardId = card.id;
-        console.log(newCardId);
-        return true; // Exit loop once the correct card is found
-      }
-
-      totalWidth += cardWidth;
-      return false;
-    });
-
-    setCurrentCardId(newCardId);
-  };
-
-  useEffect(() => {
-    if (!carouselRef.current) return;
-    carouselRef.current.addEventListener('scroll', handleScroll);
-    return () => {
-      if (carouselRef.current) {
-        carouselRef.current.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, []);
-
   const goToSlide = (slideId) => {
     const index = cards.findIndex((card) => card.id === slideId);
     if (index !== -1 && carouselRef.current) {
@@ -90,31 +46,85 @@ function Carousel({ cards }) {
         behavior: 'smooth',
       });
 
-      setCurrentCardId(slideId);
+      // setCurrentCardId(slideId);
     }
   };
 
   return (
-    <div
-      className="relative flex gap-2 overflow-auto select-none scroll-smooth snap-mandatory snap-x"
-      ref={carouselRef}
-      onMouseDown={handleMouseDown}
-      onMouseLeave={handleMouseUp}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
-    >
-      {cards.map((card, index) => {
-        return (
-          <div
-            className="relative w-full bg-red-400 h-52 mr-5px shrink-0 snap-start"
+    <div className="relative w-full">
+      <div
+        className="flex gap-2 overflow-auto select-none scroll-smooth snap-mandatory snap-x"
+        ref={carouselRef}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseUp}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+      >
+        {cards.map((card) => {
+          return (
+            <div
+              className="w-full bg-red-400 mr-5px shrink-0 snap-start"
+              key={card.id}
+            >
+              {children ? children : card.content}
+            </div>
+          );
+        })}
+      </div>
+
+      <span
+        className="absolute bottom-0 mx-auto -translate-x-1/2 left-1/2 min-w-20"
+        style={{ display: 'inline-block' }}
+      >
+        {cards.map((card) => (
+          <button
+            onClick={() => goToSlide(card.id)}
+            className="w-3 h-3 border-2 border-white rounded-full bg-slate-700"
             key={card.id}
-          >
-            {card.content}
-          </div>
-        );
-      })}
+          ></button>
+        ))}
+      </span>
     </div>
   );
 }
 
 export default Carousel;
+
+// const handleScroll = () => {
+//   if (!carouselRef.current) return;
+
+//   const scrollPosition = carouselRef.current.scrollLeft;
+
+//   let totalWidth = 0;
+//   let newCardId = 1;
+
+//   cards.some((card, index) => {
+//     const cardElement = carouselRef.current.children[index];
+//     if (!cardElement) return true;
+
+//     const cardWidth = cardElement.clientWidth;
+
+//     if (
+//       scrollPosition >= totalWidth &&
+//       scrollPosition < totalWidth + cardWidth
+//     ) {
+//       newCardId = card.id;
+//       return true;
+//     }
+
+//     totalWidth += cardWidth;
+//     return false;
+//   });
+
+//   setCurrentCardId(newCardId);
+// };
+
+// useEffect(() => {
+//   if (!carouselRef.current) return;
+//   carouselRef.current.addEventListener('scroll', handleScroll);
+//   return () => {
+//     if (carouselRef.current) {
+//       carouselRef.current.removeEventListener('scroll', handleScroll);
+//     }
+//   };
+// }, []);

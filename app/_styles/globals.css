@@ -27,6 +27,15 @@
     animation: blurGradient 600ms ease-in-out forwards;
   }
 
+  /* .no-drag {
+    user-drag: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  } */
+
   @keyframes rotate {
     to {
       transform: rotate(1turn);

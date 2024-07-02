@@ -11,7 +11,7 @@ function LandingBackgroundImage() {
         fill
         placeholder="blur"
         quality={80}
-        className="top-0 left-0 object-cover object-left w-full -z-20"
+        className="top-0 left-0 object-cover object-left w-full pointer-events-none -z-20"
       />
     </div>
   );
