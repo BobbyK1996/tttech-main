@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useReducer } from 'react';
+import { useRef, useEffect, useReducer, useState } from 'react';
 
 import CarouselCard from '@components/reusable/CarouselCard';
 
@@ -30,6 +30,8 @@ function Carousel({ carouselCards }) {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const [backdropBlur, setBackdropBlur] = useState(false);
 
   const handleMouseDown = (e) => {
     if (!carouselRef.current) return;
@@ -114,7 +116,9 @@ function Carousel({ carouselCards }) {
   return (
     <div className="relative w-full">
       <div
-        className="flex overflow-auto select-none h-52 scroll-smooth snap-mandatory snap-x"
+        className={`flex overflow-auto select-none h-80 scroll-smooth snap-mandatory snap-x ${
+          state.dragging ? 'cursor-grabbing' : 'cursor-grab'
+        }`}
         ref={carouselRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseUp}
@@ -126,21 +130,23 @@ function Carousel({ carouselCards }) {
         {carouselCards.map((card) => {
           return (
             <div
-              className="w-full px-4 py-6 bg-red-400 shrink-0 snap-start"
+              className={`w-full px-4 py-6 shrink-0 snap-start`}
               key={card.id}
             >
-              <CarouselCard />
+              <CarouselCard card={card} state={state} />
             </div>
           );
         })}
       </div>
 
-      <span className="absolute bottom-0 mx-auto -translate-x-1/2 left-1/2 min-w-20">
+      <span className="absolute mx-auto -translate-x-1/2 bottom-2 left-1/2 min-w-20">
         {carouselCards.map((card) => (
           <button
             onClick={() => goToSlide(card.id)}
-            className={`w-3 h-3 border-2 border-white rounded-full ${
-              card.id === state.currentCardId ? 'bg-accent-400' : 'bg-slate-700'
+            className={`w-3 h-3 border-2 border-white rounded-full transition-[width] duration-100 mx-1 ${
+              card.id === state.currentCardId
+                ? 'bg-accent-500 w-6'
+                : 'bg-slate-500'
             }`}
             key={card.id}
           ></button>
@@ -151,16 +157,3 @@ function Carousel({ carouselCards }) {
 }
 
 export default Carousel;
-
-{
-  /* {carouselCards.map((card) => {
-          return (
-            <div
-              className="w-full bg-red-400 mr-5px shrink-0 snap-start"
-              key={card.id}
-            >
-              {children ? children : card.content}
-            </div>
-          );
-        })} */
-}
