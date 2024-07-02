@@ -6,6 +6,7 @@ import DodgingImage from '@components/reusable/DodgingImage';
 import LandingText from '@components/non-reusable/LandingText';
 import LandingBackgroundImage from '@components/non-reusable/LandingBackgroundImage';
 import Carousel from '@components/reusable/Carousel';
+import CarouselCard from '@components/reusable/CarouselCard';
 
 const cards = [
   { id: 1, content: 'one' },
@@ -32,6 +33,7 @@ function Page() {
           <Image
             src={landingImage}
             fill
+            sizes="(min-width: 0px) 100vw, (min-width: 1024px) 50vw"
             className="object-contain object-top pointer-events-none lg:object-center"
             alt="Astronaut"
           />
@@ -45,7 +47,11 @@ function Page() {
         </Button>
       </section>
       <section className="z-10 p-4 bg-slate-500">
-        <Carousel cards={cards}></Carousel>
+        <Carousel carouselCards={cards}>
+          {cards.map((card) => (
+            <CarouselCard key={card.id} card={card} />
+          ))}
+        </Carousel>
       </section>
     </>
   );

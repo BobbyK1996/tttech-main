@@ -17,14 +17,14 @@ const reducer = (state, action) => {
   }
 };
 
-function Carousel({ cards, children }) {
+function Carousel({ carouselCards, children }) {
   const carouselRef = useRef(null);
 
   const initialState = {
     dragging: false,
     startX: 0,
     scrollLeft: 0,
-    currentCardId: cards[0].id,
+    currentCardId: carouselCards[0].id,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -49,14 +49,15 @@ function Carousel({ cards, children }) {
 
     const rect = carouselRef.current.getBoundingClientRect();
     const x = e.pageX - rect.left;
-    const averageCardWidth = carouselRef.current.scrollWidth / cards.length;
+    const averageCardWidth =
+      carouselRef.current.scrollWidth / carouselCards.length;
     const walk = (x - state.startX) * (averageCardWidth / 400);
 
     carouselRef.current.scrollLeft = state.scrollLeft - walk;
   };
 
   const goToSlide = (slideId) => {
-    const index = cards.findIndex((card) => card.id === slideId);
+    const index = carouselCards.findIndex((card) => card.id === slideId);
     if (index !== -1 && carouselRef.current) {
       const cardElement = carouselRef.current.children[index];
       const cardWidth = cardElement.clientWidth;
@@ -77,7 +78,7 @@ function Carousel({ cards, children }) {
     let totalWidth = 0;
     let newCardId = 1;
 
-    cards.some((card, index) => {
+    carouselCards.some((card, index) => {
       const cardElement = carouselRef.current.children[index];
       if (!cardElement) return true;
 
@@ -118,7 +119,7 @@ function Carousel({ cards, children }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {cards.map((card) => {
+        {/* {carouselCards.map((card) => {
           return (
             <div
               className="w-full bg-red-400 mr-5px shrink-0 snap-start"
@@ -127,14 +128,13 @@ function Carousel({ cards, children }) {
               {children ? children : card.content}
             </div>
           );
-        })}
+        })} */}
+
+        {children}
       </div>
 
-      <span
-        className="absolute bottom-0 mx-auto -translate-x-1/2 left-1/2 min-w-20"
-        style={{ display: 'inline-block' }}
-      >
-        {cards.map((card) => (
+      <span className="absolute bottom-0 mx-auto -translate-x-1/2 left-1/2 min-w-20">
+        {carouselCards.map((card) => (
           <button
             onClick={() => goToSlide(card.id)}
             className={`w-3 h-3 border-2 border-white rounded-full ${
