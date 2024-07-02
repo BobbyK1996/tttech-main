@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 //For some reason, useReducer breaks this
 
@@ -9,7 +9,7 @@ function Carousel({ cards, children }) {
   const [dragging, setDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  // const [currentCardId, setCurrentCardId] = useState(cards[0].id);
+  const [currentCardId, setCurrentCardId] = useState(cards[0].id);
 
   const handleMouseDown = (e) => {
     if (!carouselRef.current) return;
@@ -45,15 +45,52 @@ function Carousel({ cards, children }) {
         left: newScrollLeft,
         behavior: 'smooth',
       });
-
-      // setCurrentCardId(slideId);
     }
   };
+
+  const handleScroll = () => {
+    if (!carouselRef.current) return;
+
+    const scrollPosition = carouselRef.current.scrollLeft;
+
+    let totalWidth = 0;
+    let newCardId = 1;
+
+    cards.some((card, index) => {
+      const cardElement = carouselRef.current.children[index];
+      if (!cardElement) return true;
+
+      const cardWidth = cardElement.clientWidth;
+
+      if (
+        scrollPosition >= totalWidth &&
+        scrollPosition < totalWidth + cardWidth
+      ) {
+        newCardId = card.id;
+        return true;
+      }
+
+      totalWidth += cardWidth;
+      return false;
+    });
+
+    setCurrentCardId(newCardId);
+  };
+
+  useEffect(() => {
+    if (!carouselRef.current) return;
+    carouselRef.current.addEventListener('scroll', handleScroll);
+    return () => {
+      if (carouselRef.current) {
+        carouselRef.current.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, []);
 
   return (
     <div className="relative w-full">
       <div
-        className="flex gap-2 overflow-auto select-none scroll-smooth snap-mandatory snap-x"
+        className="flex overflow-auto select-none h-52 scroll-smooth snap-mandatory snap-x"
         ref={carouselRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseUp}
@@ -79,7 +116,9 @@ function Carousel({ cards, children }) {
         {cards.map((card) => (
           <button
             onClick={() => goToSlide(card.id)}
-            className="w-3 h-3 border-2 border-white rounded-full bg-slate-700"
+            className={`w-3 h-3 border-2 border-white rounded-full ${
+              card.id === currentCardId ? 'bg-accent-400' : 'bg-slate-700'
+            }`}
             key={card.id}
           ></button>
         ))}
@@ -89,42 +128,3 @@ function Carousel({ cards, children }) {
 }
 
 export default Carousel;
-
-// const handleScroll = () => {
-//   if (!carouselRef.current) return;
-
-//   const scrollPosition = carouselRef.current.scrollLeft;
-
-//   let totalWidth = 0;
-//   let newCardId = 1;
-
-//   cards.some((card, index) => {
-//     const cardElement = carouselRef.current.children[index];
-//     if (!cardElement) return true;
-
-//     const cardWidth = cardElement.clientWidth;
-
-//     if (
-//       scrollPosition >= totalWidth &&
-//       scrollPosition < totalWidth + cardWidth
-//     ) {
-//       newCardId = card.id;
-//       return true;
-//     }
-
-//     totalWidth += cardWidth;
-//     return false;
-//   });
-
-//   setCurrentCardId(newCardId);
-// };
-
-// useEffect(() => {
-//   if (!carouselRef.current) return;
-//   carouselRef.current.addEventListener('scroll', handleScroll);
-//   return () => {
-//     if (carouselRef.current) {
-//       carouselRef.current.removeEventListener('scroll', handleScroll);
-//     }
-//   };
-// }, []);
