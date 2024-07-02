@@ -6,7 +6,6 @@ import DodgingImage from '@components/reusable/DodgingImage';
 import LandingText from '@components/non-reusable/LandingText';
 import LandingBackgroundImage from '@components/non-reusable/LandingBackgroundImage';
 import Carousel from '@components/reusable/Carousel';
-import CarouselCard from '@components/reusable/CarouselCard';
 
 const cards = [
   { id: 1, content: 'one' },
@@ -46,12 +45,23 @@ function Page() {
           Jobs
         </Button>
       </section>
-      <section className="z-10 p-4 bg-slate-500">
-        <Carousel carouselCards={cards}>
+      <section className="z-10 bg-slate-500">
+        <Carousel carouselCards={cards} />
+        {/* <Carousel
+          carouselCards={cards}
+          render={({ carouselRef, goToSlide, state, carouselCards }) => (
+            <>
+              {carouselCards.map((card) => (
+                <CarouselCard key={card.id} card={card} />
+              ))}
+            </>
+          )}
+        /> */}
+        {/* <Carousel carouselCards={cards}>
           {cards.map((card) => (
             <CarouselCard key={card.id} card={card} />
           ))}
-        </Carousel>
+        </Carousel> */}
       </section>
     </>
   );

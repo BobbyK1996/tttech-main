@@ -2,6 +2,8 @@
 
 import { useRef, useEffect, useReducer } from 'react';
 
+import CarouselCard from '@components/reusable/CarouselCard';
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_DRAGGING':
@@ -17,7 +19,7 @@ const reducer = (state, action) => {
   }
 };
 
-function Carousel({ carouselCards, children }) {
+function Carousel({ carouselCards }) {
   const carouselRef = useRef(null);
 
   const initialState = {
@@ -119,18 +121,18 @@ function Carousel({ carouselCards, children }) {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        {/* {carouselCards.map((card) => {
+        {/* {render({ carouselRef, goToSlide, state, carouselCards })} */}
+
+        {carouselCards.map((card) => {
           return (
             <div
-              className="w-full bg-red-400 mr-5px shrink-0 snap-start"
+              className="w-full px-4 py-6 bg-red-400 shrink-0 snap-start"
               key={card.id}
             >
-              {children ? children : card.content}
+              <CarouselCard />
             </div>
           );
-        })} */}
-
-        {children}
+        })}
       </div>
 
       <span className="absolute bottom-0 mx-auto -translate-x-1/2 left-1/2 min-w-20">
@@ -149,3 +151,16 @@ function Carousel({ carouselCards, children }) {
 }
 
 export default Carousel;
+
+{
+  /* {carouselCards.map((card) => {
+          return (
+            <div
+              className="w-full bg-red-400 mr-5px shrink-0 snap-start"
+              key={card.id}
+            >
+              {children ? children : card.content}
+            </div>
+          );
+        })} */
+}
