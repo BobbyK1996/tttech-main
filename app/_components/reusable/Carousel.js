@@ -1,37 +1,58 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect, useReducer } from 'react';
 
-//For some reason, useReducer breaks this
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_DRAGGING':
+      return { ...state, dragging: action.value };
+    case 'SET_START_X':
+      return { ...state, startX: action.value };
+    case 'SET_SCROLL_LEFT':
+      return { ...state, scrollLeft: action.value };
+    case 'SET_CURRENT_CARD_ID':
+      return { ...state, currentCardId: action.value };
+    default:
+      return state;
+  }
+};
 
 function Carousel({ cards, children }) {
   const carouselRef = useRef(null);
-  const [dragging, setDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [currentCardId, setCurrentCardId] = useState(cards[0].id);
+
+  const initialState = {
+    dragging: false,
+    startX: 0,
+    scrollLeft: 0,
+    currentCardId: cards[0].id,
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleMouseDown = (e) => {
     if (!carouselRef.current) return;
     e.preventDefault();
-    setDragging(true);
+    dispatch({ type: 'SET_DRAGGING', value: true });
     const rect = carouselRef.current.getBoundingClientRect();
-    setStartX(e.pageX - rect.left);
-    setScrollLeft(carouselRef.current.scrollLeft);
+    dispatch({ type: 'SET_START_X', value: e.pageX - rect.left });
+    dispatch({
+      type: 'SET_SCROLL_LEFT',
+      value: carouselRef.current.scrollLeft,
+    });
   };
 
-  const handleMouseUp = () => setDragging(false);
+  const handleMouseUp = () => dispatch({ type: 'SET_DRAGGING', value: false });
 
   const handleMouseMove = (e) => {
-    if (!dragging) return;
+    if (!state.dragging) return;
     e.preventDefault();
 
     const rect = carouselRef.current.getBoundingClientRect();
     const x = e.pageX - rect.left;
     const averageCardWidth = carouselRef.current.scrollWidth / cards.length;
-    const walk = (x - startX) * (averageCardWidth / 400);
+    const walk = (x - state.startX) * (averageCardWidth / 400);
 
-    carouselRef.current.scrollLeft = scrollLeft - walk;
+    carouselRef.current.scrollLeft = state.scrollLeft - walk;
   };
 
   const goToSlide = (slideId) => {
@@ -74,7 +95,7 @@ function Carousel({ cards, children }) {
       return false;
     });
 
-    setCurrentCardId(newCardId);
+    dispatch({ type: 'SET_CURRENT_CARD_ID', value: newCardId });
   };
 
   useEffect(() => {
@@ -117,7 +138,7 @@ function Carousel({ cards, children }) {
           <button
             onClick={() => goToSlide(card.id)}
             className={`w-3 h-3 border-2 border-white rounded-full ${
-              card.id === currentCardId ? 'bg-accent-400' : 'bg-slate-700'
+              card.id === state.currentCardId ? 'bg-accent-400' : 'bg-slate-700'
             }`}
             key={card.id}
           ></button>
