@@ -1,6 +1,6 @@
 import '@/app/_styles/globals.css';
 
-import { quattrocento, marcellus, poppins } from '@lib/fonts';
+import { quattrocento, marcellus, poppins, dmsans } from '@lib/fonts';
 import { NavigationProvider } from '@/app/context/navigationContext';
 
 export const metadata = {
@@ -13,7 +13,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <NavigationProvider>
         <body
-          className={`${quattrocento} ${marcellus} ${poppins} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento -z-10`}
+          className={`${quattrocento} ${marcellus} ${poppins} ${dmsans} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento -z-10`}
         >
           {/* <body
           className={`${quattrocento} ${marcellus} ${poppins} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento`}

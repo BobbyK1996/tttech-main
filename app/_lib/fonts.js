@@ -1,4 +1,9 @@
-import { Marcellus, Poppins, Quattrocento_Sans } from 'next/font/google';
+import {
+  Marcellus,
+  Poppins,
+  Quattrocento_Sans,
+  DM_Sans,
+} from 'next/font/google';
 
 const poppins_init = Poppins({
   subsets: ['latin'],
@@ -18,8 +23,16 @@ const quattrocento_init = Quattrocento_Sans({
   variable: '--font-quattrocento_sans',
 });
 
+const dmsans_init = DM_Sans({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-dm_sans',
+});
+
 export const poppins = poppins_init.variable;
 
 export const marcellus = marcellus_init.variable;
 
 export const quattrocento = quattrocento_init.variable;
+
+export const dmsans = dmsans_init.variable;

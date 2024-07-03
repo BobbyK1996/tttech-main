@@ -7,6 +7,10 @@ import LandingText from '@components/non-reusable/LandingText';
 import LandingBackgroundImage from '@components/non-reusable/LandingBackgroundImage';
 import Carousel from '@components/reusable/Carousel';
 
+import productOne from '@/public/product1.jpg';
+import productTwo from '@/public/product2.jpg';
+import productThree from '@/public/product3.jpg';
+
 const cards = [
   {
     id: 1,
@@ -71,23 +75,45 @@ function Page() {
           Jobs
         </Button>
       </section>
-      <section className="z-10 ">
+
+      <section className="z-10">
         <Carousel carouselCards={cards} />
-        {/* <Carousel
-          carouselCards={cards}
-          render={({ carouselRef, goToSlide, state, carouselCards }) => (
-            <>
-              {carouselCards.map((card) => (
-                <CarouselCard key={card.id} card={card} />
-              ))}
-            </>
-          )}
-        /> */}
-        {/* <Carousel carouselCards={cards}>
-          {cards.map((card) => (
-            <CarouselCard key={card.id} card={card} />
-          ))}
-        </Carousel> */}
+      </section>
+
+      <section className="grid w-full grid-cols-1 lg:grid-cols-3 grid-rows-[auto,1fr] mt-16 gap-x-8 gap-y-16 gap-">
+        <h1 className="relative mx-auto text-center text-7xl lg:col-span-3 md:text-8xl after:absolute after:-bottom-3 after:left-1/2 after:w-24 after:h-1 after:bg-accent-500 after:-translate-x-2/4">
+          What We Offer
+        </h1>
+
+        <div className="flex flex-col gap-6 p-6 bg-gradient-to-t lg:bg-gradient-to-tr from-primary-950 from-40% to-primary-900 to-100% shadow-2xl rounded-md max-w-sm mx-auto min-w-64">
+          <Image src={productOne} alt="Product One" className="object-cover" />
+
+          <p className="text-lg font-dmsans">
+            A bespoke recruitment service tailored to your needs. We work as an
+            extension to your internal hiring process, providing a whole
+            recruitment solution, or additional support.
+          </p>
+        </div>
+        <div className="flex flex-col gap-6 p-6 bg-gradient-to-t from-primary-950 from-40% lg:from-20% to-primary-900 to-100% shadow-2xl rounded-md max-w-sm mx-auto min-w-64">
+          <Image src={productTwo} alt="Product Two" className="object-cover" />
+          <p className="text-lg font-dmsans">
+            Market insights from market experts. We work together to provide
+            reports on market saturation, trends and costs, etc. At all times,
+            you will know what the next steps will be.
+          </p>
+        </div>
+        <div className="flex flex-col gap-6 p-6 bg-gradient-to-t from-primary-950 from-40% lg:from-20% to-primary-900 to-100% shadow-2xl rounded-md max-w-sm mx-auto min-w-64">
+          <Image
+            src={productThree}
+            alt="Product Three"
+            className="object-cover"
+          />
+          <p className="text-lg font-dmsans">
+            Volume campaigns and one-off hires; we cater to you. This includes a
+            detailed on-boarding call with one of our consultants, where we
+            discuss short and long-term hiring plans.
+          </p>
+        </div>
       </section>
     </>
   );

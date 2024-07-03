@@ -14,6 +14,7 @@ module.exports = {
         poppins: ['var(--font-poppins)'],
         marcellus: ['var(--font-marcellus)'],
         quattrocento: ['var(--font-quattrocento_sans)'],
+        dmsans: ['var(--font-dm_sans)'],
       },
       gradientColorStopPositions: {
         mh: '100vh',
