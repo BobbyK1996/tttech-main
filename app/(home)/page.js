@@ -71,7 +71,7 @@ const PRODUCT_CARDS = [
       font: 'font-dmsans',
     },
     content:
-      'A bespoke recruitment service tailored to your needs. We work as an extension to your internal hiring process, providing a whole recruitment solution, or additional support.',
+      'Market insights from market experts. We work together to provide reports on market saturation, trends and costs, etc. At all times, you will know what the next steps will be.',
   },
   {
     id: 3,
@@ -85,7 +85,7 @@ const PRODUCT_CARDS = [
       colSpanLg: 1,
     },
     content:
-      'A bespoke recruitment service tailored to your needs. We work as an extension to your internal hiring process, providing a whole recruitment solution, or additional support.',
+      'Volume campaigns and one-off hires; we cater to you. This includes a detailed on-boarding call with one of our consultants, where we discuss short and long-term hiring plans.',
   },
 ];
 
