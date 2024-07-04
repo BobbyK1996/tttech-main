@@ -1,17 +1,18 @@
 import Image from 'next/image';
 
-import landingImage from '@/public/landing-image.png';
 import Button from '@components/reusable/Button';
 import DodgingImage from '@components/reusable/DodgingImage';
 import LandingText from '@components/non-reusable/LandingText';
 import LandingBackgroundImage from '@components/non-reusable/LandingBackgroundImage';
 import Carousel from '@components/reusable/Carousel';
+import ProductsCard from '@components/reusable/ProductsCard';
 
+import landingImage from '@/public/landing-image.png';
 import productOne from '@/public/product1.jpg';
 import productTwo from '@/public/product2.jpg';
 import productThree from '@/public/product3.jpg';
 
-const cards = [
+const CARDS = [
   {
     id: 1,
     content:
@@ -50,6 +51,44 @@ const cards = [
   },
 ];
 
+const PRODUCT_CARDS = [
+  {
+    id: 1,
+    parameters: {
+      product: productOne,
+      alt: 'Product One',
+      gradientDirectionMd: 'toTopRight',
+      font: 'font-dmsans',
+    },
+    content:
+      'A bespoke recruitment service tailored to your needs. We work as an extension to your internal hiring process, providing a whole recruitment solution, or additional support.',
+  },
+  {
+    id: 2,
+    parameters: {
+      product: productTwo,
+      alt: 'Product Two',
+      font: 'font-dmsans',
+    },
+    content:
+      'A bespoke recruitment service tailored to your needs. We work as an extension to your internal hiring process, providing a whole recruitment solution, or additional support.',
+  },
+  {
+    id: 3,
+    parameters: {
+      product: productThree,
+      alt: 'Product Three',
+      font: 'font-dmsans',
+      gradientDirectionMd: 'toTopRight',
+      gradientDirectionLg: 'toTop',
+      colSpanMd: 2,
+      colSpanLg: 1,
+    },
+    content:
+      'A bespoke recruitment service tailored to your needs. We work as an extension to your internal hiring process, providing a whole recruitment solution, or additional support.',
+  },
+];
+
 function Page() {
   return (
     <>
@@ -77,43 +116,19 @@ function Page() {
       </section>
 
       <section className="z-10">
-        <Carousel carouselCards={cards} />
+        <Carousel carouselCards={CARDS} />
       </section>
 
-      <section className="grid w-full grid-cols-1 lg:grid-cols-3 grid-rows-[auto,1fr] mt-16 gap-x-8 gap-y-16 gap-">
-        <h1 className="relative mx-auto text-center text-7xl lg:col-span-3 md:text-8xl after:absolute after:-bottom-3 after:left-1/2 after:w-24 after:h-1 after:bg-accent-500 after:-translate-x-2/4">
+      <section className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-[auto,1fr] mt-16 gap-x-8 gap-y-16 gap-">
+        <h1 className="relative mx-auto text-center text-7xl md:col-span-2 lg:col-span-3 md:text-8xl after:absolute after:-bottom-3 after:left-1/2 after:w-24 after:h-1 after:bg-accent-500 after:-translate-x-2/4">
           What We Offer
         </h1>
 
-        <div className="flex flex-col gap-6 p-6 bg-gradient-to-t lg:bg-gradient-to-tr from-primary-950 from-40% to-primary-900 to-100% shadow-2xl rounded-md max-w-sm mx-auto min-w-64">
-          <Image src={productOne} alt="Product One" className="object-cover" />
-
-          <p className="text-lg font-dmsans">
-            A bespoke recruitment service tailored to your needs. We work as an
-            extension to your internal hiring process, providing a whole
-            recruitment solution, or additional support.
-          </p>
-        </div>
-        <div className="flex flex-col gap-6 p-6 bg-gradient-to-t from-primary-950 from-40% lg:from-20% to-primary-900 to-100% shadow-2xl rounded-md max-w-sm mx-auto min-w-64">
-          <Image src={productTwo} alt="Product Two" className="object-cover" />
-          <p className="text-lg font-dmsans">
-            Market insights from market experts. We work together to provide
-            reports on market saturation, trends and costs, etc. At all times,
-            you will know what the next steps will be.
-          </p>
-        </div>
-        <div className="flex flex-col gap-6 p-6 bg-gradient-to-t from-primary-950 from-40% lg:from-20% to-primary-900 to-100% shadow-2xl rounded-md max-w-sm mx-auto min-w-64">
-          <Image
-            src={productThree}
-            alt="Product Three"
-            className="object-cover"
-          />
-          <p className="text-lg font-dmsans">
-            Volume campaigns and one-off hires; we cater to you. This includes a
-            detailed on-boarding call with one of our consultants, where we
-            discuss short and long-term hiring plans.
-          </p>
-        </div>
+        {PRODUCT_CARDS.map((card) => (
+          <ProductsCard key={card.id} parameters={card.parameters}>
+            {card.content}
+          </ProductsCard>
+        ))}
       </section>
     </>
   );
