@@ -92,7 +92,7 @@ const PRODUCT_CARDS = [
 function Page() {
   return (
     <>
-      <LandingBackgroundImage />
+      <LandingBackgroundImage dodge={true} />
 
       <section className="h-screen grid grid-cols-1 grid-rows-[1fr,auto,1.5fr] md:grid-rows-[1fr,auto,2fr] lg:grid-cols-2 lg:grid-rows-[1fr,1fr] lg:max-h-[1000px] lg:my-auto gap-4 z-10 md:text-xl 2xl:max-h-[1000px]">
         <LandingText />

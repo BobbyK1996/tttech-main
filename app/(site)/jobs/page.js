@@ -13,12 +13,10 @@ const getCachedCategories = unstable_cache(
   ['my-app-categories'],
   {
     revalidate: 10800,
-    // revalidate: 10,
   }
 );
 const getCachedJobs = unstable_cache(async () => getJobs(), ['my-app-jobs'], {
   revalidate: 10800,
-  // revalidate: 10,
 });
 
 async function Page({ searchParams }) {
