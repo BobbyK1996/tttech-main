@@ -2,12 +2,7 @@ import { Suspense } from 'react';
 
 import { unstable_cache } from 'next/cache';
 
-import {
-  getCategories,
-  getJobs,
-  getJobsTest,
-  revalidateZoho,
-} from '@lib/data-services';
+import { getCategories, getJobs, getJobsTest } from '@lib/data-services';
 
 import Filter from '@/app/_components/reusable/Filter';
 import JobList from '@/app/_components/reusable/JobList';
