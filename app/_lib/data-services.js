@@ -26,19 +26,34 @@ export async function revalidateZoho() {
   }
 }
 
-export async function getJobs() {
-  const { data, error } = await supabase
-    .from('jobs')
-    .select('id, title, category, salaryMin, salaryMax, location, tags');
+async function saveBackupData(key, data) {
+  const { data: result, error } = await supabase
+    .from(key)
+    .update({ jobs: data })
+    .eq('id', 1)
+    .select();
 
   if (error) {
     console.error(error);
+    return { success: false, error };
   }
 
-  return data;
+  return { success: true, data: result };
 }
 
-export async function getJobsTest() {
+async function getBackupData(key, column) {
+  const { data, error } = await supabase.from(key).select(column);
+
+  const dataObject = data.map((dataString) => JSON.parse(jsonString));
+
+  if (error) {
+    console.error('Error getting backup data from database', error);
+  }
+
+  return dataObject;
+}
+
+export async function getJobs() {
   try {
     const { access_token } = await revalidateZoho();
 
@@ -56,13 +71,27 @@ export async function getJobsTest() {
       throw new Error(`Network response was not ok: ${res.statusText}`);
     }
 
-    const data = await res.json();
-
+    const { data } = await res.json();
     console.log(data);
+
+    const dataBackupResult = await saveBackupData('jobsBackup', data);
+
+    if (!dataBackupResult.success) {
+      console.error('Failed to save backup data:', dataBackupResult.error);
+    } else {
+      console.log('Backup data saved successfully');
+    }
 
     return data;
   } catch (error) {
-    throw new Error(`Error: ${error.message}`);
+    console.error(`Error fetching jobs: ${error.message}`);
+
+    const backupData = await getBackupData();
+    if (!backupData) {
+      throw new Error('No cached data available and API request failed');
+    }
+
+    return backupData;
   }
 }
 
