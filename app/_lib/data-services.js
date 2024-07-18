@@ -42,9 +42,9 @@ async function saveBackupData(key, data) {
 }
 
 async function getBackupData(key, column) {
-  const { data, error } = await supabase.from(key).select(column);
+  const { data, error } = await supabase.from(key).eq('id', 1).select(column);
 
-  const dataObject = data.map((dataString) => JSON.parse(jsonString));
+  const dataObject = data.map((dataString) => JSON.parse(dataString));
 
   if (error) {
     console.error('Error getting backup data from database', error);
@@ -86,7 +86,7 @@ export async function getJobs() {
   } catch (error) {
     console.error(`Error fetching jobs: ${error.message}`);
 
-    const backupData = await getBackupData();
+    const backupData = await getBackupData('jobsBackup', 'jobs');
     if (!backupData) {
       throw new Error('No cached data available and API request failed');
     }
@@ -98,13 +98,17 @@ export async function getJobs() {
 export async function getCategories() {
   const { data, error } = await supabase
     .from('adminSettings')
-    .select('id, categories');
+    .select('categories');
 
   if (error) {
     console.error(error);
   }
 
-  const dataJSONified = data[0].categories.map(convertToObject);
+  const dataJSONified = data[0].categories.map((dataString) =>
+    JSON.parse(dataString)
+  );
+
+  console.log(dataJSONified);
 
   return dataJSONified;
 }
