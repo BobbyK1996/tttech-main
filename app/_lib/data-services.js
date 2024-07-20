@@ -18,8 +18,6 @@ export async function revalidateZoho() {
 
     const { access_token, expires_in } = data;
 
-    console.log(data);
-
     return { access_token, expires_in };
   } catch (error) {
     throw new Error(`Error: ${error.message}`);
@@ -72,7 +70,6 @@ export async function getJobs() {
     }
 
     const { data } = await res.json();
-    console.log(data);
 
     const dataBackupResult = await saveBackupData('jobsBackup', data);
 
@@ -107,8 +104,6 @@ export async function getCategories() {
   const dataJSONified = data[0].categories.map((dataString) =>
     JSON.parse(dataString)
   );
-
-  console.log(dataJSONified);
 
   return dataJSONified;
 }

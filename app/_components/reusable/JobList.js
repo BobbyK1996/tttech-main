@@ -7,7 +7,7 @@ function JobList({ filter, jobs, categories }) {
   }, {});
 
   jobs.forEach((job) => {
-    if (categorizedJobs[job.category]) categorizedJobs[job.category].push(job);
+    if (categorizedJobs[job.Industry]) categorizedJobs[job.Industry].push(job);
   });
 
   const renderCategory = (categoryTag, index) => {
@@ -41,8 +41,8 @@ function JobList({ filter, jobs, categories }) {
             <span className="text-accent-500">{lastWord}</span>
           </h1>
           <div className="grid grid-cols-1 gap-8 mb-16">
-            {categorizedJobs[categoryTag].map((jobs) => (
-              <JobCard jobs={jobs} key={jobs.id} />
+            {categorizedJobs[categoryTag].map((job) => (
+              <JobCard job={job} key={job.id} />
             ))}
           </div>
         </div>

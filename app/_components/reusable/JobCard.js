@@ -5,8 +5,19 @@ import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 
 import { formatToK } from '@lib/helper';
 
-function JobCard({ jobs }) {
-  const { title, salaryMin, salaryMax, location, tags, id } = jobs;
+function JobCard({ job }) {
+  console.log(job);
+  const {
+    Posting_Title: title,
+    Salary: salary,
+    City: location = 'Remote',
+    Associated_Tags: tags,
+    id,
+  } = job;
+
+  const salaryMin = Number(salary.split('-')[0]);
+  const salaryMax = Number(salary.split('-')[1]);
+
   return (
     <div className="grid grid-cols-3 px-8 py-6 transition duration-300 ease-in-out border-2 rounded-md border-primary-900 bg-primary-950 hover:scale-105 hover:border-white hover:shadow-2xl filter">
       <div className="grid grid-cols-[auto,1fr] col-span-2 grid-rows-[1fr,auto] gap-x-4 gap-y-2 p-2 text-xl font-bold place-items-start">
