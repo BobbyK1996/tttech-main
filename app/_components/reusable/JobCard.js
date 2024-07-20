@@ -12,7 +12,7 @@ function JobCard({ job }) {
     Salary: salary,
     City: location = 'Remote',
     Associated_Tags: tags,
-    id,
+    Job_Opening_ID: id,
   } = job;
 
   const salaryMin = Number(salary.split('-')[0]);
