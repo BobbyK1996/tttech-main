@@ -9,12 +9,21 @@ export function formatToK(number) {
   return number.toString();
 }
 
-export function convertToObject(str) {
-  if (typeof str !== 'string') throw new Error('INPUT MUST BE A STRING');
+export function convertToObject(data, index = 0) {
+  try {
+    const categories = data[index].categories.map((categoryString) => {
+      const jsonString = categoryString
+        .replace(/'/g, '"')
+        .replace(/(\w+):/g, '"$1":');
+      return JSON.parse(jsonString);
+    });
 
-  const jsonString = str.replace(/'/g, '"').replace(/(\w+):/g, '"$1":');
-
-  return JSON.parse(jsonString);
+    console.log(categories);
+    return categories;
+  } catch (error) {
+    console.error('Error parsing categories:', error);
+    return null;
+  }
 }
 
 export function formatDate(inputDate) {
@@ -40,4 +49,27 @@ export function formatDate(inputDate) {
   const month = monthNames[monthIndex];
 
   return `${day} ${month} ${year}`;
+}
+
+export function validateSalaryString(s) {
+  if (typeof s !== 'string') {
+    return 0;
+  }
+
+  const pattern = /^(\d+)\s*-\s*(\d+)$/;
+
+  const match = s.match(pattern);
+
+  if (match) {
+    const [_, x, y] = match;
+
+    const numX = parseInt(x, 10);
+    const numY = parseInt(y, 10);
+
+    if (!isNaN(numX) && !isNaN(numY)) {
+      return s;
+    }
+  }
+
+  return 0;
 }

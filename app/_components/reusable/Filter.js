@@ -18,6 +18,7 @@ function Filter({ categories }) {
       shallow: true,
     });
   }
+  // console.log('from filter', categories);
 
   return (
     <div className="flex flex-col border rounded-md border-primary-800">

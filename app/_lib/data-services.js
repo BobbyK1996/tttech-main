@@ -101,11 +101,9 @@ export async function getCategories() {
     console.error(error);
   }
 
-  const dataJSONified = data[0].categories.map((dataString) =>
-    JSON.parse(dataString)
-  );
+  const categories = convertToObject(data);
 
-  return dataJSONified;
+  return categories;
 }
 
 export async function getJob(id) {

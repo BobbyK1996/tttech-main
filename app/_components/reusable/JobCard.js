@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { IoBriefcaseOutline } from 'react-icons/io5';
 import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 
-import { formatToK } from '@lib/helper';
+import { formatToK, validateSalaryString } from '@lib/helper';
 
 function JobCard({ job }) {
-  console.log(job);
+  // console.log(job);
   const {
     Posting_Title: title,
     Salary: salary,
@@ -15,8 +15,17 @@ function JobCard({ job }) {
     Job_Opening_ID: id,
   } = job;
 
-  const salaryMin = Number(salary.split('-')[0]);
-  const salaryMax = Number(salary.split('-')[1]);
+  const salaryMin =
+    validateSalaryString(salary) !== 0
+      ? Number(validateString(salary).split('-')[0].trim())
+      : 0;
+  const salaryMax =
+    validateSalaryString(salary) !== 0
+      ? Number(validateString(salary).split('-')[1].trim())
+      : 0;
+
+  // const salaryMin = Number(salary.split('-')[0]);
+  // const salaryMax =  Number(salary.split('-')[1]);
 
   return (
     <div className="grid grid-cols-3 px-8 py-6 transition duration-300 ease-in-out border-2 rounded-md border-primary-900 bg-primary-950 hover:scale-105 hover:border-white hover:shadow-2xl filter">
