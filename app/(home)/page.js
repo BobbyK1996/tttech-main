@@ -94,10 +94,11 @@ function Page() {
     <>
       <LandingBackgroundImage />
 
-      <section className="h-screen grid grid-cols-1 grid-rows-[1fr,auto,1.5fr] md:grid-rows-[1fr,auto,2fr] lg:grid-cols-2 lg:grid-rows-[1fr,1fr] lg:max-h-[1000px] lg:my-auto gap-4 z-10 md:text-xl 2xl:max-h-[1000px]">
+      {/* <section className="h-screen grid grid-cols-1 grid-rows-[1fr,auto,1.5fr] md:grid-rows-[1fr,auto,2fr] lg:grid-cols-2 lg:grid-rows-[1fr,1fr] lg:max-h-[1000px] lg:my-auto gap-4 z-10 md:text-xl 2xl:max-h-[1000px]"> */}
+      <section className="h-screen grid grid-cols-1 lg:grid-cols-2 lg:max-h-[1000px] lg:my-auto gap-4 z-10 md:text-xl 2xl:max-h-[1000px]">
         <LandingText />
 
-        <DodgingImage className="relative order-3 row-span-2 lg:order-2">
+        {/* <DodgingImage className="relative order-3 row-span-2 lg:order-2">
           <Image
             src={landingImage}
             fill
@@ -105,10 +106,10 @@ function Page() {
             className="object-contain object-top pointer-events-none lg:object-center"
             alt="Astronaut"
           />
-        </DodgingImage>
+        </DodgingImage> */}
 
         <Button
-          customCSS={'flex self-start order-2 mx-auto lg:order-3'}
+          customCSS={'flex self-center mx-auto lg:order-3 translate-y-32'}
           href="/jobs"
         >
           Jobs
