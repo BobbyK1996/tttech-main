@@ -17,11 +17,11 @@ function JobCard({ job }) {
 
   const salaryMin =
     validateSalaryString(salary) !== 0
-      ? Number(validateString(salary).split('-')[0].trim())
+      ? Number(salary.split('-')[0].trim())
       : 0;
   const salaryMax =
     validateSalaryString(salary) !== 0
-      ? Number(validateString(salary).split('-')[1].trim())
+      ? Number(salary.split('-')[1].trim())
       : 0;
 
   // const salaryMin = Number(salary.split('-')[0]);

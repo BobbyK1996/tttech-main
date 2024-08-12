@@ -103,6 +103,8 @@ export async function getCategories() {
 
   const categories = convertToObject(data);
 
+  console.log(categories);
+
   return categories;
 }
 
