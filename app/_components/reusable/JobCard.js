@@ -62,12 +62,12 @@ function JobCard({ job }) {
         ))}
       </div>
 
-      <Link
+      {/* <Link
         href={`/jobs/${id}`}
         className="w-full px-6 py-4 text-center transition duration-300 ease-in-out rounded-md hover:bg-accent-300 bg-accent-500"
       >
         Apply
-      </Link>
+      </Link> */}
     </div>
   );
 }
