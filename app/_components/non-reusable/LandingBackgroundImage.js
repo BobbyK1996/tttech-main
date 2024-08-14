@@ -21,6 +21,8 @@ function LandingBackgroundImage() {
       <Image
         src={shake}
         fill
+        alt="shaking hands"
+        priority
         className="top-0 object-cover scale-105 -translate-y-80 -rotate-6"
       />
     </div>

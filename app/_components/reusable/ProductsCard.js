@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { RiH2 } from 'react-icons/ri';
 
 const cardType = {
   gradientDirection: {
@@ -74,6 +75,7 @@ function ProductsCard({
     customTailwind,
     font,
   } = {},
+  title = null,
   children,
 }) {
   validateParam(alt, 'string');
@@ -109,6 +111,7 @@ function ProductsCard({
       ${customTailwind && customTailwind}`}
     >
       <Image src={product} alt={alt} className={``} />
+      {title !== null && <h2 className="text-2xl font-bold">{title}</h2>}
       <p className={`text-lg ${font && font}`}>{children}</p>
     </div>
   );

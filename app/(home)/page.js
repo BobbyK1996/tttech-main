@@ -120,13 +120,17 @@ function Page() {
         <Carousel carouselCards={CARDS} />
       </section>
 
-      <section className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-[auto,1fr] mt-16 gap-x-8 gap-y-16 gap-">
+      <section className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-[auto,1fr] mt-16 gap-x-8 gap-y-16">
         <h1 className="relative mx-auto text-center text-7xl md:col-span-2 lg:col-span-3 md:text-8xl after:absolute after:-bottom-3 after:left-1/2 after:w-24 after:h-1 after:bg-accent-500 after:-translate-x-2/4">
           What We Offer
         </h1>
 
         {PRODUCT_CARDS.map((card) => (
-          <ProductsCard key={card.id} parameters={card.parameters}>
+          <ProductsCard
+            key={card.id}
+            parameters={card.parameters}
+            title={card.title}
+          >
             {card.content}
           </ProductsCard>
         ))}

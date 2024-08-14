@@ -1,5 +1,5 @@
 import '@/app/_styles/globals.css';
-import { marcellus, quattrocento, raleway } from '@lib/fonts';
+// import { marcellus, quattrocento, raleway } from '@lib/fonts';
 
 import Header from '@/app/_components/reusable/Header';
 
