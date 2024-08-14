@@ -13,7 +13,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <NavigationProvider>
         <body
-          className={`${quattrocento} ${marcellus} ${poppins} ${dmsans} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento -z-10`}
+          className={`${quattrocento} ${marcellus} ${poppins} ${dmsans} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento -z-10 overflow-x-hidden`}
         >
           {/* <body
           className={`${quattrocento} ${marcellus} ${poppins} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento`}
