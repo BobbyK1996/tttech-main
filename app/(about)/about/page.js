@@ -39,6 +39,8 @@ const VALUES_CARDS = [
       alt: 'Results',
       font: 'font-dmsans',
       customTailwind: 'from-white to-white drop-shadow-2xl',
+      colSpanMd: 2,
+      colSpanLg: 1,
     },
     title: 'RESULTS',
     content:
