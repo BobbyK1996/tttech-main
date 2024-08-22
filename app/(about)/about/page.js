@@ -6,6 +6,7 @@ import commitmentImage from '@/public/commitment.png';
 import resultsImage from '@/public/tick.png';
 
 import ProductsCard from '@/app/_components/reusable/ProductsCard';
+import Button from '@/app/_components/reusable/Button';
 
 const VALUES_CARDS = [
   {
@@ -100,6 +101,29 @@ function Page() {
               {card.content}
             </ProductsCard>
           ))}
+        </div>
+      </section>
+
+      <section className="w-full p-8">
+        <div className="flex justify-between w-full mx-auto max-w-7xl bg-slate-300">
+          <div className="flex-1 basis-5/12">
+            <h1 className="self-center mx-auto text-2xl sm:text-3xl md:text-5xl lg:pb-20">
+              <span className="transition-colors duration-600 text-accent-500 hover:text-accent-200">
+                More
+              </span>{' '}
+              than just a pretty face
+            </h1>
+            <h2 className="self-center mx-auto text-2xl sm:text-3xl md:text-5xl lg:pb-20">
+              Meet the people behind the{' '}
+              <span className="transition-colors duration-600 text-accent-500 hover:text-accent-200">
+                TT Tech Experience
+              </span>
+            </h2>
+            <Button href="#" customCSS={'flex self-center mx-auto lg:order-3'}>
+              Contact Us
+            </Button>
+          </div>
+          <div className="flex-1 basis-7/12">Bye</div>
         </div>
       </section>
     </>
