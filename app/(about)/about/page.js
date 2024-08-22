@@ -5,8 +5,17 @@ import techSavvyImage from '@/public/circuit.png';
 import commitmentImage from '@/public/commitment.png';
 import resultsImage from '@/public/tick.png';
 
+import trishnaMin from '@/public/trishna-min.jpg';
+import bobbyMin from '@/public/bobby-min.jpg';
+import farahMin from '@/public/farah-min.jpg';
+import cainMin from '@/public/cain-min.jpg';
+import demMin from '@/public/dem-min.jpg';
+import marlennaMin from '@/public/marlenna-min.jpg';
+import luluMin from '@/public/lulu-min.jpg';
+
 import ProductsCard from '@/app/_components/reusable/ProductsCard';
 import Button from '@/app/_components/reusable/Button';
+import TeamCircle from '@/app/_components/reusable/TeamCircle';
 
 const VALUES_CARDS = [
   {
@@ -49,6 +58,15 @@ const VALUES_CARDS = [
   },
 ];
 
+const images = [
+  trishnaMin,
+  bobbyMin,
+  farahMin,
+  cainMin,
+  demMin,
+  marlennaMin,
+  luluMin,
+];
 function Page() {
   return (
     <>
@@ -105,7 +123,7 @@ function Page() {
       </section>
 
       <section className="w-full p-8">
-        <div className="flex justify-between w-full mx-auto max-w-7xl bg-slate-300">
+        <div className="flex justify-between w-full mx-auto max-w-7xl bg-slate-500">
           <div className="flex-1 basis-5/12">
             <h1 className="self-center mx-auto text-2xl sm:text-3xl md:text-5xl lg:pb-20">
               <span className="transition-colors duration-600 text-accent-500 hover:text-accent-200">
@@ -123,7 +141,76 @@ function Page() {
               Contact Us
             </Button>
           </div>
-          <div className="flex-1 basis-7/12">Bye</div>
+          <TeamCircle />
+          {/* <div className="flex items-center justify-center flex-1 p-10 basis-7/12 bg-slate-600">
+            <div className="relative w-full border-2 border-white rounded-full squareAspectRatio">
+              <div className="relative flex items-center justify-center w-full h-full cursor-pointer -left-1/2">
+                <div
+                  style={{ '--i': 0 }}
+                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
+                >
+                  <Image
+                    src={trishnaMin}
+                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
+                  />
+                </div>
+                <div
+                  style={{ '--i': 1 }}
+                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
+                >
+                  <Image
+                    src={trishnaMin}
+                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
+                  />
+                </div>
+                <div
+                  style={{ '--i': 2 }}
+                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
+                >
+                  <Image
+                    src={trishnaMin}
+                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
+                  />
+                </div>
+                <div
+                  style={{ '--i': 3 }}
+                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
+                >
+                  <Image
+                    src={trishnaMin}
+                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
+                  />
+                </div>
+                <div
+                  style={{ '--i': 4 }}
+                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
+                >
+                  <Image
+                    src={trishnaMin}
+                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
+                  />
+                </div>
+                <div
+                  style={{ '--i': 5 }}
+                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
+                >
+                  <Image
+                    src={trishnaMin}
+                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
+                  />
+                </div>
+                <div
+                  style={{ '--i': 6 }}
+                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
+                >
+                  <Image
+                    src={trishnaMin}
+                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
+                  />
+                </div>
+              </div>
+            </div>
+          </div> */}
         </div>
       </section>
     </>

@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .rotate-i {
+    transform: rotate(calc(360deg / 7 * var(--i)));
+  }
+
+  .squareAspectRatio {
+    aspect-ratio: 1/1;
+  }
+}
+
 @layer components {
   * {
     -ms-overflow-style: none; /*for Internet Explorer, Edge*/
