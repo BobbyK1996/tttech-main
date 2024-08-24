@@ -1,56 +1,57 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import trishnaMin from '@/public/trishna-min.jpg';
-import Image from 'next/image';
+import bobbyMin from '@/public/bobby-min.jpg';
+import TeamCirclePerson from './TeamCirclePerson';
 
 const employeeArray = [
   {
     name: 'Trishna',
-    image: trishnaMin,
+    image: bobbyMin,
     role: 'CEO',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
   },
   {
     name: 'Trishna',
-    image: trishnaMin,
+    image: bobbyMin,
     role: 'CEO',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
   },
   {
     name: 'Trishna',
-    image: trishnaMin,
+    image: bobbyMin,
     role: 'CEO',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
   },
   {
     name: 'Trishna',
-    image: trishnaMin,
+    image: bobbyMin,
     role: 'CEO',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
   },
   {
     name: 'Trishna',
-    image: trishnaMin,
+    image: bobbyMin,
     role: 'CEO',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
   },
   {
     name: 'Trishna',
-    image: trishnaMin,
+    image: bobbyMin,
     role: 'CEO',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
   },
   {
     name: 'Trishna',
-    image: trishnaMin,
+    image: bobbyMin,
     role: 'CEO',
     description:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
@@ -58,6 +59,7 @@ const employeeArray = [
 ];
 
 function TeamCircle() {
+  const [activeIndex, setActiveIndex] = useState(1);
   const parentRef = useRef(null);
 
   const updateTransformOrigin = () => {
@@ -88,19 +90,15 @@ function TeamCircle() {
       ref={parentRef}
     >
       <div className="relative w-full border-2 border-white rounded-full squareAspectRatio">
-        <div className="relative flex items-center justify-center w-full h-full cursor-pointer -left-1/2">
+        <div className="relative flex items-center justify-center w-full h-full -left-1/2">
           {employeeArray.map((employee, i) => (
-            <div
+            <TeamCirclePerson
+              employee={employee}
               key={i}
-              style={{ '--i': i }}
-              className="absolute w-20 h-20 duration-500 border border-white rounded-full shadow-lg rotate-i"
-            >
-              <Image
-                src={employee.image}
-                alt={employee.name}
-                className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
-              />
-            </div>
+              index={i}
+              isActive={activeIndex === i}
+              onClick={() => setActiveIndex(i)}
+            />
           ))}
         </div>
       </div>

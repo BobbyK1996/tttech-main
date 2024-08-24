@@ -6,6 +6,9 @@
   .rotate-i {
     transform: rotate(calc(360deg / 7 * var(--i)));
   }
+  .rotate-i-image {
+    transform: rotate(calc(-360deg / 7 * var(--i)));
+  }
 
   .squareAspectRatio {
     aspect-ratio: 1/1;
