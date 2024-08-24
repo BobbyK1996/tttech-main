@@ -8,7 +8,9 @@ import Image from 'next/image';
 function TeamCircle() {
   const parentRef = useRef(null);
 
-  useEffect(() => {
+  const updateTransformOrigin = () => {
+    if (!parentRef.current) return;
+
     const parentWidth = parentRef.current.clientWidth;
     const elements = parentRef.current.querySelectorAll('.rotate-i');
 
@@ -16,6 +18,16 @@ function TeamCircle() {
       const originValue = `${parentWidth * 0.5}px`;
       element.style.transformOrigin = originValue + ' center';
     });
+  };
+
+  useEffect(() => {
+    updateTransformOrigin();
+
+    window.addEventListener('resize', updateTransformOrigin);
+
+    return () => {
+      window.removeEventListener('resize', updateTransformOrigin);
+    };
   }, []);
 
   return (
