@@ -5,7 +5,7 @@ function TeamCirclePerson({ employee, index, isActive, onClick }) {
     <div
       style={{ '--i': index }}
       onClick={onClick}
-      className={`absolute w-20 h-20 duration-500 rounded-full shadow-lg cursor-pointer rotate-i grayscale ${
+      className={`absolute w-20 h-20 rounded-full shadow-lg cursor-pointer rotate-i grayscale ${
         isActive && 'grayscale-0 border-primary-700 border-4'
       }`}
     >

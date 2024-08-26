@@ -68,9 +68,15 @@ function TeamCircle() {
     const parentWidth = parentRef.current.clientWidth;
     const elements = parentRef.current.querySelectorAll('.rotate-i');
 
-    elements.forEach((element, index) => {
+    elements.forEach((element) => {
+      element.style.transitionDuration = '0s';
+
       const originValue = `${parentWidth * 0.5}px`;
       element.style.transformOrigin = originValue + ' center';
+
+      setTimeout(() => {
+        element.style.transitionDuration = '0.3s';
+      }, 50);
     });
   };
 
