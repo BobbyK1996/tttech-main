@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import trishnaMin from '@/public/trishna-min.jpg';
 import bobbyMin from '@/public/bobby-min.jpg';
 import TeamCirclePerson from './TeamCirclePerson';
 
@@ -69,25 +68,24 @@ function TeamCircle() {
     const elements = parentRef.current.querySelectorAll('.rotate-i');
 
     const windowWidth = window.innerWidth;
-    let originMultiplier = 0.54;
-    let elementSize = '3rem';
 
-    if (windowWidth > 450 && windowWidth < 640) {
-      elementSize = '5rem';
-      originMultiplier = 0.555;
-    } else if (windowWidth >= 640 && windowWidth < 768) {
-      elementSize = '7rem';
-      originMultiplier = 0.52;
-    } else if (windowWidth >= 768 && windowWidth < 1000) {
-      elementSize = '5rem';
-      originMultiplier = 0.5;
-    } else if (windowWidth >= 1000 && windowWidth < 1200) {
-      elementSize = '7rem';
-      originMultiplier = 0.52;
-    } else if (windowWidth >= 1200) {
-      elementSize = '9rem';
-      originMultiplier = 0.53;
-    }
+    const breakpoints = [
+      { max: 450, size: '3rem', multiplier: 0.54 },
+      { min: 451, max: 639, size: '5rem', multiplier: 0.555 },
+      { min: 640, max: 767, size: '7rem', multiplier: 0.52 },
+      { min: 768, max: 999, size: '5rem', multiplier: 0.5 },
+      { min: 1000, max: 1199, size: '7rem', multiplier: 0.52 },
+      { min: 1200, size: '9rem', multiplier: 0.53 },
+    ];
+
+    const getConfig = (width) => {
+      return breakpoints.find(
+        ({ min = -Infinity, max = Infinity }) => width >= min && width <= max
+      );
+    };
+
+    const { size: elementSize, multiplier: originMultiplier } =
+      getConfig(windowWidth);
 
     elements.forEach((element) => {
       element.style.transitionDuration = '0s';
