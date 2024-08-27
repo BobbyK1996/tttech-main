@@ -9,8 +9,8 @@ import trishnaMin from '@/public/trishna-min.jpg';
 import bobbyMin from '@/public/bobby-min.jpg';
 import farahMin from '@/public/farah-min.jpg';
 import cainMin from '@/public/cain-min.jpg';
-import demMin from '@/public/dem-min.jpg';
 import marlennaMin from '@/public/marlenna-min.jpg';
+import demMin from '@/public/dem-min.jpg';
 import luluMin from '@/public/lulu-min.jpg';
 
 import ProductsCard from '@/app/_components/reusable/ProductsCard';
@@ -57,16 +57,51 @@ const VALUES_CARDS = [
       'Being tech-savvy and committed means nothing if there are no results. At TT Tech Talent, we pride ourselves on our ability to deliver on our promises. Results speak for themselves, which can be seen on our testimonials page.',
   },
 ];
-
-const images = [
-  trishnaMin,
-  bobbyMin,
-  farahMin,
-  cainMin,
-  demMin,
-  marlennaMin,
-  luluMin,
+const employeeArray = [
+  {
+    name: 'Trishna Thakrar',
+    image: trishnaMin,
+    role: 'CEO',
+    url: 'www.google.com',
+  },
+  {
+    name: 'Bobby Kamal',
+    image: bobbyMin,
+    role: 'Technical Recruiter',
+    url: 'www.google.com',
+  },
+  {
+    name: 'Farah Deen',
+    image: farahMin,
+    role: 'Support Recruiter',
+    url: 'www.google.com',
+  },
+  {
+    name: 'Cain Huie',
+    image: cainMin,
+    role: 'Resourcer',
+    url: 'www.google.com',
+  },
+  {
+    name: 'Marlenna',
+    image: marlennaMin,
+    role: 'Resourcer',
+    url: 'www.google.com',
+  },
+  {
+    name: 'Demitrious',
+    image: demMin,
+    role: 'Data Recruiter',
+    url: 'https://www.google.com',
+  },
+  {
+    name: 'Lulu',
+    image: luluMin,
+    role: 'Dog',
+    url: 'https://www.google.com',
+  },
 ];
+
 function Page() {
   return (
     <>
@@ -141,76 +176,7 @@ function Page() {
               Contact Us
             </Button>
           </div>
-          <TeamCircle />
-          {/* <div className="flex items-center justify-center flex-1 p-10 basis-7/12 bg-slate-600">
-            <div className="relative w-full border-2 border-white rounded-full squareAspectRatio">
-              <div className="relative flex items-center justify-center w-full h-full cursor-pointer -left-1/2">
-                <div
-                  style={{ '--i': 0 }}
-                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
-                >
-                  <Image
-                    src={trishnaMin}
-                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
-                  />
-                </div>
-                <div
-                  style={{ '--i': 1 }}
-                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
-                >
-                  <Image
-                    src={trishnaMin}
-                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
-                  />
-                </div>
-                <div
-                  style={{ '--i': 2 }}
-                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
-                >
-                  <Image
-                    src={trishnaMin}
-                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
-                  />
-                </div>
-                <div
-                  style={{ '--i': 3 }}
-                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
-                >
-                  <Image
-                    src={trishnaMin}
-                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
-                  />
-                </div>
-                <div
-                  style={{ '--i': 4 }}
-                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
-                >
-                  <Image
-                    src={trishnaMin}
-                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
-                  />
-                </div>
-                <div
-                  style={{ '--i': 5 }}
-                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
-                >
-                  <Image
-                    src={trishnaMin}
-                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
-                  />
-                </div>
-                <div
-                  style={{ '--i': 6 }}
-                  className="absolute w-20 h-20 duration-500 origin-[320%] border border-white rounded-full shadow-lg rotate-i"
-                >
-                  <Image
-                    src={trishnaMin}
-                    className="absolute top-0 left-0 object-cover w-full h-full rounded-full"
-                  />
-                </div>
-              </div>
-            </div>
-          </div> */}
+          <TeamCircle employeeArray={employeeArray} />
         </div>
       </section>
     </>

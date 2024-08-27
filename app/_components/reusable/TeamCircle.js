@@ -2,61 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import bobbyMin from '@/public/bobby-min.jpg';
 import TeamCirclePerson from './TeamCirclePerson';
-import Image from 'next/image';
-
-const employeeArray = [
-  {
-    name: 'Trishna',
-    image: bobbyMin,
-    role: 'CEO',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
-  },
-  {
-    name: 'Trishna',
-    image: bobbyMin,
-    role: 'CEO',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
-  },
-  {
-    name: 'Trishna',
-    image: bobbyMin,
-    role: 'CEO',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
-  },
-  {
-    name: 'Trishna',
-    image: bobbyMin,
-    role: 'CEO',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
-  },
-  {
-    name: 'Trishna',
-    image: bobbyMin,
-    role: 'CEO',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
-  },
-  {
-    name: 'Trishna',
-    image: bobbyMin,
-    role: 'CEO',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
-  },
-  {
-    name: 'Trishna',
-    image: bobbyMin,
-    role: 'CEO',
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto assumenda veritatis nostrum qui libero quaerat temporibus ratione corporis, provident recusandae consectetur! Vel asperiores maiores ab eius quod veniam iusto voluptas?',
-  },
-];
+import TeamCircleCenter from './TeamCircleCenter';
 
 const breakpoints = [
   { max: 450, size: '3rem', multiplier: 0.54 },
@@ -73,7 +20,7 @@ const getConfig = (width) => {
   );
 };
 
-function TeamCircle() {
+function TeamCircle({ employeeArray }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const parentRef = useRef(null);
 
@@ -133,23 +80,10 @@ function TeamCircle() {
             />
           ))}
         </div>
-        <div className="absolute overflow-hidden inset-4 sm:inset-16 md:inset-14 before:content-[''] before:absolute before:inset-0 before:border-4 before:border-transparent before:border-l-primary-400 before:border-r-accent-400 before:rounded-full before:teamsSpinnerRight after:content-[''] after:absolute after:inset-4 after:border-4 after:border-transparent after:border-l-primary-400 after:border-r-accent-400 after:rounded-full after:teamsSpinnerLeft flex items-center justify-center">
-          {/* <div className="absolute duration-500 scale-0 opacity-0"> */}
-          {/* <div className="absolute duration-500 delay-500 opacity-100 scale-1"> */}
-          <div className="relative w-full h-full duration-500 opacity-100 max-h-56 max-w-56 scale-1">
-            <div className="w-full h-full bg-slate-100">
-              <div className="relative w-full h-full bg-slate-200">
-                <Image src={bobbyMin} fill className="object-cover" />
-              </div>
-              <div className="absolute bottom-0 left-0 w-full bg-black">
-                <h2>
-                  Bobby Kamal <br />
-                  <span>Technical Recruiter</span>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
+        <TeamCircleCenter
+          employeeArray={employeeArray}
+          isActive={activeIndex}
+        />
       </div>
     </div>
   );
