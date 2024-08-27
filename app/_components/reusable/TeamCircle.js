@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import bobbyMin from '@/public/bobby-min.jpg';
 import TeamCirclePerson from './TeamCirclePerson';
@@ -57,32 +57,31 @@ const employeeArray = [
   },
 ];
 
+const breakpoints = [
+  { max: 450, size: '3rem', multiplier: 0.54 },
+  { min: 451, max: 639, size: '5rem', multiplier: 0.555 },
+  { min: 640, max: 767, size: '7rem', multiplier: 0.52 },
+  { min: 768, max: 999, size: '5rem', multiplier: 0.5 },
+  { min: 1000, max: 1199, size: '7rem', multiplier: 0.52 },
+  { min: 1200, size: '9rem', multiplier: 0.53 },
+];
+
+const getConfig = (width) => {
+  return breakpoints.find(
+    ({ min = -Infinity, max = Infinity }) => width >= min && width <= max
+  );
+};
+
 function TeamCircle() {
   const [activeIndex, setActiveIndex] = useState(1);
   const parentRef = useRef(null);
 
-  const updateTransformOrigin = () => {
+  const updateTransformOrigin = useCallback(() => {
     if (!parentRef.current) return;
 
     const parentWidth = parentRef.current.clientWidth;
     const elements = parentRef.current.querySelectorAll('.rotate-i');
-
     const windowWidth = window.innerWidth;
-
-    const breakpoints = [
-      { max: 450, size: '3rem', multiplier: 0.54 },
-      { min: 451, max: 639, size: '5rem', multiplier: 0.555 },
-      { min: 640, max: 767, size: '7rem', multiplier: 0.52 },
-      { min: 768, max: 999, size: '5rem', multiplier: 0.5 },
-      { min: 1000, max: 1199, size: '7rem', multiplier: 0.52 },
-      { min: 1200, size: '9rem', multiplier: 0.53 },
-    ];
-
-    const getConfig = (width) => {
-      return breakpoints.find(
-        ({ min = -Infinity, max = Infinity }) => width >= min && width <= max
-      );
-    };
 
     const { size: elementSize, multiplier: originMultiplier } =
       getConfig(windowWidth);
@@ -97,10 +96,10 @@ function TeamCircle() {
       element.style.transformOrigin = originValue + ' center';
 
       setTimeout(() => {
-        element.style.transitionDuration = '0.3s';
+        element.style.transitionDuration = '0.1s';
       }, 50);
     });
-  };
+  }, []);
 
   useEffect(() => {
     updateTransformOrigin();
@@ -110,6 +109,10 @@ function TeamCircle() {
     return () => {
       window.removeEventListener('resize', updateTransformOrigin);
     };
+  }, [updateTransformOrigin]);
+
+  const handleClick = useCallback((i) => {
+    setActiveIndex(i);
   }, []);
 
   return (
@@ -125,7 +128,7 @@ function TeamCircle() {
               key={i}
               index={i}
               isActive={activeIndex === i}
-              onClick={() => setActiveIndex(i)}
+              onClick={() => handleClick(i)}
             />
           ))}
         </div>
