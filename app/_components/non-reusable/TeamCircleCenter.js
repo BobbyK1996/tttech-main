@@ -1,5 +1,5 @@
-import TeamCircleInner from './TeamCircleInner';
-import TeamCircleRings from './TeamCircleRings';
+import TeamCircleInner from '@components/non-reusable/TeamCircleInner';
+import TeamCircleRings from '@components/non-reusable/TeamCircleRings';
 
 function TeamCircleCenter({ employeeArray, activeIndex }) {
   return (

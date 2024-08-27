@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import TeamCirclePerson from './TeamCirclePerson';
-import TeamCircleCenter from './TeamCircleCenter';
+import TeamCirclePerson from '@components/non-reusable/TeamCirclePerson';
+import TeamCircleCenter from '@components/non-reusable/TeamCircleCenter';
 
 const breakpoints = [
   { max: 450, size: '3rem', multiplier: 0.54 },

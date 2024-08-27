@@ -1,21 +1,22 @@
 import Image from 'next/image';
 
-import trishnaImage from '@/public/trishna.jpg';
-import techSavvyImage from '@/public/circuit.png';
-import commitmentImage from '@/public/commitment.png';
-import resultsImage from '@/public/tick.png';
+import ProductsCard from '@components/reusable/ProductsCard';
+import Button from '@components/reusable/Button';
+import TeamCircle from '@components/non-reusable/TeamCircle';
 
-import trishnaMin from '@/public/trishna-min.jpg';
-import bobbyMin from '@/public/bobby-min.jpg';
-import farahMin from '@/public/farah-min.jpg';
-import cainMin from '@/public/cain-min.jpg';
-import marlennaMin from '@/public/marlenna-min.jpg';
-import demMin from '@/public/dem-min.jpg';
-import luluMin from '@/public/lulu-min.jpg';
-
-import ProductsCard from '@/app/_components/reusable/ProductsCard';
-import Button from '@/app/_components/reusable/Button';
-import TeamCircle from '@/app/_components/reusable/TeamCircle';
+import {
+  trishnaImage,
+  techSavvyImage,
+  commitmentImage,
+  resultsImage,
+  trishnaMin,
+  bobbyMin,
+  farahMin,
+  cainMin,
+  marlennaMin,
+  demMin,
+  luluMin,
+} from '@/public';
 
 const VALUES_CARDS = [
   {
