@@ -61,28 +61,28 @@ const VALUES_CARDS = [
 const employeeArray = [
   {
     id: 0,
-    name: 'Trishna Thakrar',
+    name: 'Trishna',
     image: trishnaMin,
     role: 'CEO',
     url: 'www.google.com',
   },
   {
     id: 1,
-    name: 'Bobby Kamal',
+    name: 'Bobby',
     image: bobbyMin,
     role: 'Technical Recruiter',
     url: 'www.google.com',
   },
   {
     id: 2,
-    name: 'Farah Deen',
+    name: 'Farah',
     image: farahMin,
     role: 'Support Recruiter',
     url: 'www.google.com',
   },
   {
     id: 3,
-    name: 'Cain Huie',
+    name: 'Cain',
     image: cainMin,
     role: 'Resourcer',
     url: 'www.google.com',
@@ -105,7 +105,7 @@ const employeeArray = [
     id: 6,
     name: 'Lulu',
     image: luluMin,
-    role: 'Dog',
+    role: 'Joy Coordinator',
     url: 'https://www.google.com',
   },
 ];
@@ -166,21 +166,26 @@ function Page() {
       </section>
 
       <section className="w-full p-8 overflow-hidden">
-        <div className="flex flex-col justify-between w-full mx-auto md:flex-row max-w-7xl">
-          <div className="flex-1 basis-5/12">
-            <h1 className="self-center mx-auto text-2xl sm:text-3xl md:text-5xl lg:pb-20">
+        <div className="flex flex-col justify-between w-full gap-8 mx-auto md:flex-row max-w-7xl">
+          <div className="flex flex-col flex-1 gap-4 my-auto md:gap-8 lg:gap-12 basis-5/12">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl">
               <span className="transition-colors duration-600 text-accent-500 hover:text-accent-200">
                 More
               </span>{' '}
               than just a pretty face
             </h1>
-            <h2 className="self-center mx-auto text-2xl sm:text-3xl md:text-5xl lg:pb-20">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl">
               Meet the people behind the{' '}
               <span className="transition-colors duration-600 text-accent-500 hover:text-accent-200">
                 TT Tech Experience
               </span>
             </h2>
-            <Button href="#" customCSS={'flex self-center mx-auto lg:order-3'}>
+            <Button
+              href="#"
+              customCSS={
+                'flex self-center mx-auto lg:order-3 text-xl px-0 py-2 lg:text-2xl lg:py-4'
+              }
+            >
               Contact Us
             </Button>
           </div>
