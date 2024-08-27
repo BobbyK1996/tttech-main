@@ -117,11 +117,11 @@ function TeamCircle() {
 
   return (
     <div
-      className="flex items-center justify-center flex-1 p-2 sm:p-10 basis-7/12 bg-slate-600"
+      className="flex items-center justify-center flex-1 p-2 sm:p-10 basis-7/12"
       ref={parentRef}
     >
       <div className="relative w-full border-2 border-white rounded-full squareAspectRatio">
-        <div className="relative flex items-center justify-center w-full h-full -left-1/2">
+        <div className="relative z-10 flex items-center justify-center w-full h-full -left-1/2">
           {employeeArray.map((employee, i) => (
             <TeamCirclePerson
               employee={employee}
@@ -132,6 +132,7 @@ function TeamCircle() {
             />
           ))}
         </div>
+        <div className="absolute overflow-hidden inset-8 sm:inset-16 md:inset-14 before:content-[''] before:absolute before:inset-0 before:border-4 before:border-transparent before:border-l-primary-400 before:border-r-accent-400 before:rounded-full before:teamsSpinnerRight after:content-[''] after:absolute after:inset-4 after:border-4 after:border-transparent after:border-l-primary-400 after:border-r-accent-400 after:rounded-full after:teamsSpinnerLeft"></div>
       </div>
     </div>
   );

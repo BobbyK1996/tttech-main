@@ -3,13 +3,6 @@
 @tailwind utilities;
 
 @layer utilities {
-  .rotate-i {
-    transform: rotate(calc(360deg / 7 * var(--i)));
-  }
-  .rotate-i-image {
-    transform: rotate(calc(-360deg / 7 * var(--i)));
-  }
-
   .squareAspectRatio {
     aspect-ratio: 1/1;
   }
@@ -40,6 +33,20 @@
     animation: blurGradient 600ms ease-in-out forwards;
   }
 
+  .rotate-i {
+    transform: rotate(calc(360deg / 7 * var(--i)));
+  }
+  .rotate-i-image {
+    transform: rotate(calc(-360deg / 7 * var(--i)));
+  }
+
+  .teamsSpinnerRight {
+    animation: teamsSpinnerRight 5s linear infinite;
+  }
+  .teamsSpinnerLeft {
+    animation: teamsSpinnerLeft 5s linear infinite;
+  }
+
   /* .no-drag {
     user-drag: none;
     -webkit-user-drag: none;
@@ -68,6 +75,23 @@
       backdrop-filter: blur(
         12px
       ); /* Smooth transition to 12px blur in the last 2 seconds */
+    }
+  }
+
+  @keyframes teamsSpinnerRight {
+    0% {
+      rotate: 0deg;
+    }
+    100% {
+      rotate: 360deg;
+    }
+  }
+  @keyframes teamsSpinnerLeft {
+    0% {
+      rotate: 360deg;
+    }
+    100% {
+      rotate: 0deg;
     }
   }
 }

@@ -123,7 +123,7 @@ function Page() {
       </section>
 
       <section className="w-full p-8 overflow-hidden">
-        <div className="flex flex-col justify-between w-full mx-auto md:flex-row max-w-7xl bg-slate-500">
+        <div className="flex flex-col justify-between w-full mx-auto md:flex-row max-w-7xl">
           <div className="flex-1 basis-5/12">
             <h1 className="self-center mx-auto text-2xl sm:text-3xl md:text-5xl lg:pb-20">
               <span className="transition-colors duration-600 text-accent-500 hover:text-accent-200">
