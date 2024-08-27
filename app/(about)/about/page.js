@@ -59,42 +59,49 @@ const VALUES_CARDS = [
 ];
 const employeeArray = [
   {
+    id: 0,
     name: 'Trishna Thakrar',
     image: trishnaMin,
     role: 'CEO',
     url: 'www.google.com',
   },
   {
+    id: 1,
     name: 'Bobby Kamal',
     image: bobbyMin,
     role: 'Technical Recruiter',
     url: 'www.google.com',
   },
   {
+    id: 2,
     name: 'Farah Deen',
     image: farahMin,
     role: 'Support Recruiter',
     url: 'www.google.com',
   },
   {
+    id: 3,
     name: 'Cain Huie',
     image: cainMin,
     role: 'Resourcer',
     url: 'www.google.com',
   },
   {
+    id: 4,
     name: 'Marlenna',
     image: marlennaMin,
     role: 'Resourcer',
     url: 'www.google.com',
   },
   {
+    id: 5,
     name: 'Demitrious',
     image: demMin,
     role: 'Data Recruiter',
     url: 'https://www.google.com',
   },
   {
+    id: 6,
     name: 'Lulu',
     image: luluMin,
     role: 'Dog',

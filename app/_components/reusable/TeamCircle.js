@@ -82,7 +82,7 @@ function TeamCircle({ employeeArray }) {
         </div>
         <TeamCircleCenter
           employeeArray={employeeArray}
-          isActive={activeIndex}
+          activeIndex={activeIndex}
         />
       </div>
     </div>
