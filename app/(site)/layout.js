@@ -1,6 +1,7 @@
 import '@/app/_styles/globals.css';
 
-import Header from '@/app/_components/reusable/Header';
+import Header from '@components/reusable/Header';
+import Footer from '@components/reusable/Footer';
 
 export const metadata = {
   title: { template: '%s: TT Tech Talent', default: 'TT Tech Talent' },
@@ -17,6 +18,8 @@ export default function Layout({ children }) {
           {children}
         </main>
       </div>
+
+      <Footer />
     </>
   );
 }
