@@ -11,3 +11,5 @@ export { default as cainMin } from '@/public/cain-min.jpg';
 export { default as marlennaMin } from '@/public/marlenna-min.jpg';
 export { default as demMin } from '@/public/dem-min.jpg';
 export { default as luluMin } from '@/public/lulu-min.jpg';
+
+export { default as logoBase } from '@/public/logo-base-white.png';
