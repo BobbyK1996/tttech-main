@@ -1,7 +1,6 @@
 'use client';
 
 import { useNavigation } from '@/app/context/navigationContext';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import {
@@ -11,7 +10,7 @@ import {
   TiSocialTwitterCircular,
 } from 'react-icons/ti';
 
-import { logoBase } from '@/public';
+import LogoDescription from '@components/reusable/LogoDescription';
 
 function Footer() {
   const { navProps } = useNavigation();
@@ -36,7 +35,7 @@ function Footer() {
   const fullLinksArray = [
     {
       name: 'Home',
-      address: '#',
+      address: '/',
     },
     ...linksArray,
   ];
@@ -44,24 +43,7 @@ function Footer() {
   return (
     <div className="w-full border-t shadow-2xl border-primary-900">
       <div className="grid w-full h-full grid-cols-[1fr,0.5fr,2fr] md:grid-cols-[0.5fr,0.5fr,2fr] md:gap-x-4 lg:grid-cols-[1fr,0.3fr,0.5fr,1fr] grid-rows-[1fr, auto] mx-auto max-w-7xl p-4 xl:px-0 gap-x-2">
-        <div className="items-center justify-center hidden gap-2 lg:flex">
-          <div className="basis-4/12">
-            <div className="relative w-20 h-20 mx-auto">
-              <Link href="/">
-                <Image src={logoBase} alt="TT Tech Logo" />
-              </Link>
-            </div>
-          </div>
-          <div className="basis-8/12">
-            <h1 className="pb-4 font-extrabold text-primary-500">
-              TT Tech Talent
-            </h1>
-            <p>
-              A boutique recruitment company focusing on the Development,
-              Support and Data industries
-            </p>
-          </div>
-        </div>
+        <LogoDescription customCSS={'hidden lg:flex'} />
 
         <div className="pl-6">
           <h1 className="pb-4 font-extrabold text-primary-500">Browse</h1>
