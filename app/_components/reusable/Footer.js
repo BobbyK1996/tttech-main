@@ -75,7 +75,7 @@ function Footer() {
             <div>0203 500 2721</div>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center col-span-4 pt-10 mx-auto text-xs text-center">
+        <div className="flex flex-col items-center justify-center col-span-4 pt-10 mx-auto text-xs text-center before:content-[''] before:border-2 before:border-transparent before:border-t-primary-500 before:w-8/12 before:min-w-10 before:-translate-y-3">
           <span>
             TT Tech Solutions LTD is a registered company in England and Wales
           </span>
