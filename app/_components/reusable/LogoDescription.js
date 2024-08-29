@@ -1,24 +1,41 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { logoBase } from '@/public';
-
-function LogoDescription({ customCSS }) {
+function LogoDescription({
+  customCSS,
+  logoSettings: {
+    content: logoContent = '',
+    alt: logoAlt = 'Logo',
+    width: logoWidth = 'w-20',
+    height: logoHeight = 'h-20',
+  } = {},
+  contentSettings: {
+    header: {
+      color: headerColor = 'text-primary-500',
+      content: headerContent = 'Header',
+    } = {},
+    body: {
+      color: bodyColor = 'text-white',
+      content: bodyContent = 'Body',
+    } = {},
+  } = {},
+}) {
   return (
     <div className={`flex items-center justify-center gap-2 ${customCSS}`}>
-      <div className="basis-4/12">
-        <div className="relative w-20 h-20 mx-auto">
-          <Link href="/">
-            <Image src={logoBase} alt="TT Tech Logo" />
-          </Link>
+      {logoContent && (
+        <div className="basis-4/12">
+          <div className={`relative ${logoWidth} ${logoHeight} mx-auto`}>
+            <Link href="/">
+              <Image src={logoContent} alt={logoAlt} />
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
       <div className="basis-8/12">
-        <h1 className="pb-4 font-extrabold text-primary-500">TT Tech Talent</h1>
-        <p>
-          A boutique recruitment company focusing on the Development, Support
-          and Data industries
-        </p>
+        <h1 className={`pb-4 font-extrabold ${headerColor}`}>
+          {headerContent}
+        </h1>
+        <p className={`${bodyColor}`}>{bodyContent}</p>
       </div>
     </div>
   );
