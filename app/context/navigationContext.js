@@ -20,7 +20,7 @@ function NavigationProvider({ children }) {
         address: '/jobs',
       },
     ],
-    colors: {
+    colorsHeader: {
       defaultBackground: 'bg-primary-800',
       hoverBackground: 'hover:bg-primary-600',
       hoverText: 'hover:text-accent-500',

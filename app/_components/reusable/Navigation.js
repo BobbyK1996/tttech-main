@@ -30,11 +30,11 @@ function validateLinksArray(linksArray) {
 
 function validateColors(
   colors,
-  defaultBackground,
-  hoverBackground,
-  hoverText,
-  defaultText,
-  currentNavColor
+  defaultBackground = '',
+  hoverBackground = '',
+  hoverText = '',
+  defaultText = '',
+  currentNavColor = ''
 ) {
   if (typeof colors !== 'object' || colors === null || Array.isArray(colors))
     throw new Error('Please return an object for colors');
@@ -51,11 +51,14 @@ function validateColors(
     );
 }
 
-function Navigation() {
+function Navigation({ type = 'header' }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const handleNav = () => setMenuOpen(!menuOpen);
 
   const { navProps } = useNavigation();
+
+  const typeValidated =
+    type === 'header' || type === 'footer' ? type : 'header';
 
   validateLinksArray(navProps.linksArray);
 
@@ -74,7 +77,7 @@ function Navigation() {
         address: '/page3',
       },
     ],
-    colors = {},
+    colorsHeader = {},
     responsiveWidth = 'w-[80%]',
   } = navProps;
 
@@ -84,10 +87,10 @@ function Navigation() {
     hoverText = 'hover:text-accent-500',
     defaultText = 'text-inherit',
     currentNavColor = 'text-accent-200',
-  } = colors;
+  } = colorsHeader;
 
   validateColors(
-    colors,
+    colorsHeader,
     defaultBackground,
     hoverBackground,
     hoverText,
@@ -98,70 +101,92 @@ function Navigation() {
   const currentNav = useFindCurrentNav();
 
   return (
-    <nav className="z-10 text-xl">
-      <ul className="items-center hidden gap-8 sm:flex lg:gap-12">
-        {linksArray.map((item, index) => (
-          <li
-            key={index}
-            className={`transition-colors duration-300 ${hoverText} ${defaultText} ${
-              currentNav === item.address && currentNavColor
-            }`}
-          >
-            <Link href={item.address}>{item.name}</Link>
-          </li>
-        ))}
-      </ul>
-
-      <div
-        onClick={handleNav}
-        className="relative z-30 text-3xl cursor-pointer sm:hidden"
-      >
-        {menuOpen ? <IoMdClose /> : <RiMenu5Fill />}
-      </div>
-
-      <div
-        className={`fixed top-0 ease-in-out duration-500 w-full h-full z-0 ${
-          menuOpen
-            ? 'left-0 sm:hidden backdrop-blur-gradient'
-            : 'left-[-100%] p-10'
-        }`}
-        onClick={handleNav}
-      >
-        <div
-          className={`h-full ${defaultBackground} w-[80%] max-w-lg z-30 absolute`}
-        >
-          <ul className="flex flex-col items-center justify-end w-full pt-12 pb-4">
-            <li
-              className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
-                currentNav === '/' && currentNavColor
-              }`}
-            >
-              <Link
-                href={'/'}
-                className="flex justify-center w-full h-full py-4"
+    <>
+      {typeValidated === 'header' && (
+        <nav className="z-10 text-xl">
+          <ul className="items-center hidden gap-8 sm:flex lg:gap-12">
+            {linksArray.map((item, index) => (
+              <li
+                key={index}
+                className={`transition-colors duration-300 ${hoverText} ${defaultText} ${
+                  currentNav === item.address && currentNavColor
+                }`}
               >
-                Home
-              </Link>
+                <Link href={item.address}>{item.name}</Link>
+              </li>
+            ))}
+          </ul>
+
+          <div
+            onClick={handleNav}
+            className="relative z-30 text-3xl cursor-pointer sm:hidden"
+          >
+            {menuOpen ? <IoMdClose /> : <RiMenu5Fill />}
+          </div>
+
+          <div
+            className={`fixed top-0 ease-in-out duration-500 w-full h-full z-0 ${
+              menuOpen
+                ? 'left-0 sm:hidden backdrop-blur-gradient'
+                : 'left-[-100%] p-10'
+            }`}
+            onClick={handleNav}
+          >
+            <div
+              className={`h-full ${defaultBackground} w-[80%] max-w-lg z-30 absolute`}
+            >
+              <ul className="flex flex-col items-center justify-end w-full pt-12 pb-4">
+                <li
+                  className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
+                    currentNav === '/' && currentNavColor
+                  }`}
+                >
+                  <Link
+                    href={'/'}
+                    className="flex justify-center w-full h-full py-4"
+                  >
+                    Home
+                  </Link>
+                </li>
+                {linksArray.map((item, index) => (
+                  <li
+                    key={index}
+                    className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
+                      currentNav === item.address && currentNavColor
+                    }`}
+                  >
+                    <Link
+                      href={item.address}
+                      className="flex justify-center w-full h-full py-4"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </nav>
+      )}
+
+      {typeValidated === 'footer' && (
+        <nav>
+          <ul>
+            <li className="pb-1 duration-200 hover:text-primary-500">
+              <Link href="/">Home</Link>
             </li>
             {linksArray.map((item, index) => (
               <li
                 key={index}
-                className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
-                  currentNav === item.address && currentNavColor
-                }`}
+                className="pb-1 duration-200 hover:text-primary-500"
               >
-                <Link
-                  href={item.address}
-                  className="flex justify-center w-full h-full py-4"
-                >
-                  {item.name}
-                </Link>
+                <Link href={item.address}>{item.name}</Link>
               </li>
             ))}
           </ul>
-        </div>
-      </div>
-    </nav>
+        </nav>
+      )}
+    </>
   );
 }
 

@@ -1,9 +1,3 @@
-'use client';
-
-import Link from 'next/link';
-
-import { useNavigation } from '@/app/context/navigationContext';
-
 import {
   TiSocialLinkedinCircular,
   TiSocialInstagramCircular,
@@ -14,6 +8,7 @@ import {
 import { logoBase } from '@/public';
 
 import LogoDescription from '@components/reusable/LogoDescription';
+import Navigation from './Navigation';
 
 const logoSettings = {
   content: logoBase,
@@ -31,56 +26,18 @@ const contentSettings = {
 };
 
 function Footer() {
-  const { navProps } = useNavigation();
-
-  const {
-    linksArray = [
-      {
-        name: 'Page1',
-        address: '/page1',
-      },
-      {
-        name: 'Page2',
-        address: '/page2',
-      },
-      {
-        name: 'Page3',
-        address: '/page3',
-      },
-    ],
-  } = navProps;
-
-  const fullLinksArray = [
-    {
-      name: 'Home',
-      address: '/',
-    },
-    ...linksArray,
-  ];
-
   return (
     <div className="w-full border-t shadow-2xl border-primary-900">
-      <div className="grid w-full h-full grid-cols-[1fr,0.5fr,2fr] md:grid-cols-[0.5fr,0.5fr,2fr] md:gap-x-4 lg:grid-cols-[1fr,0.3fr,0.5fr,1fr] grid-rows-[1fr, auto] mx-auto max-w-7xl p-4 xl:px-0 gap-x-2">
+      <div className="grid w-full h-full grid-cols-[1fr,0.5fr,2fr] md:grid-cols-[0.5fr,0.5fr,0.75fr] md:gap-x-4 lg:grid-cols-[1fr,0.3fr,0.5fr,1fr] grid-rows-[1fr, auto] mx-auto max-w-7xl p-4 xl:px-0 gap-x-2">
         <LogoDescription
           customCSS={'hidden lg:flex'}
           logoSettings={logoSettings}
           contentSettings={contentSettings}
         />
 
-        <div className="pl-6">
+        <div className="pl-6 md:ml-12 lg:ml-0">
           <h1 className="pb-4 font-extrabold text-primary-500">Browse</h1>
-          <div>
-            <ul>
-              {fullLinksArray.map((item, index) => (
-                <li
-                  key={index}
-                  className="pb-1 duration-200 hover:text-primary-500"
-                >
-                  <Link href={item.address}>{item.name}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Navigation type="footer" />
         </div>
 
         <div className="text-center">
