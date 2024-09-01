@@ -21,10 +21,8 @@ function NavigationProvider({ children }) {
       },
     ],
     colors: {
-      defaultBackground: 'transparent',
-      hoverBackground: 'hover:transparent',
-      // defaultBackground: 'bg-primary-800',
-      // hoverBackground: 'hover:bg-primary-600',
+      defaultBackground: 'bg-primary-800',
+      hoverBackground: 'hover:bg-primary-600',
       hoverText: 'hover:text-accent-500',
       currentNavColor: 'text-accent-500',
     },
