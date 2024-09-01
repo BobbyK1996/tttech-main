@@ -119,32 +119,27 @@ function Navigation({ type = 'header' }) {
                 className={`h-full ${defaultBackground} w-[80%] max-w-lg z-30 absolute`}
               >
                 <ul className="flex flex-col items-center justify-end w-full pt-12 pb-4">
-                  <li
-                    className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
+                  <NavLink
+                    name="Home"
+                    address="/"
+                    colors={{ hoverText }}
+                    customCSSList={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
                       currentNav === '/' && currentNavColor
                     }`}
-                  >
-                    <Link
-                      href={'/'}
-                      className="flex justify-center w-full h-full py-4"
-                    >
-                      Home
-                    </Link>
-                  </li>
-                  {links.map((item, index) => (
-                    <li
+                    customCSSAnchor={'flex justify-center w-full h-full py-4'}
+                  />
+
+                  {links.map((link, index) => (
+                    <NavLink
                       key={index}
-                      className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
-                        currentNav === item.address && currentNavColor
+                      name={link.name}
+                      address={link.address}
+                      colors={{ hoverText }}
+                      customCSSList={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
+                        currentNav === link.address && currentNavColor
                       }`}
-                    >
-                      <Link
-                        href={item.address}
-                        className="flex justify-center w-full h-full py-4"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
+                      customCSSAnchor={'flex justify-center w-full h-full py-4'}
+                    />
                   ))}
                 </ul>
               </div>
@@ -154,15 +149,14 @@ function Navigation({ type = 'header' }) {
 
         {isFooter && (
           <ul>
-            <li className="pb-1 duration-200 hover:text-primary-500">
-              <Link href="/">Home</Link>
-            </li>
+            <NavLink name="Home" address="/" colors={{ hoverText }} />
             {links.map((link, index) => (
               <NavLink
                 key={index}
                 name={link.name}
                 address={link.address}
                 colors={{ hoverText }}
+                customCSS="pb-1"
               />
             ))}
           </ul>
