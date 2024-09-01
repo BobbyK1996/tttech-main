@@ -6,7 +6,7 @@ const NavigationContext = createContext();
 
 function NavigationProvider({ children }) {
   const navProps = {
-    linksArray: [
+    links: [
       {
         name: 'About Us',
         address: '/about',
@@ -20,9 +20,11 @@ function NavigationProvider({ children }) {
         address: '/jobs',
       },
     ],
-    colorsHeader: {
-      defaultBackground: 'bg-primary-800',
-      hoverBackground: 'hover:bg-primary-600',
+    colors: {
+      defaultBackground: 'transparent',
+      hoverBackground: 'hover:transparent',
+      // defaultBackground: 'bg-primary-800',
+      // hoverBackground: 'hover:bg-primary-600',
       hoverText: 'hover:text-accent-500',
       currentNavColor: 'text-accent-500',
     },

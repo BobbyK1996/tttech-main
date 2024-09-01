@@ -14,13 +14,8 @@ function validateLinksArray(linksArray) {
       'linksArray not present. Please include to use this component'
     );
 
-  linksArray.forEach((link) => {
-    if (
-      !link.name ||
-      typeof link.name !== 'string' ||
-      !link.address ||
-      typeof link.address !== 'string'
-    ) {
+  linksArray.forEach(({ name, address }) => {
+    if (typeof name !== 'string' || typeof address !== 'string') {
       throw new Error(
         "Please provide a linksArray with valid values in the form of a string. The format for linksArray should be [{name: '', address: ''}]"
       );
@@ -28,84 +23,66 @@ function validateLinksArray(linksArray) {
   });
 }
 
-function validateColors(
-  colors,
-  defaultBackground = '',
-  hoverBackground = '',
-  hoverText = '',
-  defaultText = '',
-  currentNavColor = ''
-) {
+function validateColors(colors = {}) {
   if (typeof colors !== 'object' || colors === null || Array.isArray(colors))
     throw new Error('Please return an object for colors');
 
+  const {
+    defaultBackground,
+    hoverBackground,
+    hoverText,
+    defaultText,
+    currentNavColor,
+  } = colors;
+
   if (
-    typeof defaultBackground !== 'string' ||
-    typeof hoverBackground !== 'string' ||
-    typeof hoverText !== 'string' ||
-    typeof defaultText !== 'string' ||
-    typeof currentNavColor !== 'string'
-  )
+    ![
+      defaultBackground,
+      hoverBackground,
+      hoverText,
+      defaultText,
+      currentNavColor,
+    ].every((color) => typeof color === 'string')
+  ) {
     throw new Error(
       "All color properties must be strings in the form of 'hover:bg-' or 'bg-' or 'hover:text-' or 'text-'"
     );
+  }
 }
 
 function Navigation({ type = 'header' }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { navProps } = useNavigation();
+  const currentNav = useFindCurrentNav();
+
   const handleNav = () => setMenuOpen(!menuOpen);
 
-  const { navProps } = useNavigation();
-
-  const typeValidated =
-    type === 'header' || type === 'footer' ? type : 'header';
-
-  validateLinksArray(navProps.linksArray);
-
-  const {
-    linksArray = [
-      {
-        name: 'Page1',
-        address: '/page1',
-      },
-      {
-        name: 'Page2',
-        address: '/page2',
-      },
-      {
-        name: 'Page3',
-        address: '/page3',
-      },
-    ],
-    colorsHeader = {},
-    responsiveWidth = 'w-[80%]',
-  } = navProps;
-
+  const { links = [], colors = {}, responsiveWidth = 'w-[80%]' } = navProps;
   const {
     defaultBackground = 'bg-primary-800',
     hoverBackground = 'hover:bg-primary-600',
     hoverText = 'hover:text-accent-500',
     defaultText = 'text-inherit',
     currentNavColor = 'text-accent-200',
-  } = colorsHeader;
+  } = colors;
 
-  validateColors(
-    colorsHeader,
+  validateLinksArray(links);
+  validateColors({
     defaultBackground,
     hoverBackground,
     hoverText,
     defaultText,
-    currentNavColor
-  );
+    currentNavColor,
+  });
 
-  const currentNav = useFindCurrentNav();
+  const isFooter = type === 'footer';
 
   return (
     <>
-      {typeValidated === 'header' && (
+      {!isFooter && (
         <nav className="z-10 text-xl">
           <ul className="items-center hidden gap-8 sm:flex lg:gap-12">
-            {linksArray.map((item, index) => (
+            {links.map((item, index) => (
               <li
                 key={index}
                 className={`transition-colors duration-300 ${hoverText} ${defaultText} ${
@@ -148,7 +125,7 @@ function Navigation({ type = 'header' }) {
                     Home
                   </Link>
                 </li>
-                {linksArray.map((item, index) => (
+                {links.map((item, index) => (
                   <li
                     key={index}
                     className={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
@@ -169,13 +146,13 @@ function Navigation({ type = 'header' }) {
         </nav>
       )}
 
-      {typeValidated === 'footer' && (
+      {isFooter && (
         <nav>
           <ul>
             <li className="pb-1 duration-200 hover:text-primary-500">
               <Link href="/">Home</Link>
             </li>
-            {linksArray.map((item, index) => (
+            {links.map((item, index) => (
               <li
                 key={index}
                 className="pb-1 duration-200 hover:text-primary-500"
