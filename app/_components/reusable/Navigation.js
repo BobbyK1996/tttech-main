@@ -8,6 +8,8 @@ import { IoMdClose } from 'react-icons/io';
 import { useFindCurrentNav } from '@lib/helperClient';
 import { useNavigation } from '@/app/context/navigationContext';
 
+import NavLink from '@components/reusable/NavLink';
+
 function validateLinksArray(linksArray) {
   if (!Array.isArray(linksArray) || linksArray.length === 0)
     throw new Error(
@@ -55,7 +57,7 @@ function Navigation({ type = 'header' }) {
   const { navProps } = useNavigation();
   const currentNav = useFindCurrentNav();
 
-  const handleNav = () => setMenuOpen(!menuOpen);
+  console.log(currentNav);
 
   const { links = [], colors = {}, responsiveWidth = 'w-[80%]' } = navProps;
   const {
@@ -87,15 +89,14 @@ function Navigation({ type = 'header' }) {
         {!isFooter && (
           <>
             <ul className="items-center hidden gap-8 sm:flex lg:gap-12">
-              {links.map((item, index) => (
-                <li
+              {links.map((link, index) => (
+                <NavLink
                   key={index}
-                  className={`transition-colors duration-300 ${hoverText} ${defaultText} ${
-                    currentNav === item.address && currentNavColor
-                  }`}
-                >
-                  <Link href={item.address}>{item.name}</Link>
-                </li>
+                  name={link.name}
+                  address={link.address}
+                  isActive={currentNav === link.address}
+                  colors={{ hoverText, defaultText, currentNavColor }}
+                />
               ))}
             </ul>
 
@@ -156,13 +157,13 @@ function Navigation({ type = 'header' }) {
             <li className="pb-1 duration-200 hover:text-primary-500">
               <Link href="/">Home</Link>
             </li>
-            {links.map((item, index) => (
-              <li
+            {links.map((link, index) => (
+              <NavLink
                 key={index}
-                className="pb-1 duration-200 hover:text-primary-500"
-              >
-                <Link href={item.address}>{item.name}</Link>
-              </li>
+                name={link.name}
+                address={link.address}
+                colors={{ hoverText }}
+              />
             ))}
           </ul>
         )}
