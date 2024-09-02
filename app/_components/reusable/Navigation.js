@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import {
   useFindCurrentNav,
@@ -9,14 +10,13 @@ import {
 } from '@lib/helperClient';
 import { useNavigation } from '@/app/context/navigationContext';
 
-import NavLink from '@components/reusable/NavLink';
-import dynamic from 'next/dynamic';
-
 import { RiMenu5Fill } from 'react-icons/ri';
 const IoMdClose = dynamic(
   () => import('react-icons/io').then((mod) => mod.IoMdClose),
   { ssr: false }
 );
+
+import NavLink from '@components/reusable/NavLink';
 
 const defaultNavProps = {
   links: [],
