@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 
 import { RiMenu5Fill } from 'react-icons/ri';
@@ -57,7 +56,7 @@ function Navigation({ type = 'header' }) {
   const { navProps } = useNavigation();
   const currentNav = useFindCurrentNav();
 
-  console.log(currentNav);
+  console.log('Current Navigation', currentNav);
 
   const { links = [], colors = {}, responsiveWidth = 'w-[80%]' } = navProps;
   const {
@@ -89,15 +88,17 @@ function Navigation({ type = 'header' }) {
         {!isFooter && (
           <>
             <ul className="items-center hidden gap-8 sm:flex lg:gap-12">
-              {links.map((link, index) => (
-                <NavLink
-                  key={index}
-                  name={link.name}
-                  address={link.address}
-                  isActive={currentNav === link.address}
-                  colors={{ hoverText, defaultText, currentNavColor }}
-                />
-              ))}
+              {links.map((link, index) => {
+                return (
+                  <NavLink
+                    key={index}
+                    name={link.name}
+                    address={link.address}
+                    isActive={currentNav === link.address}
+                    colors={{ hoverText, currentNavColor }}
+                  />
+                );
+              })}
             </ul>
 
             <div
@@ -122,7 +123,8 @@ function Navigation({ type = 'header' }) {
                   <NavLink
                     name="Home"
                     address="/"
-                    colors={{ hoverText }}
+                    colors={{ hoverText, currentNavColor }}
+                    isActive={currentNav === '/'}
                     customCSSList={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
                       currentNav === '/' && currentNavColor
                     }`}
@@ -134,7 +136,8 @@ function Navigation({ type = 'header' }) {
                       key={index}
                       name={link.name}
                       address={link.address}
-                      colors={{ hoverText }}
+                      isActive={currentNav === link.address}
+                      colors={{ hoverText, currentNavColor }}
                       customCSSList={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
                         currentNav === link.address && currentNavColor
                       }`}
@@ -149,16 +152,24 @@ function Navigation({ type = 'header' }) {
 
         {isFooter && (
           <ul>
-            <NavLink name="Home" address="/" colors={{ hoverText }} />
-            {links.map((link, index) => (
-              <NavLink
-                key={index}
-                name={link.name}
-                address={link.address}
-                colors={{ hoverText }}
-                customCSS="pb-1"
-              />
-            ))}
+            <NavLink
+              name="Home"
+              address="/"
+              isActive={currentNav === '/'}
+              colors={{ hoverText, currentNavColor }}
+            />
+            {links.map((link, index) => {
+              return (
+                <NavLink
+                  key={index}
+                  name={link.name}
+                  address={link.address}
+                  isActive={currentNav === link.address}
+                  colors={{ hoverText, currentNavColor }}
+                  customCSS="pb-1"
+                />
+              );
+            })}
           </ul>
         )}
       </nav>

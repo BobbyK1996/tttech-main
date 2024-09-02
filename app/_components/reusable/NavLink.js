@@ -3,12 +3,12 @@ import Link from 'next/link';
 function NavLink({
   name,
   address,
-  isActive,
+  isActive = false,
   colors,
   customCSSList,
   customCSSAnchor,
 }) {
-  console.log(isActive);
+  console.log(`Link Active: ${name} - ${isActive}`);
 
   return (
     <li
