@@ -1,82 +1,69 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { RiMenu5Fill } from 'react-icons/ri';
-import { IoMdClose } from 'react-icons/io';
-import { useFindCurrentNav } from '@lib/helperClient';
+import {
+  useFindCurrentNav,
+  validateLinksArray,
+  validateColors,
+} from '@lib/helperClient';
 import { useNavigation } from '@/app/context/navigationContext';
 
 import NavLink from '@components/reusable/NavLink';
+import dynamic from 'next/dynamic';
 
-function validateLinksArray(linksArray) {
-  if (!Array.isArray(linksArray) || linksArray.length === 0)
-    throw new Error(
-      'linksArray not present. Please include to use this component'
-    );
+import { RiMenu5Fill } from 'react-icons/ri';
+const IoMdClose = dynamic(
+  () => import('react-icons/io').then((mod) => mod.IoMdClose),
+  { ssr: false }
+);
 
-  linksArray.forEach(({ name, address }) => {
-    if (typeof name !== 'string' || typeof address !== 'string') {
-      throw new Error(
-        "Please provide a linksArray with valid values in the form of a string. The format for linksArray should be [{name: '', address: ''}]"
-      );
-    }
-  });
-}
-
-function validateColors(colors = {}) {
-  if (typeof colors !== 'object' || colors === null || Array.isArray(colors))
-    throw new Error('Please return an object for colors');
-
-  const {
-    defaultBackground,
-    hoverBackground,
-    hoverText,
-    defaultText,
-    currentNavColor,
-  } = colors;
-
-  if (
-    ![
-      defaultBackground,
-      hoverBackground,
-      hoverText,
-      defaultText,
-      currentNavColor,
-    ].every((color) => typeof color === 'string')
-  ) {
-    throw new Error(
-      "All color properties must be strings in the form of 'hover:bg-' or 'bg-' or 'hover:text-' or 'text-'"
-    );
-  }
-}
+const defaultNavProps = {
+  links: [],
+  colors: {
+    defaultBackground: 'bg-primary-800',
+    hoverBackground: 'hover:bg-primary-600',
+    hoverText: 'hover:text-accent-500',
+    defaultText: 'text-inherit',
+    currentNavColor: 'text-accent-200',
+  },
+  responsiveWidth: 'w-[80%]',
+};
 
 function Navigation({ type = 'header' }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { navProps } = useNavigation();
+  const { navProps = defaultNavProps } = useNavigation();
   const currentNav = useFindCurrentNav();
 
-  console.log('Current Navigation', currentNav);
+  const { links, colors, responsiveWidth } = useMemo(() => {
+    const { links = [], colors = {}, responsiveWidth = 'w-[80%]' } = navProps;
+    const validatedColors = {
+      defaultBackground: colors.defaultBackground || 'bg-primary-800',
+      hoverBackground: colors.hoverBackground || 'hover:bg-primary-600',
+      hoverText: colors.hoverText || 'hover:text-accent-500',
+      defaultText: colors.defaultText || 'text-inherit',
+      currentNavColor: colors.currentNavColor || 'text-accent-200',
+    };
+    validateLinksArray(links);
+    validateColors(validatedColors);
+    return { links, colors: validatedColors, responsiveWidth };
+  }, [navProps]);
 
-  const { links = [], colors = {}, responsiveWidth = 'w-[80%]' } = navProps;
   const {
-    defaultBackground = 'bg-primary-800',
-    hoverBackground = 'hover:bg-primary-600',
-    hoverText = 'hover:text-accent-500',
-    defaultText = 'text-inherit',
-    currentNavColor = 'text-accent-200',
-  } = colors;
-
-  validateLinksArray(links);
-  validateColors({
     defaultBackground,
     hoverBackground,
     hoverText,
     defaultText,
     currentNavColor,
-  });
+  } = colors;
 
   const isFooter = type === 'footer';
+
+  const menuClass = `fixed top-0 ease-in-out duration-500 w-full h-full z-0 ${
+    menuOpen ? 'left-0 sm:hidden backdrop-blur-gradient' : 'left-[-100%] p-10'
+  }`;
+
+  const mobileListItemClass = `w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl`;
 
   return (
     <>
@@ -108,16 +95,9 @@ function Navigation({ type = 'header' }) {
               {menuOpen ? <IoMdClose /> : <RiMenu5Fill />}
             </div>
 
-            <div
-              className={`fixed top-0 ease-in-out duration-500 w-full h-full z-0 ${
-                menuOpen
-                  ? 'left-0 sm:hidden backdrop-blur-gradient'
-                  : 'left-[-100%] p-10'
-              }`}
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
+            <div className={menuClass} onClick={() => setMenuOpen(!menuOpen)}>
               <div
-                className={`h-full ${defaultBackground} w-[80%] max-w-lg z-30 absolute`}
+                className={`h-full ${defaultBackground} ${responsiveWidth} max-w-lg z-30 absolute`}
               >
                 <ul className="flex flex-col items-center justify-end w-full pt-12 pb-4">
                   <NavLink
@@ -125,7 +105,7 @@ function Navigation({ type = 'header' }) {
                     address="/"
                     colors={{ hoverText, currentNavColor }}
                     isActive={currentNav === '/'}
-                    customCSSList={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
+                    customCSSList={`${mobileListItemClass} ${
                       currentNav === '/' && currentNavColor
                     }`}
                     customCSSAnchor={'flex justify-center w-full h-full py-4'}
@@ -138,7 +118,7 @@ function Navigation({ type = 'header' }) {
                       address={link.address}
                       isActive={currentNav === link.address}
                       colors={{ hoverText, currentNavColor }}
-                      customCSSList={`w-full transition-colors cursor-pointer ${hoverBackground} hover:shadow-2xl ${
+                      customCSSList={`${mobileListItemClass} ${
                         currentNav === link.address && currentNavColor
                       }`}
                       customCSSAnchor={'flex justify-center w-full h-full py-4'}

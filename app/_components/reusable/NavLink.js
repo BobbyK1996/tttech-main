@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Link from 'next/link';
 
 function NavLink({
@@ -8,8 +9,6 @@ function NavLink({
   customCSSList,
   customCSSAnchor,
 }) {
-  console.log(`Link Active: ${name} - ${isActive}`);
-
   return (
     <li
       className={`transition-colors, duration-300 ${colors.hoverText} ${
@@ -23,4 +22,4 @@ function NavLink({
   );
 }
 
-export default NavLink;
+export default memo(NavLink);

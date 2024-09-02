@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import { memo } from 'react';
 
 function TeamCirclePerson({ employee, index, isActive, onClick }) {
   return (
@@ -19,4 +19,4 @@ function TeamCirclePerson({ employee, index, isActive, onClick }) {
   );
 }
 
-export default React.memo(TeamCirclePerson);
+export default memo(TeamCirclePerson);
