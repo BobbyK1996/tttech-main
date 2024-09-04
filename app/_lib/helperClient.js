@@ -49,3 +49,7 @@ export function validateColors(colors = {}) {
     );
   }
 }
+
+export function validateSocials(socials = []) {
+  return null;
+}

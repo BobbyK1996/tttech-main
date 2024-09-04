@@ -25,6 +25,8 @@ function NavigationProvider({ children }) {
       hoverBackground: 'hover:bg-primary-600',
       hoverText: 'hover:text-accent-500',
       currentNavColor: 'text-accent-500',
+      hoverTextFooter: 'hover:text-primary-500',
+      currentNavColorFooter: 'text-primary-500',
     },
   };
 

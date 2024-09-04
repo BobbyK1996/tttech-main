@@ -1,14 +1,15 @@
+import { logoBase } from '@/public';
+
+import LogoDescription from '@components/reusable/LogoDescription';
+import Navigation from '@components/reusable/Navigation';
+import Socials from '@components/reusable/Socials';
+
 import {
   TiSocialLinkedinCircular,
   TiSocialInstagramCircular,
   TiSocialFacebookCircular,
   TiSocialTwitterCircular,
 } from 'react-icons/ti';
-
-import { logoBase } from '@/public';
-
-import LogoDescription from '@components/reusable/LogoDescription';
-import Navigation from './Navigation';
 
 const logoSettings = {
   content: logoBase,
@@ -24,6 +25,29 @@ const contentSettings = {
       'A boutique recruitment company focusing on the Development, Support and Data industries',
   },
 };
+
+const socials = [
+  {
+    logo: <TiSocialLinkedinCircular />,
+    href: 'https://www.linkedin.com/company/tttech-talent/',
+    newTab: true,
+  },
+  {
+    logo: <TiSocialInstagramCircular />,
+    href: 'https://www.instagram.com/tttechtalent/',
+    newTab: true,
+  },
+  {
+    logo: <TiSocialTwitterCircular />,
+    href: 'https://twitter.com/TTTechTalent',
+    newTab: true,
+  },
+  {
+    logo: <TiSocialFacebookCircular />,
+    href: 'https://www.facebook.com/tttechtalent/',
+    newTab: true,
+  },
+];
 
 function Footer() {
   return (
@@ -42,40 +66,7 @@ function Footer() {
 
         <div className="text-center">
           <h1 className="pb-4 font-extrabold text-primary-500">Socials</h1>
-          <div className="grid grid-cols-1 grid-rows-4 mx-auto text-4xl md:grid-cols-2 md:grid-rows-1 md:gap-y-2 lg:grid-cols-4 max-w-48">
-            <a
-              href="https://www.linkedin.com/company/tttech-talent/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="duration-200 hover:text-primary-500"
-            >
-              <TiSocialLinkedinCircular className="mx-auto" />
-            </a>
-            <a
-              href="https://www.instagram.com/tttechtalent/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="duration-200 hover:text-primary-500"
-            >
-              <TiSocialInstagramCircular className="mx-auto" />
-            </a>
-            <a
-              href="https://twitter.com/TTTechTalent"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="duration-200 hover:text-primary-500"
-            >
-              <TiSocialTwitterCircular className="mx-auto" />
-            </a>
-            <a
-              href="https://www.facebook.com/tttechtalent/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="duration-200 hover:text-primary-500"
-            >
-              <TiSocialFacebookCircular className="mx-auto" />
-            </a>
-          </div>
+          <Socials socials={socials} />
         </div>
 
         <div className="text-right sm:text-left">

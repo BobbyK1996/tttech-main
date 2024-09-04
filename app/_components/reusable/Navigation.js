@@ -41,8 +41,10 @@ function Navigation({ type = 'header' }) {
       defaultBackground: colors.defaultBackground || 'bg-primary-800',
       hoverBackground: colors.hoverBackground || 'hover:bg-primary-600',
       hoverText: colors.hoverText || 'hover:text-accent-500',
+      hoverTextFooter: colors.hoverTextFooter || 'hover:text-primary-500',
       defaultText: colors.defaultText || 'text-inherit',
       currentNavColor: colors.currentNavColor || 'text-accent-200',
+      currentNavColorFooter: colors.currentNavColorFooter || 'text-primary-500',
     };
     validateLinksArray(links);
     validateColors(validatedColors);
@@ -55,6 +57,8 @@ function Navigation({ type = 'header' }) {
     hoverText,
     defaultText,
     currentNavColor,
+    hoverTextFooter,
+    currentNavColorFooter,
   } = colors;
 
   const isFooter = type === 'footer';
@@ -136,7 +140,7 @@ function Navigation({ type = 'header' }) {
               name="Home"
               address="/"
               isActive={currentNav === '/'}
-              colors={{ hoverText, currentNavColor }}
+              colors={{ hoverTextFooter, currentNavColorFooter }}
             />
             {links.map((link, index) => {
               return (
@@ -145,7 +149,7 @@ function Navigation({ type = 'header' }) {
                   name={link.name}
                   address={link.address}
                   isActive={currentNav === link.address}
-                  colors={{ hoverText, currentNavColor }}
+                  colors={{ hoverTextFooter, currentNavColorFooter }}
                   customCSS="pb-1"
                 />
               );

@@ -12,8 +12,10 @@ function NavLink({
   return (
     <li
       className={`transition-colors, duration-300 ${colors.hoverText} ${
-        colors.defaultText
-      } ${isActive && colors.currentNavColor} ${customCSSList}`}
+        colors.hoverTextFooter
+      } ${colors.defaultText} ${isActive && colors.currentNavColor} ${
+        isActive && colors.currentNavColorFooter
+      } ${customCSSList}`}
     >
       <Link href={address} className={`${customCSSAnchor}`}>
         {name}
