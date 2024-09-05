@@ -23,9 +23,13 @@ function validateLogoDescription({
     height: logoHeight,
   } = logoSettings;
 
-  if (logoContent && typeof logoContent !== 'string') {
+  if (
+    logoContent &&
+    typeof logoContent !== 'string' &&
+    !(typeof logoContent === 'object' && typeof logoContent.src === 'string')
+  ) {
     throw new Error(
-      'logoSettings.content must be a string representing the logo URL.'
+      'logoSettings.content must be a string (URL) or an object with a `src` property representing the logo URL.'
     );
   }
 
@@ -94,25 +98,29 @@ function validateLogoDescription({
   }
 }
 
-function LogoDescription({
-  customCSS,
-  logoSettings: {
-    content: logoContent = '',
-    alt: logoAlt = 'Logo',
-    width: logoWidth = 'w-20',
-    height: logoHeight = 'h-20',
-  } = {},
-  contentSettings: {
-    header: {
-      color: headerColor = 'text-primary-500',
-      content: headerContent = 'Header',
+function LogoDescription(props) {
+  validateLogoDescription(props);
+
+  const {
+    customCSS,
+    logoSettings: {
+      content: logoContent = '',
+      alt: logoAlt = 'Logo',
+      width: logoWidth = 'w-20',
+      height: logoHeight = 'h-20',
     } = {},
-    body: {
-      color: bodyColor = 'text-white',
-      content: bodyContent = 'Body',
+    contentSettings: {
+      header: {
+        color: headerColor = 'text-primary-500',
+        content: headerContent = 'Header',
+      } = {},
+      body: {
+        color: bodyColor = 'text-white',
+        content: bodyContent = 'Body',
+      } = {},
     } = {},
-  } = {},
-}) {
+  } = props;
+
   return (
     <div className={`flex items-center justify-center gap-2 ${customCSS}`}>
       {logoContent && (
