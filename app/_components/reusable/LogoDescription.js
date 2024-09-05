@@ -44,6 +44,54 @@ function validateLogoDescription({
       'logoSettings.height must be a valid TailwindCSS class that represents a height.'
     );
   }
+
+  if (typeof contentSettings !== 'object' || contentSettings === null) {
+    throw new Error(
+      'contentSettings must be an object with possible keys of header and body. Each of these keys also have possible keys of color and content'
+    );
+  }
+
+  const { header = {}, body = {} } = contentSettings;
+
+  if (typeof header !== 'object' || header === null) {
+    throw new Error(
+      'contentSettings.header must be an object with possible keys of color and content.'
+    );
+  }
+
+  const { color: headerColor, content: headerContent } = header;
+
+  if (headerColor && typeof headerColor !== 'string') {
+    throw new Error(
+      'contentSettings.header.color must be a string representing a TailwindCSS color class.'
+    );
+  }
+
+  if (headerContent && typeof headerContent !== 'string') {
+    throw new Error(
+      'contentSettings.header.content must be a string representing the header content.'
+    );
+  }
+
+  if (typeof body !== 'object' || body === null) {
+    throw new Error(
+      'contentSettings.body must be an object with possible keys of color and content.'
+    );
+  }
+
+  const { color: bodyColor, content: bodyContent } = body;
+
+  if (bodyColor && typeof bodyColor !== 'string') {
+    throw new Error(
+      'contentSettings.body.color must be a string representing a TailwindCSS color class.'
+    );
+  }
+
+  if (bodyContent && typeof bodyContent !== 'string') {
+    throw new Error(
+      'contentSettings.body.content must be a string representing the body content.'
+    );
+  }
 }
 
 function LogoDescription({
