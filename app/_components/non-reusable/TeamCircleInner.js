@@ -3,6 +3,8 @@ import Image from 'next/image';
 
 import { FaLinkedin } from 'react-icons/fa';
 
+import { convertToHttps } from '@lib/helperShared';
+
 function TeamCircleInner({ activeIndex, employee }) {
   return (
     <div
@@ -28,7 +30,7 @@ function TeamCircleInner({ activeIndex, employee }) {
           <div className="text-3xl sm:text-5xl md:text-4xl lg:text-6xl">
             <a
               className="w-full h-full bg-black"
-              href={`https://${employee.url.replace(/^https?:\/\//, '')}`}
+              href={convertToHttps(employee.url)}
               target="_blank"
               rel="noopener noreferrer"
             >

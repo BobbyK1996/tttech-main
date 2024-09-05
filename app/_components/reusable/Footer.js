@@ -1,3 +1,4 @@
+import { validateSocials } from '@lib/helper';
 import { logoBase } from '@/public';
 
 import LogoDescription from '@components/reusable/LogoDescription';
@@ -50,6 +51,8 @@ const socials = [
 ];
 
 function Footer() {
+  validateSocials(socials);
+
   return (
     <div className="w-full border-t shadow-2xl border-primary-900">
       <div className="grid w-full h-full grid-cols-[1fr,0.5fr,2fr] md:grid-cols-[0.5fr,0.5fr,0.75fr] md:gap-x-4 lg:grid-cols-[1fr,0.3fr,0.5fr,1fr] grid-rows-[1fr, auto] mx-auto max-w-7xl p-4 xl:px-0 gap-x-2">
