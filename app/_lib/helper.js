@@ -1,18 +1,9 @@
-import { convertToHttps } from '@lib/helperShared';
+import {
+  convertToHttps,
+  validateString,
+  validateObject,
+} from '@lib/helperShared';
 import { isValidElement } from 'react';
-
-//Non-exports
-function validateString(value, name, notes) {
-  if (value && typeof value !== 'string') {
-    throw new Error(`${name} must be a string. ${notes}.`);
-  }
-}
-
-function validateObject(value, name, notes) {
-  if (typeof value !== 'object' || value === null) {
-    throw new Error(`${name} must be an object. ${notes}.`);
-  }
-}
 
 //Exports
 export function formatNumber(number) {
