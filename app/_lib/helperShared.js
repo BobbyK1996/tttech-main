@@ -56,3 +56,17 @@ export function isValidPhoneNumber(phoneNumber) {
 
   return phonePattern.test(phoneNumber);
 }
+
+export function returnTrimmedObject(toTrim) {
+  const trimmedObject = {};
+
+  Object.keys(toTrim).forEach((key) => {
+    if (typeof toTrim[key] === 'string') {
+      trimmedObject[key] = toTrim[key].trim();
+    } else {
+      trimmedObject[key] = toTrim[key];
+    }
+  });
+
+  return trimmedObject;
+}
