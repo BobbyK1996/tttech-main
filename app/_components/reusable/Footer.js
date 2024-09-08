@@ -11,6 +11,7 @@ import {
   TiSocialFacebookCircular,
   TiSocialTwitterCircular,
 } from 'react-icons/ti';
+import ContactDetails from './ContactDetails';
 
 const logoSettings = {
   content: logoBase,
@@ -50,6 +51,14 @@ const socials = [
   },
 ];
 
+const contactData = {
+  address:
+    'Winsor & Newton Building, N Building, 26 Whitefriars Ave, Harrow, HA3 5RN',
+  addressLink: 'https://maps.app.goo.gl/qBxCQQ5m8EjmwQdk9',
+  email: 'info@tttechrec.com',
+  phoneNumber: '+442035002721',
+};
+
 function Footer() {
   validateSocials(socials);
 
@@ -74,25 +83,9 @@ function Footer() {
 
         <div className="text-right sm:text-left">
           <h1 className="pb-4 font-extrabold text-primary-500">Contact</h1>
-          <div className="flex flex-col gap-3 break-words">
-            <div className="duration-200 hover:text-primary-500">
-              <a
-                href="https://maps.app.goo.gl/qBxCQQ5m8EjmwQdk9"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Winsor & Newton Building, N Building, 26 Whitefriars Ave,
-                Harrow, HA3 5RN
-              </a>
-            </div>
-            <div className="duration-200 hover:text-primary-500">
-              <a href="mailto:info@tttechrec.com">info@tttechrec.com</a>
-            </div>
-            <div className="duration-200 hover:text-primary-500">
-              <a href="tel:+442035002721">0203 500 2721</a>
-            </div>
-          </div>
+          <ContactDetails contact={contactData} />
         </div>
+
         <div className="flex flex-col items-center justify-center col-span-4 pt-10 mx-auto text-xs text-center before:content-[''] before:border-2 before:border-transparent before:border-t-primary-500 before:w-8/12 before:min-w-10 before:-translate-y-3">
           <a href="">
             <span>

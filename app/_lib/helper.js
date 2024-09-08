@@ -1,7 +1,7 @@
 import { convertToHttps } from '@lib/helperShared';
 import { isValidElement } from 'react';
 
-//Non exports
+//Non-exports
 function validateString(value, name, notes) {
   if (value && typeof value !== 'string') {
     throw new Error(`${name} must be a string. ${notes}.`);
