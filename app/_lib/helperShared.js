@@ -1,9 +1,10 @@
 export function validateString(value, name, notes) {
   if (
-    value === null ||
-    value === undefined ||
-    typeof value !== 'string' ||
-    value.trim() === ''
+    value &&
+    (value === null ||
+      value === undefined ||
+      typeof value !== 'string' ||
+      value.trim() === '')
   ) {
     throw new Error(`${name} must be a string. ${notes}.`);
   }

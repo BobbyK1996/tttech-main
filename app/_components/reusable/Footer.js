@@ -1,63 +1,11 @@
 import { validateSocials } from '@lib/helper';
-import { logoBase } from '@/public';
+import { logoSettings, contentSettings, socials, contactData } from '@lib/data';
 
 import LogoDescription from '@components/reusable/LogoDescription';
 import Navigation from '@components/reusable/Navigation';
 import Socials from '@components/reusable/Socials';
 
-import {
-  TiSocialLinkedinCircular,
-  TiSocialInstagramCircular,
-  TiSocialFacebookCircular,
-  TiSocialTwitterCircular,
-} from 'react-icons/ti';
 import ContactDetails from './ContactDetails';
-
-const logoSettings = {
-  content: logoBase,
-  alt: 'TT Tech Logo',
-};
-
-const contentSettings = {
-  header: {
-    content: 'TT Tech Talent',
-  },
-  body: {
-    content:
-      'A boutique recruitment company focusing on the Development, Support and Data industries',
-  },
-};
-
-const socials = [
-  {
-    logo: <TiSocialLinkedinCircular />,
-    href: 'https://www.linkedin.com/company/tttech-talent/',
-    newTab: true,
-  },
-  {
-    logo: <TiSocialInstagramCircular />,
-    href: 'https://www.instagram.com/tttechtalent/',
-    newTab: true,
-  },
-  {
-    logo: <TiSocialTwitterCircular />,
-    href: 'https://twitter.com/TTTechTalent',
-    newTab: true,
-  },
-  {
-    logo: <TiSocialFacebookCircular />,
-    href: 'https://www.facebook.com/tttechtalent/',
-    newTab: true,
-  },
-];
-
-const contactData = {
-  address:
-    'Winsor & Newton Building, N Building, 26 Whitefriars Ave, Harrow, HA3 5RN',
-  addressLink: 'https://maps.app.goo.gl/qBxCQQ5m8EjmwQdk9',
-  email: 'info@tttechrec.com',
-  phoneNumber: '+442035002721',
-};
 
 function Footer() {
   validateSocials(socials);
