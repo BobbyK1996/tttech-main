@@ -58,15 +58,25 @@ export function isValidPhoneNumber(phoneNumber) {
 }
 
 export function returnTrimmedObject(toTrim) {
-  const trimmedObject = {};
+  if (Array.isArray(toTrim)) {
+    return toTrim.map((item) => returnTrimmedObject(item));
+  }
 
-  Object.keys(toTrim).forEach((key) => {
-    if (typeof toTrim[key] === 'string') {
-      trimmedObject[key] = toTrim[key].trim();
-    } else {
-      trimmedObject[key] = toTrim[key];
-    }
-  });
+  if (typeof toTrim === 'object' && toTrim !== null && !Array.isArray(toTrim)) {
+    const trimmedObject = {};
 
-  return trimmedObject;
+    Object.keys(toTrim).forEach((key) => {
+      if (typeof toTrim[key] === 'string') {
+        trimmedObject[key] = toTrim[key].trim();
+      } else if (typeof toTrim[key] === 'object') {
+        trimmedObject[key] = returnTrimmedObject(toTrim[key]);
+      } else {
+        trimmedObject[key] = toTrim[key];
+      }
+    });
+
+    return trimmedObject;
+  }
+
+  return toTrim;
 }
