@@ -1,11 +1,17 @@
 import { validateSocials } from '@lib/helper';
-import { logoSettings, contentSettings, socials, contactData } from '@lib/data';
+import {
+  logoSettings,
+  contentSettings,
+  socials,
+  contactData,
+  details,
+} from '@lib/data';
 
 import LogoDescription from '@components/reusable/LogoDescription';
 import Navigation from '@components/reusable/Navigation';
 import Socials from '@components/reusable/Socials';
-
-import ContactDetails from './ContactDetails';
+import ContactDetails from '@components/reusable/ContactDetails';
+import CompaniesHouse from '@components/reusable/CompaniesHouse';
 
 function Footer() {
   validateSocials(socials);
@@ -34,18 +40,7 @@ function Footer() {
           <ContactDetails contact={contactData} />
         </div>
 
-        <div className="flex flex-col items-center justify-center col-span-4 pt-10 mx-auto text-xs text-center before:content-[''] before:border-2 before:border-transparent before:border-t-primary-500 before:w-8/12 before:min-w-10 before:-translate-y-3">
-          <a href="">
-            <span>
-              TT Tech Solutions LTD is a registered company in England and Wales
-            </span>
-          </a>
-          <span>Company number: 11625905</span>
-          <span>
-            Registered address Unimix House, Platinum Suite, Abbey Road, London,
-            England, NW10 7TR
-          </span>
-        </div>
+        <CompaniesHouse details={details} />
       </div>
     </div>
   );

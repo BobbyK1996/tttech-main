@@ -52,3 +52,11 @@ export const contactData = {
   email: 'info@tttechrec.com',
   phoneNumber: '+442035002721',
 };
+
+export const details = {
+  companyName: 'TT Tech Solutions',
+  registrationLocation: 'England and Wales',
+  registeredAddress:
+    'Unimix House, Platinum Suite, Abbey Road, London, England, NW10 7TR',
+  companyNumber: 11625905,
+};

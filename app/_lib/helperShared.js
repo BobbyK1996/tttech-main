@@ -1,16 +1,22 @@
-export function validateString(value, name, notes) {
+export function validateString(value, name, notes = '') {
   if (
-    value &&
-    (value === null ||
-      value === undefined ||
-      typeof value !== 'string' ||
-      value.trim() === '')
+    value !== undefined &&
+    (value === null || typeof value !== 'string' || value.trim() === '')
   ) {
     throw new Error(`${name} must be a string. ${notes}.`);
   }
 }
 
-export function validateObject(value, name, notes) {
+export function validateNumber(value, name, notes = '') {
+  if (
+    value !== undefined &&
+    (value === null || typeof value !== 'number' || isNaN(value))
+  ) {
+    throw new Error(`${name} must be a number. ${notes}.`);
+  }
+}
+
+export function validateObject(value, name, notes = '') {
   if (typeof value !== 'object' || value === null) {
     throw new Error(`${name} must be an object. ${notes}.`);
   }
