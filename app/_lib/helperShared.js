@@ -59,7 +59,11 @@ export function isValidPhoneNumber(phoneNumber) {
     'Please provide a valid UK phone number as a string'
   );
 
-  const phonePattern = /^(?:0\d{10}|\+44\d{10})$/;
+  //Allows 0XXXXXXXXXX and +44XXXXXXXXXX
+  // const phonePattern = /^(?:0\d{10}|\+44\d{10})$/;
+
+  //Allows 0XXXXXXXXXX, +44XXXXXXXXXX, 0XXX XXX XXXX and +44XXX XXX XXXX
+  const phonePattern = /^(?:0\d{3}\s?\d{3}\s?\d{4}|\+44\d{3}\s?\d{3}\s?\d{4})$/;
 
   return phonePattern.test(phoneNumber);
 }

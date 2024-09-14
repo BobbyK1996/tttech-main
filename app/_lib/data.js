@@ -50,7 +50,7 @@ export const contactData = {
     'Winsor & Newton Building, N Building, 26 Whitefriars Ave, Harrow, HA3 5RN',
   addressLink: 'https://maps.app.goo.gl/qBxCQQ5m8EjmwQdk9',
   email: 'info@tttechrec.com',
-  phoneNumber: '+442035002721',
+  phoneNumber: '0203 500 2721',
 };
 
 export const details = {

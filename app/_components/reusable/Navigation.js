@@ -30,7 +30,7 @@ const defaultNavProps = {
   responsiveWidth: 'w-[80%]',
 };
 
-function Navigation({ type = 'header' }) {
+function Navigation({ type }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { navProps = defaultNavProps } = useNavigation();
   const currentNav = useFindCurrentNav();

@@ -11,6 +11,8 @@ import landingImage from '@/public/landing-image.png';
 import productOne from '@/public/product1.jpg';
 import productTwo from '@/public/product2.jpg';
 import productThree from '@/public/product3.jpg';
+import ContactDetails from '../_components/reusable/ContactDetails';
+import { contactData } from '../_lib/data';
 
 const CARDS = [
   {
@@ -120,7 +122,7 @@ function Page() {
         <Carousel carouselCards={CARDS} />
       </section>
 
-      <section className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-[auto,1fr] mt-16 gap-x-8 gap-y-16">
+      <section className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-[auto,1fr] gap-x-8 gap-y-16">
         <h1 className="relative mx-auto text-center text-7xl md:col-span-2 lg:col-span-3 md:text-8xl after:absolute after:-bottom-3 after:left-1/2 after:w-24 after:h-1 after:bg-accent-500 after:-translate-x-2/4">
           What We Offer
         </h1>
@@ -134,6 +136,19 @@ function Page() {
             {card.content}
           </ProductsCard>
         ))}
+      </section>
+
+      <section className="flex flex-col font-dmsans lg:flex-row">
+        <div className="flex flex-col gap-16">
+          <div>
+            <h1 className="text-5xl sm:text-7xl">Talk to a consultant</h1>
+            <p className="mt-6 text-xl sm:text-2xl">
+              Submit the form and a member of our team will get back to you
+            </p>
+          </div>
+          <ContactDetails contact={contactData} />
+        </div>
+        <div className=""></div>
       </section>
     </>
   );

@@ -37,7 +37,7 @@ function Footer() {
 
         <div className="text-right sm:text-left">
           <h1 className="pb-4 font-extrabold text-primary-500">Contact</h1>
-          <ContactDetails contact={contactData} />
+          <ContactDetails contact={contactData} type="footer" />
         </div>
 
         <CompaniesHouse details={details} />
