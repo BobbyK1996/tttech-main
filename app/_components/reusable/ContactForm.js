@@ -1,18 +1,6 @@
 import { isValidEmail, validateString } from '@/app/_lib/helperShared';
 import { sendMail } from '@lib/mail';
 
-// const isEmailValid = isValidEmail(email);
-// if (isEmailValid) return;
-// validateString(name, 'Name');
-// validateString(
-//   type,
-//   'Type',
-//   'Please do not edit values for Company and Candidate dropdown'
-// );
-// validateString(message, 'Message');
-
-// console.log(name, email, type, message);
-
 async function send(formData) {
   'use server';
 
@@ -20,6 +8,21 @@ async function send(formData) {
   const email = formData.get('email');
   const type = formData.get('type');
   const message = formData.get('message');
+
+  try {
+    if (!isValidEmail(email)) return;
+    validateString(name, 'Name');
+    validateString(
+      type,
+      'Type',
+      'Please do not edit values for Company and Candidate dropdown'
+    );
+    validateString(message, 'Message');
+  } catch (error) {
+    console.log('Validation failed:', error.message);
+  }
+
+  console.log('Validation passed:', name, email, type, message);
 
   const body = `
     <h1>New Message</h1>
@@ -106,7 +109,6 @@ function ContactForm() {
         />
       </div>
 
-      {/* <button formAction={send}>Test</button> */}
       <button
         type="submit"
         className="px-4 py-2 mt-4 text-white bg-blue-500 rounded"
