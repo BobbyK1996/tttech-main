@@ -4,111 +4,9 @@ import ProductsCard from '@components/reusable/ProductsCard';
 import Button from '@components/reusable/Button';
 import TeamCircle from '@components/non-reusable/TeamCircle';
 
-import {
-  trishnaImage,
-  techSavvyImage,
-  commitmentImage,
-  resultsImage,
-  trishnaMin,
-  bobbyMin,
-  farahMin,
-  cainMin,
-  marlennaMin,
-  demMin,
-  luluMin,
-} from '@/public';
+import { trishnaImage } from '@/public';
 
-const VALUES_CARDS = [
-  {
-    id: 1,
-    parameters: {
-      product: techSavvyImage,
-      alt: 'Tech Savvy',
-      font: 'font-dmsans',
-      customTailwind: 'from-white to-white drop-shadow-2xl',
-    },
-    title: 'TECH SAVVY',
-    content:
-      'We pride ourselves on understanding the tech we work with. If we do not, how can we expect to provide a specialist service? Our consultants spend time researching the technology developers and engineers work with, so we can understand the limitations they face.',
-  },
-  {
-    id: 2,
-    parameters: {
-      product: commitmentImage,
-      alt: 'Commitment',
-      font: 'font-dmsans',
-      customTailwind: 'from-white to-white drop-shadow-2xl',
-    },
-    title: 'COMMITMENT',
-    content:
-      'Our consultants make sure you are looked after. From start to finish, we keep your experience in mind, making sure you never feel forgotten.',
-  },
-  {
-    id: 3,
-    parameters: {
-      product: resultsImage,
-      alt: 'Results',
-      font: 'font-dmsans',
-      customTailwind: 'from-white to-white drop-shadow-2xl',
-      colSpanMd: 2,
-      colSpanLg: 1,
-    },
-    title: 'RESULTS',
-    content:
-      'Being tech-savvy and committed means nothing if there are no results. At TT Tech Talent, we pride ourselves on our ability to deliver on our promises. Results speak for themselves, which can be seen on our testimonials page.',
-  },
-];
-const employeeArray = [
-  {
-    id: 0,
-    name: 'Trishna',
-    image: trishnaMin,
-    role: 'CEO',
-    url: 'www.google.com',
-  },
-  {
-    id: 1,
-    name: 'Bobby',
-    image: bobbyMin,
-    role: 'Technical Recruiter',
-    url: 'www.google.com',
-  },
-  {
-    id: 2,
-    name: 'Farah',
-    image: farahMin,
-    role: 'Support Recruiter',
-    url: 'www.google.com',
-  },
-  {
-    id: 3,
-    name: 'Cain',
-    image: cainMin,
-    role: 'Resourcer',
-    url: 'www.google.com',
-  },
-  {
-    id: 4,
-    name: 'Marlenna',
-    image: marlennaMin,
-    role: 'Resourcer',
-    url: 'www.google.com',
-  },
-  {
-    id: 5,
-    name: 'Demitrious',
-    image: demMin,
-    role: 'Data Recruiter',
-    url: 'https://www.google.com',
-  },
-  {
-    id: 6,
-    name: 'Lulu',
-    image: luluMin,
-    role: 'Joy Coordinator',
-    url: 'https://www.google.com',
-  },
-];
+import { COMPANY_VALUES_DATA as VALUES_CARDS, EMPLOYEE_DATA } from '@lib/data';
 
 function Page() {
   return (
@@ -189,7 +87,7 @@ function Page() {
               Contact Us
             </Button>
           </div>
-          <TeamCircle employeeArray={employeeArray} />
+          <TeamCircle employeeArray={EMPLOYEE_DATA} />
         </div>
       </section>
     </>

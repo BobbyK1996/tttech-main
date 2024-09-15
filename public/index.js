@@ -13,3 +13,7 @@ export { default as demMin } from '@/public/dem-min.jpg';
 export { default as luluMin } from '@/public/lulu-min.jpg';
 
 export { default as logoBase } from '@/public/logo-base-white.png';
+
+export { default as productOne } from '@/public/product1.jpg';
+export { default as productTwo } from '@/public/product2.jpg';
+export { default as productThree } from '@/public/product3.jpg';
