@@ -72,7 +72,7 @@ function Page() {
           </div>
           <ContactDetails contact={CONTACT_DATA} />
         </div>
-        <div className="">
+        <div className="mt-6">
           <ContactForm />
         </div>
       </section>
