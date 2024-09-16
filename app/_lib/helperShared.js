@@ -36,8 +36,33 @@ export function isValidEmail(email) {
     'Email',
     'Please provide a valid email address as a string'
   );
+
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(email);
+
+  return email.length <= 256 && emailPattern.test(email);
+}
+
+export function isValidName(name) {
+  validateString(name, 'Name');
+
+  const namePattern = /^[a-zA-Z\s'-]+$/;
+
+  return !(name.length < 2 || name.length > 100) && namePattern.test(name);
+}
+
+export function isValidType(type, validTypes = []) {
+  if (!Array.isArray(validTypes))
+    throw new Error('validTypes must be an array');
+
+  validateString(type, 'Dropdown type');
+
+  return validTypes.includes(type);
+}
+
+export function isValidMessage(message) {
+  validateString(message, 'Message');
+
+  return !(message.length < 10 || message.length > 1000);
 }
 
 export function isValidGMapsLink(addressLink) {
@@ -68,9 +93,11 @@ export function isValidPhoneNumber(phoneNumber) {
   return phonePattern.test(phoneNumber);
 }
 
-export function returnTrimmedObject(toTrim) {
+export function returnTrimmed(toTrim) {
+  if (typeof toTrim === 'string') return toTrim.trim();
+
   if (Array.isArray(toTrim)) {
-    return toTrim.map((item) => returnTrimmedObject(item));
+    return toTrim.map((item) => returnTrimmed(item));
   }
 
   if (typeof toTrim === 'object' && toTrim !== null && !Array.isArray(toTrim)) {
@@ -80,7 +107,7 @@ export function returnTrimmedObject(toTrim) {
       if (typeof toTrim[key] === 'string') {
         trimmedObject[key] = toTrim[key].trim();
       } else if (typeof toTrim[key] === 'object') {
-        trimmedObject[key] = returnTrimmedObject(toTrim[key]);
+        trimmedObject[key] = returnTrimmed(toTrim[key]);
       } else {
         trimmedObject[key] = toTrim[key];
       }

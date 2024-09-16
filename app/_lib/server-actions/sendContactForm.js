@@ -1,25 +1,24 @@
 'use server';
 
-import { isValidEmail, validateString } from '@/app/_lib/helperShared';
+import {
+  returnTrimmed,
+  isValidName,
+  isValidEmail,
+  isValidType,
+  isValidMessage,
+} from '@/app/_lib/helperShared';
 import { sendMail } from '@lib/mail';
 
 export async function sendContactForm(formData) {
-  // const name = formData.get('name');
-  // const email = formData.get('email');
-  // const type = formData.get('type');
-  // const message = formData.get('message');
+  const trimmedData = returnTrimmed(formData);
 
-  const { name, email, type, message } = formData;
+  const { name, email, type, message } = trimmedData;
 
   try {
+    if (!isValidName(name)) return;
     if (!isValidEmail(email)) return;
-    validateString(name, 'Name');
-    validateString(
-      type,
-      'Type',
-      'Please do not edit values for Company and Candidate dropdown'
-    );
-    validateString(message, 'Message');
+    if (!isValidType(type, ['Company', 'Candidate'])) return;
+    if (!isValidMessage(message)) return;
   } catch (error) {
     console.log('Validation failed:', error.message);
   }
