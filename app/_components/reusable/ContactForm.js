@@ -24,7 +24,19 @@ function ContactForm() {
   };
 
   return (
-    <form className="w-full space-y-4 text-gray-700" action={send}>
+    <form
+      className="w-full space-y-4 text-gray-700"
+      action={async (formData) => {
+        setFormData({
+          name: '',
+          email: '',
+          type: 'Company',
+          message: '',
+        });
+
+        await send(formData);
+      }}
+    >
       <div>
         <label htmlFor="name" className="hidden"></label>
         <input
