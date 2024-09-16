@@ -4,10 +4,12 @@ import { isValidEmail, validateString } from '@/app/_lib/helperShared';
 import { sendMail } from '@lib/mail';
 
 export async function sendContactForm(formData) {
-  const name = formData.get('name');
-  const email = formData.get('email');
-  const type = formData.get('type');
-  const message = formData.get('message');
+  // const name = formData.get('name');
+  // const email = formData.get('email');
+  // const type = formData.get('type');
+  // const message = formData.get('message');
+
+  const { name, email, type, message } = formData;
 
   try {
     if (!isValidEmail(email)) return;
