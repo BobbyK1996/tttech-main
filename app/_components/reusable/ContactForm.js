@@ -16,8 +16,9 @@ function ContactForm() {
     type: 'Company',
     message: '',
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sendStatus, setSendStatus] = useState('success');
+
   const { pending } = useFormStatus();
 
   const handleChange = (e) => {
@@ -28,12 +29,17 @@ function ContactForm() {
     }));
   };
 
+  const handleFocus = () => {
+    if (sendStatus !== null) setSendStatus(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      await send(formData);
+      const { status } = await send(formData);
+      setSendStatus(status);
 
       setFormData({
         name: '',
@@ -61,8 +67,8 @@ function ContactForm() {
               id="name"
               name="name"
               required
-              value={formData.name}
               onChange={handleChange}
+              onFocus={handleFocus}
               placeholder="Full Name"
               className={`${formItemStyles} ${
                 formData.name ? 'bg-primary-500' : 'bg-white'
@@ -77,8 +83,8 @@ function ContactForm() {
               id="email"
               name="email"
               required
-              value={formData.email}
               onChange={handleChange}
+              onFocus={handleFocus}
               placeholder="Email"
               className={`${formItemStyles} ${
                 formData.email ? 'bg-primary-500' : 'bg-white'
@@ -91,8 +97,9 @@ function ContactForm() {
             <select
               id="type"
               name="type"
-              value={formData.type}
+              // value={formData.type}
               onChange={handleChange}
+              onFocus={handleFocus}
               className={`${formItemStyles} ${
                 formData.type ? 'bg-primary-500' : 'bg-white'
               }`}
@@ -108,8 +115,8 @@ function ContactForm() {
               id="message"
               name="message"
               required
-              value={formData.message}
               onChange={handleChange}
+              onFocus={handleFocus}
               placeholder="Message"
               className={`${formItemStyles} ${
                 formData.message ? 'bg-primary-500' : 'bg-white'
@@ -117,12 +124,28 @@ function ContactForm() {
             />
           </div>
 
-          <button
-            type="submit"
-            className="px-4 py-2 mt-4 text-white bg-blue-500 rounded"
-          >
-            Submit
-          </button>
+          <div className="flex items-center justify-start gap-6">
+            <button
+              type="submit"
+              className="px-4 py-2 text-white bg-blue-500 rounded"
+            >
+              Submit
+            </button>
+
+            {sendStatus && (
+              <span
+                className={`p-2 text-center rounded-sm ${
+                  sendStatus === 'success'
+                    ? 'text-green-600 bg-green-300'
+                    : 'text-red-600 bg-red-300'
+                }`}
+              >
+                {sendStatus === 'success'
+                  ? 'Message sent successfully!'
+                  : 'Message failed to send'}
+              </span>
+            )}
+          </div>
         </>
       )}
     </form>
