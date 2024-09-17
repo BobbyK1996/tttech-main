@@ -1,15 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useFormStatus } from 'react-dom';
 
 import { isValidEmail, isValidMessage, isValidName } from '@lib/helperShared';
 import { sendContactForm as send } from '@lib/server-actions/sendContactForm';
 
 import Spinner from '@components/reusable/Spinner';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
+
+const EMAIL_FORM_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
 
 function ContactForm() {
   const [formData, setFormData] = useState({
@@ -18,10 +20,10 @@ function ContactForm() {
     type: 'Company',
     message: '',
   });
+
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sendStatus, setSendStatus] = useState(null);
-
-  const { pending } = useFormStatus();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,8 +41,14 @@ function ContactForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    if (!recaptchaToken) {
+      setSendStatus('failed');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      const { status } = await send(formData);
+      const { status } = await send({ ...formData, recaptchaToken });
       setSendStatus(status);
 
       setFormData({
@@ -49,8 +57,11 @@ function ContactForm() {
         type: 'Company',
         message: '',
       });
+
+      setRecaptchaToken(null);
     } catch (error) {
       console.log('Form submission error:', error.message);
+      setSendStatus('failed');
     } finally {
       setIsSubmitting(false);
     }
@@ -58,7 +69,7 @@ function ContactForm() {
 
   return (
     <form className="w-full space-y-4 text-gray-700" onSubmit={handleSubmit}>
-      {isSubmitting || pending ? (
+      {isSubmitting ? (
         <Spinner />
       ) : (
         <>
@@ -135,6 +146,13 @@ function ContactForm() {
                     : 'bg-red-500'
                   : 'bg-white'
               }`}
+            />
+          </div>
+
+          <div>
+            <ReCAPTCHA
+              sitekey={EMAIL_FORM_SITEKEY}
+              onChange={(token) => setRecaptchaToken(token)}
             />
           </div>
 
