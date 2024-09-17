@@ -75,7 +75,7 @@ export async function sendContactForm(formData) {
     console.log('EMAIL SENT SUCCESSFULLY');
     return { status: 'success', message: 'Email sent successfully' };
   } catch (error) {
-    console.error('Error sending mail occured:', error.message);
+    console.error('Error sending mail occurred:', error.message);
     return { status: 'failed', message: 'Failed to send email' };
   }
 }
