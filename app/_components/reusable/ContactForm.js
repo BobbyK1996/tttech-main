@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
+import { isValidEmail, isValidMessage, isValidName } from '@lib/helperShared';
 import { sendContactForm as send } from '@lib/server-actions/sendContactForm';
-import Spinner from './Spinner';
+
+import Spinner from '@components/reusable/Spinner';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
@@ -17,7 +19,7 @@ function ContactForm() {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [sendStatus, setSendStatus] = useState('success');
+  const [sendStatus, setSendStatus] = useState(null);
 
   const { pending } = useFormStatus();
 
@@ -71,8 +73,13 @@ function ContactForm() {
               onFocus={handleFocus}
               placeholder="Full Name"
               className={`${formItemStyles} ${
-                formData.name ? 'bg-primary-500' : 'bg-white'
-              }`}
+                formData.name
+                  ? isValidName(formData.name.trim())
+                    ? 'bg-primary-500'
+                    : 'bg-red-500'
+                  : 'bg-white'
+              }
+              `}
             />
           </div>
 
@@ -87,7 +94,11 @@ function ContactForm() {
               onFocus={handleFocus}
               placeholder="Email"
               className={`${formItemStyles} ${
-                formData.email ? 'bg-primary-500' : 'bg-white'
+                formData.email
+                  ? isValidEmail(formData.email.trim())
+                    ? 'bg-primary-500'
+                    : 'bg-red-500'
+                  : 'bg-white'
               }`}
             />
           </div>
@@ -97,7 +108,6 @@ function ContactForm() {
             <select
               id="type"
               name="type"
-              // value={formData.type}
               onChange={handleChange}
               onFocus={handleFocus}
               className={`${formItemStyles} ${
@@ -119,7 +129,11 @@ function ContactForm() {
               onFocus={handleFocus}
               placeholder="Message"
               className={`${formItemStyles} ${
-                formData.message ? 'bg-primary-500' : 'bg-white'
+                formData.message
+                  ? isValidMessage(formData.message.trim())
+                    ? 'bg-primary-500'
+                    : 'bg-red-500'
+                  : 'bg-white'
               }`}
             />
           </div>

@@ -1,10 +1,11 @@
 export function validateString(value, name, notes = '') {
-  if (
-    value !== undefined &&
-    (value === null || typeof value !== 'string' || value.trim() === '')
-  ) {
+  if (value !== undefined && (value === null || typeof value !== 'string')) {
     throw new Error(`${name} must be a string. ${notes}.`);
   }
+
+  if (value === undefined) return false;
+
+  return value.trim().length > 0;
 }
 
 export function validateNumber(value, name, notes = '') {
@@ -47,7 +48,7 @@ export function isValidName(name) {
 
   const namePattern = /^[a-zA-Z\s'-]+$/;
 
-  return !(name.length < 2 || name.length > 100) && namePattern.test(name);
+  return !(name.length < 3 || name.length > 100) && namePattern.test(name);
 }
 
 export function isValidType(type, validTypes = []) {
