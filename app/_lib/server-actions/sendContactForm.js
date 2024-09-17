@@ -9,10 +9,12 @@ import {
 } from '@/app/_lib/helperShared';
 import { sendMail } from '@lib/mail';
 
+const { EMAIL_FORM_RECAPTCHA_SECRET_KEY } = process.env;
+
 export async function sendContactForm(formData) {
   const trimmedData = returnTrimmed(formData);
 
-  const { name, email, type, message } = trimmedData;
+  const { name, email, type, message, recaptchaToken } = trimmedData;
 
   const nameValid = isValidName(name);
   const emailValid = isValidEmail(email);
@@ -34,6 +36,27 @@ export async function sendContactForm(formData) {
   }
 
   try {
+    const recaptchaResponse = await fetch(
+      'https://www.google.com/recaptcha/api/siteverify',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          secret: EMAIL_FORM_RECAPTCHA_SECRET_KEY,
+          response: recaptchaToken,
+        }),
+      }
+    );
+
+    const recaptchaData = await recaptchaResponse.json();
+
+    if (!recaptchaData.success) {
+      console.error('reCAPTCHA validation failed', recaptchaData);
+      return { status: 'failed', message: 'reCAPTCHA validation failed' };
+    }
+
     const body = `
     <h1>New Message</h1>
     <p><strong>Name:</strong> ${name}</p>

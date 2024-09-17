@@ -11,7 +11,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
 
-const EMAIL_FORM_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
+const EMAIL_FORM_RECAPTCHA_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
 
 function ContactForm() {
   const [formData, setFormData] = useState({
@@ -151,7 +151,7 @@ function ContactForm() {
 
           <div>
             <ReCAPTCHA
-              sitekey={EMAIL_FORM_SITEKEY}
+              sitekey={EMAIL_FORM_RECAPTCHA_SITEKEY}
               onChange={(token) => setRecaptchaToken(token)}
             />
           </div>
