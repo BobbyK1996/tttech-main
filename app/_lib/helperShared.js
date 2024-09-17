@@ -32,7 +32,7 @@ export function convertToHttps(url) {
 }
 
 export function isValidEmail(email) {
-  validateString(
+  const isValidString = validateString(
     email,
     'Email',
     'Please provide a valid email address as a string'
@@ -44,30 +44,34 @@ export function isValidEmail(email) {
 }
 
 export function isValidName(name) {
-  validateString(name, 'Name');
+  const isValidString = validateString(name, 'Name');
 
   const namePattern = /^[a-zA-Z\s'-]+$/;
 
-  return !(name.length < 3 || name.length > 100) && namePattern.test(name);
+  return (
+    !(name.length < 3 || name.length > 100) &&
+    namePattern.test(name) &&
+    isValidString
+  );
 }
 
 export function isValidType(type, validTypes = []) {
   if (!Array.isArray(validTypes))
     throw new Error('validTypes must be an array');
 
-  validateString(type, 'Dropdown type');
+  const isValidString = validateString(type, 'Dropdown type');
 
-  return validTypes.includes(type);
+  return validTypes.includes(type) && isValidString;
 }
 
 export function isValidMessage(message) {
-  validateString(message, 'Message');
+  const isValidString = validateString(message, 'Message');
 
-  return !(message.length < 10 || message.length > 1000);
+  return !(message.length < 10 || message.length > 1000) && isValidString;
 }
 
 export function isValidGMapsLink(addressLink) {
-  validateString(
+  const isValidString = validateString(
     addressLink,
     'Address Link',
     'Please provide a valid Google Maps share URL as a string'
@@ -75,11 +79,11 @@ export function isValidGMapsLink(addressLink) {
 
   const googleMapsPattern = /^https:\/\/maps\.app\.goo\.gl\/.+/;
 
-  return googleMapsPattern.test(addressLink);
+  return googleMapsPattern.test(addressLink) && isValidString;
 }
 
 export function isValidPhoneNumber(phoneNumber) {
-  validateString(
+  const isValidString = validateString(
     phoneNumber,
     'Phone Number',
     'Please provide a valid UK phone number as a string'
@@ -91,7 +95,7 @@ export function isValidPhoneNumber(phoneNumber) {
   //Allows 0XXXXXXXXXX, +44XXXXXXXXXX, 0XXX XXX XXXX and +44XXX XXX XXXX
   const phonePattern = /^(?:0\d{3}\s?\d{3}\s?\d{4}|\+44\d{3}\s?\d{3}\s?\d{4})$/;
 
-  return phonePattern.test(phoneNumber);
+  return phonePattern.test(phoneNumber) && isValidString;
 }
 
 export function returnTrimmed(toTrim) {
