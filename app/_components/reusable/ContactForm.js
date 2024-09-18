@@ -112,7 +112,7 @@ function ContactForm() {
               onChange={handleChange}
               onFocus={handleFocus}
               aria-label="CandidateOrClient"
-              className={`${formItemStyles} ${
+              className={`${formItemStyles} max-w-[304px] ${
                 state.formData.type ? 'bg-primary-500' : 'bg-white'
               }`}
             >
@@ -147,20 +147,21 @@ function ContactForm() {
               onChange={(token) =>
                 dispatch({ type: 'SET_RECAPTCHA_TOKEN', payload: token })
               }
+              // size="compact"
             />
           </div>
 
           <div className="flex items-center justify-start gap-6">
             <button
               type="submit"
-              className="px-4 py-2 text-white bg-blue-500 rounded"
+              className="px-4 py-2 text-white bg-blue-500 rounded sm:px-6 sm:py-4"
             >
               Submit
             </button>
 
             {state.sendStatus && (
               <span
-                className={`p-2 text-center rounded-sm ${
+                className={`p-2 text-center rounded-sm sm:px-6 sm:py-4 ${
                   state.sendStatus === 'success'
                     ? 'text-green-600 bg-green-300'
                     : 'text-red-600 bg-red-300'

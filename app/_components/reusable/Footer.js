@@ -25,7 +25,7 @@ function Footer() {
           contentSettings={LOGO_DESC_DESC_DATA}
         />
 
-        <div className="pl-6 md:ml-12 lg:ml-0">
+        <div className=" sm:ml-6 lg:ml-0">
           <h1 className="pb-4 font-extrabold text-primary-500">Browse</h1>
           <Navigation type="footer" />
         </div>

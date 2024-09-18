@@ -62,17 +62,17 @@ function Page() {
         ))}
       </section>
 
-      <section className="flex flex-col font-dmsans lg:flex-row">
-        <div className="flex flex-col gap-16">
+      <section className="flex flex-col gap-6 font-dmsans md:flex-row md:items-center">
+        <div className="flex flex-col max-w-md gap-16 lg:max-w-xl">
           <div>
-            <h1 className="text-5xl sm:text-7xl">Talk to a consultant</h1>
-            <p className="mt-6 text-xl sm:text-2xl">
+            <h1 className="text-5xl lg:text-6xl">Talk to a consultant</h1>
+            <p className="mt-6 text-xl">
               Submit the form and a member of our team will get back to you
             </p>
           </div>
           <ContactDetails contact={CONTACT_DATA} />
         </div>
-        <div className="mt-6">
+        <div className="flex-grow max-w-md sm:ml-2 md:ml-auto">
           <ContactForm />
         </div>
       </section>
