@@ -40,7 +40,7 @@ export function isValidEmail(email) {
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  return email.length <= 256 && emailPattern.test(email);
+  return email.length <= 256 && emailPattern.test(email) && isValidString;
 }
 
 export function isValidName(name) {
