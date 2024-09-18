@@ -3,8 +3,9 @@
 import { useReducer } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { isValidEmail, isValidMessage, isValidName } from '@lib/helperShared';
+import { initialState, reducer } from '@lib/reducers/emailFormReducer';
 import { sendContactForm as send } from '@lib/server-actions/sendContactForm';
+import { isValidEmail, isValidMessage, isValidName } from '@lib/helperShared';
 
 import Spinner from '@components/reusable/Spinner';
 
@@ -12,59 +13,6 @@ const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
 
 const EMAIL_FORM_RECAPTCHA_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
-
-const initialState = {
-  formData: {
-    name: '',
-    email: '',
-    type: 'Company',
-    message: '',
-  },
-  recaptchaToken: null,
-  isSubmitting: false,
-  sendStatus: null,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_FORM_DATA':
-      return {
-        ...state,
-        formData: {
-          ...state.formData,
-          [action.payload.name]: action.payload.value,
-        },
-      };
-    case 'SET_RECAPTCHA_TOKEN':
-      return {
-        ...state,
-        recaptchaToken: action.payload,
-      };
-    case 'SET_IS_SUBMITTING':
-      return {
-        ...state,
-        isSubmitting: action.payload,
-      };
-    case 'SET_SEND_STATUS':
-      return {
-        ...state,
-        sendStatus: action.payload,
-      };
-    case 'RESET_FORM':
-      return {
-        ...state,
-        formData: {
-          name: '',
-          email: '',
-          type: 'Company',
-          message: '',
-        },
-        recaptchaToken: null,
-      };
-    default:
-      return state;
-  }
-};
 
 function ContactForm() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -122,6 +70,7 @@ function ContactForm() {
               onFocus={handleFocus}
               placeholder="Full Name"
               aria-label="Full Name"
+              autoComplete="name"
               className={`${formItemStyles} ${
                 state.formData.name
                   ? isValidName(state.formData.name.trim())
@@ -144,6 +93,7 @@ function ContactForm() {
               onFocus={handleFocus}
               placeholder="Email"
               aria-label="Email"
+              autoComplete="email"
               className={`${formItemStyles} ${
                 state.formData.email
                   ? isValidEmail(state.formData.email.trim())

@@ -1,37 +1,20 @@
 'use client';
 
-import { useRef, useEffect, useReducer, useState } from 'react';
+import { useRef, useEffect, useReducer, useCallback } from 'react';
 
+import {
+  createCarouselInitialState,
+  reducer,
+} from '@lib/reducers/carouselCardReducer';
 import CarouselCard from '@components/reusable/CarouselCard';
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_DRAGGING':
-      return { ...state, dragging: action.value };
-    case 'SET_START_X':
-      return { ...state, startX: action.value };
-    case 'SET_SCROLL_LEFT':
-      return { ...state, scrollLeft: action.value };
-    case 'SET_CURRENT_CARD_ID':
-      return { ...state, currentCardId: action.value };
-    default:
-      return state;
-  }
-};
 
 function Carousel({ carouselCards }) {
   const carouselRef = useRef(null);
 
-  const initialState = {
-    dragging: false,
-    startX: 0,
-    scrollLeft: 0,
-    currentCardId: carouselCards[0].id,
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const [backdropBlur, setBackdropBlur] = useState(false);
+  const [state, dispatch] = useReducer(
+    reducer,
+    createCarouselInitialState(carouselCards)
+  );
 
   const handleMouseDown = (e) => {
     if (!carouselRef.current) return;
@@ -74,7 +57,7 @@ function Carousel({ carouselCards }) {
     }
   };
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (!carouselRef.current) return;
 
     const scrollPosition = carouselRef.current.scrollLeft;
@@ -101,17 +84,19 @@ function Carousel({ carouselCards }) {
     });
 
     dispatch({ type: 'SET_CURRENT_CARD_ID', value: newCardId });
-  };
+  }, [carouselCards, dispatch]);
 
   useEffect(() => {
-    if (!carouselRef.current) return;
-    carouselRef.current.addEventListener('scroll', handleScroll);
+    const currentCarousel = carouselRef.current;
+
+    if (!currentCarousel) return;
+    currentCarousel.addEventListener('scroll', handleScroll);
     return () => {
-      if (carouselRef.current) {
-        carouselRef.current.removeEventListener('scroll', handleScroll);
+      if (currentCarousel) {
+        currentCarousel.removeEventListener('scroll', handleScroll);
       }
     };
-  }, []);
+  }, [handleScroll]);
 
   return (
     <div className="relative w-full">
