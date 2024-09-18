@@ -6,8 +6,9 @@ import {
   isValidEmail,
   isValidType,
   isValidMessage,
-} from '@/app/_lib/helperShared';
-import { sendMail } from '@lib/mail';
+} from '@lib/helperShared';
+import { sendMail } from '@lib/mail/mail';
+import { generateEmailBody } from '@lib/mail/generateEmailBody';
 
 const { EMAIL_FORM_RECAPTCHA_SECRET_KEY } = process.env;
 
@@ -57,14 +58,7 @@ export async function sendContactForm(formData) {
       return { status: 'failed', message: 'reCAPTCHA validation failed' };
     }
 
-    const body = `
-    <h1>New Message</h1>
-    <p><strong>Name:</strong> ${name}</p>
-    <p><strong>Email:</strong> ${email}</p>
-    <p><strong>Type:</strong> ${type}</p>
-    <p><strong>Message:</strong></p>
-    <p>${message}</p>
-  `;
+    const body = generateEmailBody(name, email, type, message);
 
     await sendMail({
       to: 'freestuffpls12345@gmail.com',

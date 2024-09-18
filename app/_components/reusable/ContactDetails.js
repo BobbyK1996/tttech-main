@@ -46,7 +46,7 @@ function ContactDetails({
           <div className={containerClassMain}>
             <IoMail className={iconClassMain} />
             {emailIsValid ? (
-              <a href={`mailto:${email}`} className={anchorClassMain}>
+              <a href={`:${email}`} className={anchorClassMain}>
                 {email}
               </a>
             ) : (

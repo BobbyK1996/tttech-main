@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { RiH2 } from 'react-icons/ri';
 
 const cardType = {
   gradientDirection: {
