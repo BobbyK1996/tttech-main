@@ -61,7 +61,7 @@ export async function sendContactForm(formData) {
     const body = generateEmailBody(name, email, type, message);
 
     await sendMail({
-      to: 'freestuffpls12345@gmail.com',
+      to: 'bobby@tttechrec.com',
       subject: `New Message from ${name} (${type})`,
       body: body,
     });
