@@ -47,3 +47,10 @@ async function Page({ searchParams }) {
 }
 
 export default Page;
+
+const temp = [
+  "{ categoryTitle: 'Development & Design', categoryTag: 'devdesign', id: 1 }",
+  "{ categoryTitle: 'Support & Infrastructure', categoryTag: 'supinf', id: 2 }",
+  "{ categoryTitle: 'Data & SaaS', categoryTag: 'datasaas', id: 3 }",
+  "{ categoryTitle: 'Marketing and Sales', categoryTag: 'salesmark', id: 4 }",
+];
