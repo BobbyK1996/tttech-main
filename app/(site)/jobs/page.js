@@ -4,26 +4,22 @@ import { unstable_cache } from 'next/cache';
 
 import { getCategories, getJobs } from '@lib/data-services';
 
-import Filter from '@/app/_components/reusable/Filter';
-import JobList from '@/app/_components/reusable/JobList';
-import Spinner from '@/app/_components/reusable/Spinner';
+import Filter from '@components/reusable/Filter';
+import JobList from '@components/reusable/JobList';
+import Spinner from '@components/reusable/Spinner';
 
-const getCachedCategories = unstable_cache(
-  async () => getCategories(),
-  ['my-app-categories'],
-  {
-    revalidate: 10800,
-  }
+const getCachedJobData = unstable_cache(
+  async () => {
+    const [jobs, categories] = await Promise.all([getJobs(), getCategories()]);
+    return { jobs, categories };
+  },
+  ['tttech-job-data'],
+  { revalidate: 10800 }
 );
-const getCachedJobs = unstable_cache(async () => getJobs(), ['my-app-jobs'], {
-  revalidate: 10800,
-});
 
 async function Page({ searchParams }) {
-  const jobs = await getCachedJobs();
-  const categories = await getCachedCategories();
-
-  const filter = searchParams?.category ?? 'all';
+  const { jobs, categories } = await getCachedJobData();
+  const filter = searchParams.category ?? 'all';
 
   return (
     <div>
@@ -47,10 +43,3 @@ async function Page({ searchParams }) {
 }
 
 export default Page;
-
-const temp = [
-  "{ categoryTitle: 'Development & Design', categoryTag: 'devdesign', id: 1 }",
-  "{ categoryTitle: 'Support & Infrastructure', categoryTag: 'supinf', id: 2 }",
-  "{ categoryTitle: 'Data & SaaS', categoryTag: 'datasaas', id: 3 }",
-  "{ categoryTitle: 'Marketing and Sales', categoryTag: 'salesmark', id: 4 }",
-];
