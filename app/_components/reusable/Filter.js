@@ -12,13 +12,20 @@ function Filter({ categories }) {
   function handleFilter(filter) {
     const params = new URLSearchParams(searchParams);
 
-    params.set('category', filter);
-    router.replace(`${pathname}?${params.toString()}`, {
+    if (filter === 'all') {
+      params.delete('category');
+    } else {
+      params.set('category', filter);
+    }
+
+    const queryString = params.toString();
+    const newUrl = queryString ? `${pathname}?${queryString}` : pathname;
+
+    router.replace(newUrl, {
       scroll: false,
       shallow: true,
     });
   }
-  // console.log('from filter', categories);
 
   return (
     <div className="flex flex-col border rounded-md border-primary-800">
