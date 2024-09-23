@@ -6,7 +6,7 @@ import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 import { formatToK, validateSalaryString } from '@lib/helper';
 
 function JobCard({ job }) {
-  // console.log(job);
+  console.log(job);
   const {
     Posting_Title: title,
     Salary: salary,
@@ -15,6 +15,7 @@ function JobCard({ job }) {
     Job_Opening_ID: id,
   } = job;
 
+  console.log('This is the ID:', id);
   const salaryMin =
     validateSalaryString(salary) !== 0
       ? Number(salary.split('-')[0].trim())
@@ -62,12 +63,12 @@ function JobCard({ job }) {
         ))}
       </div>
 
-      {/* <Link
+      <Link
         href={`/jobs/${id}`}
         className="w-full px-6 py-4 text-center transition duration-300 ease-in-out rounded-md hover:bg-accent-300 bg-accent-500"
       >
         Apply
-      </Link> */}
+      </Link>
     </div>
   );
 }

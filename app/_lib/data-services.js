@@ -1,10 +1,19 @@
 import { convertToObject } from '@lib/helper';
 import supabase from '@lib/supabase';
 
+let REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+let EXPIRATION_TIME = null;
+
+const TOKEN_EXPIRATION_BUFFER = 60 * 1000;
+
 export async function revalidateZoho() {
+  if (REFRESH_TOKEN && EXPIRATION_TIME && Date.now() < EXPIRATION_TIME) {
+    return { access_token: REFRESH_TOKEN };
+  }
+
   try {
     const res = await fetch(
-      `https://accounts.zoho.eu/oauth/v2/token?refresh_token=${process.env.REFRESH_TOKEN}&client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&grant_type=refresh_token`,
+      `https://accounts.zoho.eu/oauth/v2/token?refresh_token=${REFRESH_TOKEN}&client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&grant_type=refresh_token`,
       {
         method: 'POST',
       }
@@ -17,6 +26,9 @@ export async function revalidateZoho() {
     const data = await res.json();
 
     const { access_token, expires_in } = data;
+
+    EXPIRATION_TIME = Date.now() + expires_in * 1000 - TOKEN_EXPIRATION_BUFFER;
+    REFRESH_TOKEN = access_token;
 
     return { access_token, expires_in };
   } catch (error) {
@@ -121,3 +133,9 @@ export async function getJob(id) {
 
   return data;
 }
+
+// export async function getJobTemp(id){
+//   try {
+//     const {access_token} = await revalidateZoho();
+//   }
+// }
