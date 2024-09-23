@@ -2,18 +2,26 @@ import { convertToObject } from '@lib/helper';
 import supabase from '@lib/supabase';
 
 let REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+let ACCESS_TOKEN = null;
 let EXPIRATION_TIME = null;
 
-const TOKEN_EXPIRATION_BUFFER = 60 * 1000;
+const TOKEN_EXPIRATION_BUFFER = 300 * 1000;
 
 export async function revalidateZoho() {
-  if (REFRESH_TOKEN && EXPIRATION_TIME && Date.now() < EXPIRATION_TIME) {
-    return { access_token: REFRESH_TOKEN };
+  if (ACCESS_TOKEN && EXPIRATION_TIME && Date.now() < EXPIRATION_TIME) {
+    return { access_token: ACCESS_TOKEN };
   }
 
   try {
+    const params = new URLSearchParams({
+      refresh_token: REFRESH_TOKEN,
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      grant_type: 'refresh_token',
+    });
+
     const res = await fetch(
-      `https://accounts.zoho.eu/oauth/v2/token?refresh_token=${REFRESH_TOKEN}&client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&grant_type=refresh_token`,
+      `https://accounts.zoho.eu/oauth/v2/token?${params.toString()}`,
       {
         method: 'POST',
       }
@@ -28,11 +36,11 @@ export async function revalidateZoho() {
     const { access_token, expires_in } = data;
 
     EXPIRATION_TIME = Date.now() + expires_in * 1000 - TOKEN_EXPIRATION_BUFFER;
-    REFRESH_TOKEN = access_token;
+    ACCESS_TOKEN = access_token;
 
-    return { access_token, expires_in };
+    return { access_token };
   } catch (error) {
-    throw new Error(`Error: ${error.message}`);
+    throw new Error(`Error. Failed to refresh access token: ${error.message}`);
   }
 }
 
