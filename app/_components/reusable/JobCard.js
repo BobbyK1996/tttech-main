@@ -6,7 +6,7 @@ import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 import { formatToK, validateSalaryString } from '@lib/helper';
 
 function JobCard({ job }) {
-  console.log(job);
+  // console.log(job);
   const {
     Posting_Title: title,
     Salary: salary,
