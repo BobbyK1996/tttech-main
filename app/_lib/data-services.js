@@ -1,5 +1,6 @@
 import { convertToObject } from '@lib/helper';
 import supabase from '@lib/supabase';
+import { validateString } from './helperShared';
 
 let refreshingPromise = null;
 
@@ -187,23 +188,40 @@ export async function getCategories() {
 }
 
 export async function getJob(id) {
-  const { data, error } = await supabase
-    .from('jobs')
-    .select(
-      'id, created_date, title, salaryMin, salaryMax, location, tags, jobDescription'
-    )
-    .eq('id', id)
-    .single();
+  const isValidID = validateString(id, 'ID');
 
-  if (error) {
-    console.error(error);
+  if (!isValidID)
+    throw new Error('The Job ID is empty. Please provide a valid Job ID');
+
+  try {
+    const { access_token } = await revalidateZoho();
+
+    const res = await fetch(
+      `https://recruit.zoho.eu/recruit/v2/Job_Openings/search?criteria=(Job_Opening_ID:equals:${id})`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Zoho-oauthtoken ${access_token}`,
+        },
+      }
+    );
+
+    if (!res.ok) {
+      const { code: errorCode, message: errorMessage } = await res.json();
+
+      if (errorCode === 'INVALID_TOKEN')
+        throw new Error(`The OAuth token is invalid. Please reauthenticate.`);
+
+      throw new Error(`Error: ${errorCode}. Details: ${errorMessage}`);
+    }
+
+    const { data } = await res.json();
+
+    if (!data || data.length === 0)
+      throw new Error(`No data returned for the Job ID: ${id}`);
+
+    return data;
+  } catch (error) {
+    throw new Error(`Error fetching jobs: ${error.message}`);
   }
-
-  return data;
 }
-
-// export async function getJobTemp(id){
-//   try {
-//     const {access_token} = await revalidateZoho();
-//   }
-// }
