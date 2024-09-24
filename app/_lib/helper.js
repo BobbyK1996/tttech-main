@@ -28,7 +28,6 @@ export function convertToObject(data, index = 0) {
       return JSON.parse(jsonString);
     });
 
-    console.log(categories);
     return categories;
   } catch (error) {
     console.error('Error parsing categories:', error);
