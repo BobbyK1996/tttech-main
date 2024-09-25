@@ -220,7 +220,7 @@ export async function getJob(id) {
     if (!data || data.length === 0)
       throw new Error(`No data returned for the Job ID: ${id}`);
 
-    return data;
+    return data[0];
   } catch (error) {
     throw new Error(`Error fetching jobs: ${error.message}`);
   }

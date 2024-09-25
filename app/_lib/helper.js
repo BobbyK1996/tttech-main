@@ -21,14 +21,21 @@ export function convertToObject(data, index = 0) {
   validateObject(data, 'data', 'The data parameter must be an array.');
 
   try {
-    const categories = data[index].categories.map((categoryString) => {
-      const jsonString = categoryString
+    if (data[index].categories) {
+      const categories = data[index].categories.map((categoryString) => {
+        const jsonString = categoryString
+          .replace(/'/g, '"')
+          .replace(/(\w+):/g, '"$1":');
+        return JSON.parse(jsonString);
+      });
+
+      return categories;
+    } else {
+      const jsonString = data[index]
         .replace(/'/g, '"')
         .replace(/(\w+):/g, '"$1":');
       return JSON.parse(jsonString);
-    });
-
-    return categories;
+    }
   } catch (error) {
     console.error('Error parsing categories:', error);
     return null;

@@ -2,7 +2,12 @@ import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 import { FaCalendar } from 'react-icons/fa';
 
 import { getJob } from '@lib/data-services';
-import { formatDate, formatToK } from '@lib/helper';
+import {
+  convertToObject,
+  formatDate,
+  formatToK,
+  validateSalaryString,
+} from '@lib/helper';
 
 // const TEMP_DATA = {
 //   id: 1,
@@ -52,19 +57,29 @@ import { formatDate, formatToK } from '@lib/helper';
 async function Page({ params }) {
   const job = await getJob(params.jobId);
   const {
-    id,
-    created_date,
-    title,
-    salaryMin,
-    salaryMax,
-    location,
-    tags,
-    jobDescription,
+    Job_Opening_ID: id,
+    Created_Time: created_date,
+    Posting_Title: title,
+    Salary: salary,
+    City: location = 'Remote',
+    Associated_Tags: tags,
+    PublicDescription: jobDescription,
   } = job;
+
+  const descriptionObject = convertToObject([jobDescription]);
 
   const titleSplit = title.split(' ');
   const lastWord = titleSplit.pop();
   const titleWithoutLastWord = titleSplit.join(' ');
+
+  const salaryMin =
+    validateSalaryString(salary) !== 0
+      ? Number(salary.split('-')[0].trim())
+      : 0;
+  const salaryMax =
+    validateSalaryString(salary) !== 0
+      ? Number(salary.split('-')[1].trim())
+      : 0;
 
   return (
     <div className="grid max-w-6xl grid-cols-[1fr,16rem] mx-auto mt-8 gap-4 gap-y-16 p-2 place-items-start grid-rows-[auto,1fr] h-full">
@@ -111,20 +126,20 @@ async function Page({ params }) {
           <h1 className="inline-block mb-4 text-4xl border-b border-primary-200 text-accent-300">
             About Us
           </h1>
-          <p>{jobDescription.about}</p>
+          <p>{descriptionObject.about}</p>
         </div>
         <div>
           <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
             Overview
           </h1>
-          <p>{jobDescription.overview}</p>
+          <p>{descriptionObject.overview}</p>
         </div>
         <div>
           <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
             Responsibilities
           </h1>
           <ul className="pl-10">
-            {jobDescription.responsibilities.map((res, index) => (
+            {descriptionObject.responsibilities.map((res, index) => (
               <li className="list-disc" key={index}>
                 {res}
               </li>
@@ -136,7 +151,7 @@ async function Page({ params }) {
             Requirements
           </h1>
           <ul className="pl-10">
-            {jobDescription.requirements.map((req, index) => (
+            {descriptionObject.requirements.map((req, index) => (
               <li className="list-disc" key={index}>
                 {req}
               </li>
@@ -148,7 +163,7 @@ async function Page({ params }) {
             Benefits
           </h1>
           <ul className="pl-10">
-            {jobDescription.benefits.map((benefit, index) => (
+            {descriptionObject.benefits.map((benefit, index) => (
               <li className="list-disc" key={index}>
                 {benefit}
               </li>
@@ -156,7 +171,7 @@ async function Page({ params }) {
           </ul>
         </div>
 
-        <p>{jobDescription.ending}</p>
+        <p>{descriptionObject.ending}</p>
 
         <p className="text-sm text-slate-400">
           [Company Name] is an equal opportunity employer. We celebrate
