@@ -203,6 +203,7 @@ export async function getJob(id) {
         headers: {
           Authorization: `Zoho-oauthtoken ${access_token}`,
         },
+        next: { revalidate: 86400 },
       }
     );
 
