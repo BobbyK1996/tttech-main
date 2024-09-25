@@ -1,9 +1,8 @@
 import Link from 'next/link';
 
 import { IoBriefcaseOutline } from 'react-icons/io5';
-import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 
-import { formatToK, validateSalaryString } from '@lib/helper';
+import Salary from '@components/reusable/Salary';
 
 function JobCard({ job }) {
   // console.log(job);
@@ -16,17 +15,6 @@ function JobCard({ job }) {
   } = job;
 
   console.log('This is the ID:', id);
-  const salaryMin =
-    validateSalaryString(salary) !== 0
-      ? Number(salary.split('-')[0].trim())
-      : 0;
-  const salaryMax =
-    validateSalaryString(salary) !== 0
-      ? Number(salary.split('-')[1].trim())
-      : 0;
-
-  // const salaryMin = Number(salary.split('-')[0]);
-  // const salaryMax =  Number(salary.split('-')[1]);
 
   return (
     <div className="grid grid-cols-3 px-8 py-6 transition duration-300 ease-in-out border-2 rounded-md border-primary-900 bg-primary-950 hover:scale-105 hover:border-white hover:shadow-2xl filter">
@@ -40,17 +28,7 @@ function JobCard({ job }) {
         </span>
       </div>
 
-      <div className="flex items-center justify-end gap-3 text-xl">
-        <div className="text-3xl text-primary-400">
-          <RiMoneyPoundCircleLine />
-        </div>
-        <div>
-          <span className="font-bold">
-            £{formatToK(salaryMin)} - £{formatToK(salaryMax)}
-          </span>
-          <span className="text-xs"> /year</span>
-        </div>
-      </div>
+      <Salary salary={salary} />
 
       <div className="flex items-center col-span-2 gap-2 pl-2">
         {tags.map((tag, index) => (
