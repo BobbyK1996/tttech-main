@@ -3,9 +3,7 @@ export function validateString(value, name, notes = '') {
     throw new Error(`${name} must be a string. ${notes}.`);
   }
 
-  if (value === undefined) return false;
-
-  return value.trim().length > 0;
+  return typeof value === 'string' && value.trim().length > 0;
 }
 
 export function validateNumber(value, name, notes = '') {

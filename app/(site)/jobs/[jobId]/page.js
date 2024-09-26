@@ -4,6 +4,7 @@ import { getJob } from '@lib/data-services';
 import { convertToObject, formatDate } from '@lib/helper';
 
 import Salary from '@components/reusable/Salary';
+import JobIDText from '@/app/_components/reusable/JobIDText';
 
 async function Page({ params }) {
   const job = await getJob(params.jobId);
@@ -56,54 +57,19 @@ async function Page({ params }) {
       <div className="flex justify-center w-full h-full">Apply!</div>
 
       <div className="flex flex-col w-full gap-8 text-lg text-primary-50">
-        <div>
-          <h1 className="inline-block mb-4 text-4xl border-b border-primary-200 text-accent-300">
-            About Us
-          </h1>
-          <p>{descriptionObject.about}</p>
-        </div>
-        <div>
-          <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
-            Overview
-          </h1>
-          <p>{descriptionObject.overview}</p>
-        </div>
-        <div>
-          <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
-            Responsibilities
-          </h1>
-          <ul className="pl-10">
-            {descriptionObject.responsibilities.map((res, index) => (
-              <li className="list-disc" key={index}>
-                {res}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
-            Requirements
-          </h1>
-          <ul className="pl-10">
-            {descriptionObject.requirements.map((req, index) => (
-              <li className="list-disc" key={index}>
-                {req}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h1 className="inline-block mb-4 text-3xl border-b border-primary-200 text-accent-300">
-            Benefits
-          </h1>
-          <ul className="pl-10">
-            {descriptionObject.benefits.map((benefit, index) => (
-              <li className="list-disc" key={index}>
-                {benefit}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <JobIDText header="About Us">{descriptionObject.about}</JobIDText>
+
+        <JobIDText header="Overview">{descriptionObject.overview}</JobIDText>
+
+        <JobIDText header="Responsibilities">
+          {descriptionObject.responsibilities}
+        </JobIDText>
+
+        <JobIDText header="Requirements">
+          {descriptionObject.requirements}
+        </JobIDText>
+
+        <JobIDText header="Benefits">{descriptionObject.benefits}</JobIDText>
 
         <p>{descriptionObject.ending}</p>
 
