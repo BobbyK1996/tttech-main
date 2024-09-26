@@ -149,13 +149,13 @@ export async function getJobs() {
       }
     );
 
+    const { data } = await res.json();
+
     if (!res.ok) {
       throw new Error(
-        `Network response was not ok (getJobs): ${res.statusText}`
+        `Network response was not ok (getJobs): ${data.code} - ${data.message}`
       );
     }
-
-    const { data } = await res.json();
 
     const dataBackupResult = await saveBackupData('jobsBackup', data);
 
