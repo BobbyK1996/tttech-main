@@ -4,7 +4,8 @@ import { getJob } from '@lib/data-services';
 import { convertToObject, formatDate } from '@lib/helper';
 
 import Salary from '@components/reusable/Salary';
-import JobIDText from '@/app/_components/reusable/JobIDText';
+import JobIDText from '@components/reusable/JobIDText';
+import SubmitFormWrapper from '@components/reusable/SubmitFormWrapper';
 
 const TEMP_DATA = {
   Client_Name: { name: 'TTTechSolutionsLtd', id: '31464000000284047' },
@@ -182,7 +183,7 @@ async function Page({ params }) {
       </div>
 
       <div className="flex justify-center order-3 w-full h-full md:order-2 bg-slate-400">
-        Apply!
+        <SubmitFormWrapper />
       </div>
 
       <div className="flex flex-col order-2 w-full gap-8 text-lg text-primary-50 md:order-3">
