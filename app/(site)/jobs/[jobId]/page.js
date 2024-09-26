@@ -1,11 +1,6 @@
-import { FaCalendar } from 'react-icons/fa';
-
+import JobPageClientWrapper from '@/app/_components/non-reusable/JobPageClientWrapper';
 import { getJob } from '@lib/data-services';
 import { convertToObject, formatDate } from '@lib/helper';
-
-import Salary from '@components/reusable/Salary';
-import JobIDText from '@components/reusable/JobIDText';
-import SubmitFormWrapper from '@components/reusable/SubmitFormWrapper';
 
 const TEMP_DATA = {
   Client_Name: { name: 'TTTechSolutionsLtd', id: '31464000000284047' },
@@ -150,66 +145,18 @@ async function Page({ params }) {
   const titleWithoutLastWord = titleSplit.join(' ');
 
   return (
-    <div className="grid max-w-6xl grid-cols-1 md:grid-cols-[1fr,16rem] mx-auto mt-8 gap-4 gap-y-16 p-2 place-items-start grid-rows-[auto,1fr] h-full">
-      <div className="grid grid-cols-[auto,1fr] gap-3 w-full order-1">
-        <h1 className="col-span-2 text-5xl font-bold sm:text-7xl">
-          {titleWithoutLastWord}{' '}
-          <span className="text-accent-500">{lastWord}</span>
-        </h1>
-        <h2 className="col-span-2 pl-2 text-xl font-semibold">{location}</h2>
-        <div className="flex gap-4 place-items-start">
-          {tags.map((tag) => (
-            <span
-              key={tag.id}
-              className="px-4 py-2 shadow-lg rounded-xl hover:filter hover:saturate-100"
-              style={{
-                backgroundColor: `${tag.color_code}`,
-              }}
-            >
-              {tag.name}
-            </span>
-          ))}
-        </div>
-
-        <Salary salary={salary} customCSS="justify-start" />
-
-        <div className="flex col-span-2 gap-4 text-sm text-slate-400">
-          <span>Job Reference #{id.toString().padStart(4, '0')}</span>
-          <span className="flex items-center gap-1">
-            <FaCalendar />
-            <span>Posted on {formatDate(created_date)}</span>
-          </span>
-        </div>
-      </div>
-
-      <div className="flex justify-center order-3 w-full h-full md:order-2 bg-slate-400">
-        <SubmitFormWrapper />
-      </div>
-
-      <div className="flex flex-col order-2 w-full gap-8 text-lg text-primary-50 md:order-3">
-        <JobIDText header="About Us">{descriptionObject.about}</JobIDText>
-
-        <JobIDText header="Overview">{descriptionObject.overview}</JobIDText>
-
-        <JobIDText header="Responsibilities">
-          {descriptionObject.responsibilities}
-        </JobIDText>
-
-        <JobIDText header="Requirements">
-          {descriptionObject.requirements}
-        </JobIDText>
-
-        <JobIDText header="Benefits">{descriptionObject.benefits}</JobIDText>
-
-        <JobIDText>{descriptionObject.ending}</JobIDText>
-
-        <p className="text-sm text-slate-400">
-          [Company Name] is an equal opportunity employer. We celebrate
-          diversity and are committed to creating an inclusive environment for
-          all employees.
-        </p>
-      </div>
-    </div>
+    <JobPageClientWrapper
+      job={{
+        id,
+        created_date,
+        title,
+        salary,
+        location,
+        tags,
+        descriptionObject,
+      }}
+      utils={{ titleSplit, lastWord, titleWithoutLastWord }}
+    />
   );
 }
 

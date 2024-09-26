@@ -47,14 +47,25 @@
     animation: teamsSpinnerLeft 5s linear infinite;
   }
 
-  /* .no-drag {
-    user-drag: none;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-  } */
+  /* animation classes for JobPageClientWrapper */
+  .job-content-enter {
+    opacity: 0;
+    height: 0;
+  }
+  .job-content-enter-active {
+    opacity: 1;
+    height: auto;
+    transition: opacity 300ms ease-in, height 300ms ease-in;
+  }
+  .job-content-exit {
+    opacity: 1;
+    height: auto;
+  }
+  .job-content-exit-active {
+    opacity: 0;
+    height: 0;
+    transition: opacity 300ms ease-out, height 300ms ease-out;
+  }
 
   @keyframes rotate {
     to {
