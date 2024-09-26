@@ -11,7 +11,7 @@ function JobIDText({ header, children }) {
 
   return (
     <div>
-      {!isValidHeader ? (
+      {header === undefined ? null : !isValidHeader ? (
         <span className="text-red-500 bg-red-300" role="alert">
           Header is not valid. Please use a non-empty string
         </span>

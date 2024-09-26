@@ -71,7 +71,7 @@ async function Page({ params }) {
 
         <JobIDText header="Benefits">{descriptionObject.benefits}</JobIDText>
 
-        <p>{descriptionObject.ending}</p>
+        <JobIDText>{descriptionObject.ending}</JobIDText>
 
         <p className="text-sm text-slate-400">
           [Company Name] is an equal opportunity employer. We celebrate
