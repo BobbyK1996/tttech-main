@@ -37,6 +37,7 @@ export async function revalidateZoho() {
 
       if (dbError)
         throw new Error(`Database query for token failed: ${dbError.message}`);
+      console.log(dbTokenData);
 
       if (dbTokenData?.length > 0) {
         const { token, expiration_time } = dbTokenData[0];
@@ -195,7 +196,6 @@ export async function getJob(id) {
 
   try {
     const { access_token } = await revalidateZoho();
-
     const res = await fetch(
       `https://recruit.zoho.eu/recruit/v2/Job_Openings/search?criteria=(Job_Opening_ID:equals:${id})`,
       {

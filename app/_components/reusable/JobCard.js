@@ -5,7 +5,6 @@ import { IoBriefcaseOutline } from 'react-icons/io5';
 import Salary from '@components/reusable/Salary';
 
 function JobCard({ job }) {
-  // console.log(job);
   const {
     Posting_Title: title,
     Salary: salary,
@@ -31,12 +30,15 @@ function JobCard({ job }) {
       <Salary salary={salary} />
 
       <div className="flex items-center col-span-2 gap-2 pl-2">
-        {tags.map((tag, index) => (
+        {tags.map((tag) => (
           <span
-            key={index}
-            className="px-3 py-2 text-xs text-center rounded-md bg-accent-500"
+            key={tag.id}
+            className="px-4 py-2 shadow-lg rounded-xl hover:filter hover:saturate-100"
+            style={{
+              backgroundColor: `${tag.color_code}`,
+            }}
           >
-            {tag}
+            {tag.name}
           </span>
         ))}
       </div>

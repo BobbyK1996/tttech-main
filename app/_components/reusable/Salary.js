@@ -2,7 +2,7 @@ import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 
 import { formatToK, validateSalaryString } from '@lib/helper';
 
-function Salary({ salary }) {
+function Salary({ salary, customCSS }) {
   const salaryMin =
     validateSalaryString(salary) !== 0
       ? Number(salary.split('-')[0].trim())
@@ -13,7 +13,7 @@ function Salary({ salary }) {
       : 0;
 
   return (
-    <div className="flex items-center justify-end gap-3 text-xl">
+    <div className={`flex items-center gap-3 text-xl ${customCSS}`}>
       <div className="text-3xl text-primary-400">
         <RiMoneyPoundCircleLine />
       </div>
