@@ -72,9 +72,7 @@ export async function revalidateZoho() {
       );
 
       if (!res.ok) {
-        throw new Error(
-          `Network response was not ok (validation): ${res.statusText}`
-        );
+        throw new Error(`Network response was not ok: ${res.statusText}`);
       }
 
       const { access_token, expires_in } = await res.json();
@@ -150,9 +148,7 @@ export async function getJobs() {
     );
 
     if (!res.ok) {
-      throw new Error(
-        `Network response was not ok (getJobs): ${res.statusText}`
-      );
+      throw new Error(`Network response was not ok: ${res.statusText}`);
     }
 
     const { data } = await res.json();
