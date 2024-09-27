@@ -30,7 +30,7 @@ function JobCard({ job }) {
       <Salary salary={salary} />
 
       <div className="flex items-center col-span-2 gap-2 pl-2">
-        {tags.map((tag) => (
+        {tags.slice(0, 3).map((tag) => (
           <span
             key={tag.id}
             className="px-4 py-2 shadow-lg rounded-xl hover:filter hover:saturate-100"

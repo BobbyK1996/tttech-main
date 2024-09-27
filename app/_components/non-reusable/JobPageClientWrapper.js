@@ -24,17 +24,17 @@ function JobPageClientWrapper({ job, utils }) {
 
   return (
     <div className="flex flex-col h-full max-w-6xl gap-4 p-2 mx-auto mt-8 gap-y-16 place-items-start">
-      <div className="grid grid-cols-[auto,1fr] gap-3 w-full">
-        <h1 className="col-span-2 text-5xl font-bold sm:text-7xl">
+      <div className="flex flex-col w-full gap-3">
+        <h1 className="text-5xl font-bold sm:text-7xl md:text-8xl">
           {titleWithoutLastWord}{' '}
           <span className="text-accent-500">{lastWord}</span>
         </h1>
         <h2 className="col-span-2 pl-2 text-xl font-semibold">{location}</h2>
-        <div className="flex gap-4 place-items-start">
-          {tags.map((tag) => (
+        <div className="flex flex-wrap items-center gap-4">
+          {tags.slice(0, 3).map((tag) => (
             <span
               key={tag.id}
-              className="px-4 py-2 shadow-lg rounded-xl hover:filter hover:saturate-100"
+              className="px-2 py-1 shadow-lg rounded-xl hover:filter hover:saturate-100"
               style={{
                 backgroundColor: `${tag.color_code}`,
               }}
@@ -42,9 +42,9 @@ function JobPageClientWrapper({ job, utils }) {
               {tag.name}
             </span>
           ))}
-        </div>
 
-        <Salary salary={salary} customCSS="justify-start" />
+          <Salary salary={salary} customCSS="justify-start" />
+        </div>
 
         <div className="flex col-span-2 gap-4 text-sm text-slate-400">
           <span>Job Reference #{id.toString().padStart(4, '0')}</span>
