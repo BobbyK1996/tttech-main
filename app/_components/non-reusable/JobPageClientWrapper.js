@@ -1,32 +1,32 @@
-'use client';
-import { useState } from 'react';
-import { FaCalendar } from 'react-icons/fa';
+"use client"
+import { useState } from "react"
+import { FaCalendar } from "react-icons/fa"
 
-import Salary from '@components/reusable/Salary';
-import JobIDText from '@components/reusable/JobIDText';
-import SubmitFormWrapper from '@components/reusable/SubmitFormWrapper';
-import Fade from '@components/reusable/Fade';
+import Salary from "@components/reusable/Salary"
+import JobIDText from "@components/reusable/JobIDText"
+import SubmitFormWrapper from "@components/reusable/SubmitFormWrapper"
+import Fade from "@components/reusable/Fade"
 
-import { formatDate } from '@lib/helper';
+import { formatDate } from "@lib/helper"
 
 function JobPageClientWrapper({ job, utils }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleOpen = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    setIsOpen((prevState) => !prevState);
-  };
+    setIsOpen((prevState) => !prevState)
+  }
 
-  const { id, created_date, salary, location, tags, descriptionObject } = job;
+  const { id, created_date, salary, location, tags, descriptionObject } = job
 
-  const { lastWord, titleWithoutLastWord } = utils;
+  const { lastWord, titleWithoutLastWord } = utils
 
   return (
-    <div className="flex flex-col h-full max-w-6xl gap-4 p-2 mx-auto mt-8 gap-y-16 place-items-start">
-      <div className="flex flex-col w-full gap-3">
+    <div className="mx-auto mt-8 flex h-full max-w-6xl flex-col place-items-start gap-4 gap-y-16 p-2">
+      <div className="flex w-full flex-col gap-3">
         <h1 className="text-5xl font-bold sm:text-7xl md:text-8xl">
-          {titleWithoutLastWord}{' '}
+          {titleWithoutLastWord}{" "}
           <span className="text-accent-500">{lastWord}</span>
         </h1>
         <h2 className="col-span-2 pl-2 text-xl font-semibold">{location}</h2>
@@ -34,7 +34,7 @@ function JobPageClientWrapper({ job, utils }) {
           {tags.slice(0, 3).map((tag) => (
             <span
               key={tag.id}
-              className="px-2 py-1 shadow-lg rounded-xl hover:filter hover:saturate-100"
+              className="rounded-xl px-2 py-1 shadow-lg hover:saturate-100 hover:filter"
               style={{
                 backgroundColor: `${tag.color_code}`,
               }}
@@ -46,8 +46,8 @@ function JobPageClientWrapper({ job, utils }) {
           <Salary salary={salary} customCSS="justify-start" />
         </div>
 
-        <div className="flex col-span-2 gap-4 text-sm text-slate-400">
-          <span>Job Reference #{id.toString().padStart(4, '0')}</span>
+        <div className="col-span-2 flex gap-4 text-sm text-slate-400">
+          <span>Job Reference #{id.toString().padStart(4, "0")}</span>
           <span className="flex items-center gap-1">
             <FaCalendar />
             <span>Posted on {formatDate(created_date)}</span>
@@ -56,7 +56,7 @@ function JobPageClientWrapper({ job, utils }) {
       </div>
 
       <Fade in={!isOpen} unmountOnExit>
-        <div className="flex flex-col w-full gap-8 text-lg text-primary-50">
+        <div className="flex w-full flex-col gap-8 text-lg text-primary-50">
           <JobIDText header="About Us">{descriptionObject.about}</JobIDText>
 
           <JobIDText header="Overview">{descriptionObject.overview}</JobIDText>
@@ -81,11 +81,11 @@ function JobPageClientWrapper({ job, utils }) {
         </div>
       </Fade>
 
-      <div className="flex justify-center w-full bg-slate-400">
+      <div className="-z-0 flex w-full justify-center bg-slate-600">
         <SubmitFormWrapper isOpen={isOpen} onOpen={handleOpen} />
       </div>
     </div>
-  );
+  )
 }
 
-export default JobPageClientWrapper;
+export default JobPageClientWrapper
