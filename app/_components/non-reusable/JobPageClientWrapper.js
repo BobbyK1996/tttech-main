@@ -1,26 +1,26 @@
-"use client"
-import { useState } from "react"
-import { FaCalendar } from "react-icons/fa"
+"use client";
+import { useState } from "react";
+import { FaCalendar } from "react-icons/fa";
 
-import Salary from "@components/reusable/Salary"
-import JobIDText from "@components/reusable/JobIDText"
-import SubmitFormWrapper from "@components/reusable/SubmitFormWrapper"
-import Fade from "@components/reusable/Fade"
+import Salary from "@components/reusable/Salary";
+import JobIDText from "@components/reusable/JobIDText";
+import SubmitFormWrapper from "@components/reusable/SubmitFormWrapper";
+import Fade from "@components/reusable/Fade";
 
-import { formatDate } from "@lib/helper"
+import { formatDate } from "@lib/helper";
 
 function JobPageClientWrapper({ job, utils }) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    setIsOpen((prevState) => !prevState)
-  }
+    setIsOpen((prevState) => !prevState);
+  };
 
-  const { id, created_date, salary, location, tags, descriptionObject } = job
+  const { id, created_date, salary, location, tags, descriptionObject } = job;
 
-  const { lastWord, titleWithoutLastWord } = utils
+  const { lastWord, titleWithoutLastWord } = utils;
 
   return (
     <div className="mx-auto mt-8 flex h-full max-w-6xl flex-col place-items-start gap-4 gap-y-16 p-2">
@@ -85,7 +85,7 @@ function JobPageClientWrapper({ job, utils }) {
         <SubmitFormWrapper isOpen={isOpen} onOpen={handleOpen} />
       </div>
     </div>
-  )
+  );
 }
 
-export default JobPageClientWrapper
+export default JobPageClientWrapper;

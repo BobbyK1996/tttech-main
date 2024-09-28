@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 const messages = ["Required", "Optional (but helpful!)", "Review & Submit"];
@@ -25,18 +23,7 @@ function Button({ bgColor, textColor, onClick, children }) {
   );
 }
 
-const calcProgressWidth = () => {
-  const progressParentEl = document.querySelectorAll("#progress-parent > li");
-  const posDiff =
-    progressParentEl[1].getBoundingClientRect().left -
-    progressParentEl[0].getBoundingClientRect().left;
-
-  return posDiff;
-};
-
-function SubmitForm() {
-  const [step, setStep] = useState(1);
-
+function SubmitForm({ step, setStep }) {
   const handlePrevious = () => {
     if (step > 1) setStep(step - 1);
   };
@@ -46,13 +33,10 @@ function SubmitForm() {
   };
 
   return (
-    <>
-      <ul
-        className="mx-auto flex w-full max-w-xl justify-between"
-        id="progress-parent"
-      >
+    <div className="mt-4 p-10">
+      <ul className="relative mx-auto flex w-full max-w-xl justify-between">
         <li
-          className={`relative flex aspect-square h-10 items-center justify-center rounded-full text-2xl ${
+          className={`relative z-10 flex aspect-square h-10 items-center justify-center rounded-full text-2xl duration-300 ${
             step >= 1 ? "bg-green-600 text-white" : "bg-stone-400"
           }`}
           style={{}}
@@ -60,19 +44,22 @@ function SubmitForm() {
           1
         </li>
         <li
-          className={`flex aspect-square h-10 items-center justify-center rounded-full text-2xl ${
+          className={`z-10 flex aspect-square h-10 items-center justify-center rounded-full text-2xl duration-300 ${
             step >= 2 ? "bg-green-600 text-white" : "bg-stone-400"
           }`}
         >
           2
         </li>
         <li
-          className={`flex aspect-square h-10 items-center justify-center rounded-full text-2xl ${
+          className={`z-10 flex aspect-square h-10 items-center justify-center rounded-full text-2xl duration-300 ${
             step >= 3 ? "bg-green-600 text-white" : "bg-stone-400"
           }`}
         >
           3
         </li>
+        <li
+          className={`absolute left-1 top-1/2 h-2 w-[calc(100%-10px)] origin-top-left -translate-y-1/2 transform bg-green-600 duration-300 ${step >= 2 ? `scale-x-[${50 * (step - 1)}%]` : "scale-x-0"}`}
+        ></li>
       </ul>
 
       <StepMessage>{messages[step - 1]}</StepMessage>
@@ -90,42 +77,41 @@ function SubmitForm() {
           </span>
         </Button>
       </div>
-    </>
-
-    // <form className="text-black">
-    //   <div className="flex">
-    //     <div>
-    //       <label htmlFor="given-name">Name</label>
-    //       <input
-    //         type="text"
-    //         id="given-name"
-    //         name="given-name"
-    //         required
-    //         placeholder="Given name"
-    //         autoComplete="given-name"
-    //         aria-label="Given Name"
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="surname">Surname</label>
-    //       <input
-    //         type="text"
-    //         id="surname"
-    //         name="surname"
-    //         required
-    //         placeholder="Surname"
-    //         autoComplete="family-name"
-    //         aria-label="Surname"
-    //       />
-    //     </div>
-    //   </div>
-
-    //   <div>
-    //     <label htmlFor="mobile">Mobile number</label>
-    //     <input type="tel" id="mobile" />
-    //   </div>
-    // </form>
+    </div>
   );
 }
 
+// <form className="text-black">
+//   <div className="flex">
+//     <div>
+//       <label htmlFor="given-name">Name</label>
+//       <input
+//         type="text"
+//         id="given-name"
+//         name="given-name"
+//         required
+//         placeholder="Given name"
+//         autoComplete="given-name"
+//         aria-label="Given Name"
+//       />
+//     </div>
+//     <div>
+//       <label htmlFor="surname">Surname</label>
+//       <input
+//         type="text"
+//         id="surname"
+//         name="surname"
+//         required
+//         placeholder="Surname"
+//         autoComplete="family-name"
+//         aria-label="Surname"
+//       />
+//     </div>
+//   </div>
+
+//   <div>
+//     <label htmlFor="mobile">Mobile number</label>
+//     <input type="tel" id="mobile" />
+//   </div>
+// </form>
 export default SubmitForm;

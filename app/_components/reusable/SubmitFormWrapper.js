@@ -1,12 +1,17 @@
-import SubmitForm from '@components/reusable/SubmitForm';
+"use client";
+import { useState } from "react";
+
+import SubmitForm from "@components/reusable/SubmitForm";
 
 function SubmitFormWrapper({ isOpen, onOpen }) {
+  const [step, setStep] = useState(1);
+
   return (
     <div className="w-full">
-      <button className="w-full p-4 bg-green-500" onClick={onOpen}>
-        {!isOpen ? 'Apply!' : 'Go Back'}
+      <button className="w-full bg-green-500 p-4" onClick={onOpen}>
+        {!isOpen ? "Apply!" : "Go Back"}
       </button>
-      {isOpen && <SubmitForm />}
+      {isOpen && <SubmitForm step={step} setStep={setStep} />}
     </div>
   );
 }
