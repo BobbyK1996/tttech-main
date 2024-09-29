@@ -11,8 +11,11 @@ export function validateNumber(value, name, notes = '') {
     value !== undefined &&
     (value === null || typeof value !== 'number' || isNaN(value))
   ) {
-    throw new Error(`${name} must be a number. ${notes}.`);
+    console.error(`${name} must be a number. ${notes}.`);
+    return false;
   }
+
+  return value !== undefined;
 }
 
 export function validateObject(value, name, notes = '') {
@@ -33,7 +36,7 @@ export function isValidEmail(email) {
   const isValidString = validateString(
     email,
     'Email',
-    'Please provide a valid email address as a string'
+    'Please provide a valid email address as a string',
   );
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -72,7 +75,7 @@ export function isValidGMapsLink(addressLink) {
   const isValidString = validateString(
     addressLink,
     'Address Link',
-    'Please provide a valid Google Maps share URL as a string'
+    'Please provide a valid Google Maps share URL as a string',
   );
 
   const googleMapsPattern = /^https:\/\/maps\.app\.goo\.gl\/.+/;
@@ -84,7 +87,7 @@ export function isValidPhoneNumber(phoneNumber) {
   const isValidString = validateString(
     phoneNumber,
     'Phone Number',
-    'Please provide a valid UK phone number as a string'
+    'Please provide a valid UK phone number as a string',
   );
 
   //Allows 0XXXXXXXXXX and +44XXXXXXXXXX

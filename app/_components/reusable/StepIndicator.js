@@ -1,7 +1,18 @@
+import { validateNumber } from '@lib/helperShared';
 import { useState } from 'react';
 
 function StepIndicator({ step, setStep, length = 3 }) {
+  const isValidLength = validateNumber(length, 'Length');
+  if (!isValidLength)
+    throw new Error('Invalid length prop. Please provide a numerical value');
+
   const [formStep, setFormStep] = useState(step || 1);
+
+  const isValidStep = validateNumber(formStep, 'Step');
+  if (!isValidStep)
+    throw new Error(
+      'Invalid step prop. Please provide step with a numerical value',
+    );
 
   const currentStep = step !== undefined ? step : formStep;
   const currentSetStep = setStep !== undefined ? setStep : setFormStep;

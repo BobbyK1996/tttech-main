@@ -3,7 +3,7 @@
 import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 
 import Button from '@components/reusable/Button';
-import StepIndicator from './StepIndicator';
+import StepIndicator from '@components/reusable/StepIndicator';
 
 const messages = ['Required', 'Optional (but helpful!)', 'Review & Submit'];
 
