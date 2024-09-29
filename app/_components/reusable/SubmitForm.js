@@ -3,6 +3,7 @@
 import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 
 import Button from '@components/reusable/Button';
+import StepIndicator from './StepIndicator';
 
 const messages = ['Required', 'Optional (but helpful!)', 'Review & Submit'];
 
@@ -36,41 +37,7 @@ function SubmitForm({ step, setStep }) {
 
   return (
     <div className='relative flex flex-col gap-10 px-10 py-14'>
-      <ul className='relative mx-auto flex w-full max-w-xl justify-between'>
-        <li
-          className={`relative z-10 flex aspect-square h-10 cursor-pointer items-center justify-center rounded-full text-2xl duration-300 ${
-            step >= 1
-              ? 'bg-accent-500 text-white'
-              : 'bg-stone-400 hover:bg-primary-500'
-          }`}
-          onClick={() => setStep(1)}
-        >
-          1
-        </li>
-        <li
-          className={`z-10 flex aspect-square h-10 cursor-pointer items-center justify-center rounded-full text-2xl duration-300 ${
-            step >= 2
-              ? 'bg-accent-500 text-white'
-              : 'bg-stone-400 hover:bg-primary-500'
-          }`}
-          onClick={() => setStep(2)}
-        >
-          2
-        </li>
-        <li
-          className={`z-10 flex aspect-square h-10 cursor-pointer items-center justify-center rounded-full text-2xl duration-300 ${
-            step >= 3
-              ? 'bg-accent-500 text-white'
-              : 'bg-stone-400 hover:bg-primary-500'
-          }`}
-          onClick={() => setStep(3)}
-        >
-          3
-        </li>
-        <li
-          className={`absolute left-1 top-1/2 h-2 w-[calc(100%-10px)] origin-top-left -translate-y-1/2 transform bg-accent-500 duration-300 ${step >= 2 ? `scale-x-[${50 * (step - 1)}%]` : 'scale-x-0'}`}
-        ></li>
-      </ul>
+      <StepIndicator step={step} setStep={setStep} />
 
       <StepMessage>{messages[step - 1]}</StepMessage>
 
