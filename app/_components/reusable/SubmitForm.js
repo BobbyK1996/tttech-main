@@ -2,6 +2,8 @@
 
 import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 
+import Button from '@components/reusable/Button';
+
 const messages = ['Required', 'Optional (but helpful!)', 'Review & Submit'];
 
 const formItemStyles =
@@ -15,17 +17,13 @@ function StepMessage({ children }) {
   );
 }
 
-function Button({ bgColor, textColor, onClick, customCSS, children }) {
-  return (
-    <button
-      className={`absolute ${customCSS}`}
-      style={{ backgroundColor: bgColor, color: textColor }}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
+// function Button({ onClick, customCSS, children }) {
+//   return (
+//     <button className={`absolute ${customCSS}`} onClick={onClick}>
+//       {children}
+//     </button>
+//   );
+// }
 
 function SubmitForm({ step, setStep }) {
   const handlePrevious = () => {
@@ -79,8 +77,8 @@ function SubmitForm({ step, setStep }) {
       <div className='relative'>
         {step > 1 && (
           <Button
-            textColor='#fff'
             onClick={handlePrevious}
+            type='arrow'
             customCSS='left-0 bottom-1/2 -translate-y-1/2  rounded-tl-full rounded-bl-full bg-accent-500 hover:bg-primary-500 duration-300'
           >
             <span className='text-4xl'>
@@ -91,8 +89,8 @@ function SubmitForm({ step, setStep }) {
 
         {step < 3 && (
           <Button
-            textColor='#fff'
             onClick={handleNext}
+            type='arrow'
             customCSS='right-0 bottom-1/2 -translate-y-1/2 rounded-tr-full rounded-br-full bg-accent-500 hover:bg-primary-500 duration-300'
           >
             <span className='text-4xl'>
