@@ -1,9 +1,7 @@
 'use client';
 
-import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
-
-import Button from '@components/reusable/Button';
 import StepIndicator from '@components/reusable/StepIndicator';
+import StepArrowButtons from './StepArrowButtons';
 
 const messages = ['Required', 'Optional (but helpful!)', 'Review & Submit'];
 
@@ -18,23 +16,7 @@ function StepMessage({ children }) {
   );
 }
 
-// function Button({ onClick, customCSS, children }) {
-//   return (
-//     <button className={`absolute ${customCSS}`} onClick={onClick}>
-//       {children}
-//     </button>
-//   );
-// }
-
 function SubmitForm({ step, setStep }) {
-  const handlePrevious = () => {
-    if (step > 1) setStep(step - 1);
-  };
-
-  const handleNext = () => {
-    if (step < 3) setStep(step + 1);
-  };
-
   return (
     <div className='relative flex flex-col gap-10 px-10 py-14'>
       <StepIndicator step={step} setStep={setStep} />
@@ -42,29 +24,8 @@ function SubmitForm({ step, setStep }) {
       <StepMessage>{messages[step - 1]}</StepMessage>
 
       <div className='relative'>
-        {step > 1 && (
-          <Button
-            onClick={handlePrevious}
-            type='arrow'
-            customCSS='left-0 bottom-1/2 -translate-y-1/2  rounded-tl-full rounded-bl-full bg-accent-500 hover:bg-primary-500 duration-300'
-          >
-            <span className='text-4xl'>
-              <MdNavigateBefore />
-            </span>
-          </Button>
-        )}
+        <StepArrowButtons />
 
-        {step < 3 && (
-          <Button
-            onClick={handleNext}
-            type='arrow'
-            customCSS='right-0 bottom-1/2 -translate-y-1/2 rounded-tr-full rounded-br-full bg-accent-500 hover:bg-primary-500 duration-300'
-          >
-            <span className='text-4xl'>
-              <MdNavigateNext />
-            </span>
-          </Button>
-        )}
         <form className='mx-auto flex max-w-2xl flex-col gap-12 text-black'>
           <div className='flex w-full gap-10'>
             <div className='w-full'>

@@ -44,6 +44,5 @@ function StepIndicator({ step, setStep, length = 3 }) {
     </ul>
   );
 }
-// ${currentStep >= 2 ? `scale-x-[${50 * (currentStep - 1)}%]` : 'scale-x-0'}
 
 export default StepIndicator;
