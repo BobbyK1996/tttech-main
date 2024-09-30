@@ -24,8 +24,7 @@ function SubmitForm({ step, setStep }) {
       <StepMessage>{messages[step - 1]}</StepMessage>
 
       <div className='relative'>
-        <StepArrowButtons />
-
+        <StepArrowButtons step={step} setStep={setStep} />
         <form className='mx-auto flex max-w-2xl flex-col gap-12 text-black'>
           <div className='flex w-full gap-10'>
             <div className='w-full'>
