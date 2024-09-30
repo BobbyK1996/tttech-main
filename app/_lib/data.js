@@ -245,3 +245,9 @@ export const EMPLOYEE_DATA = [
     url: 'https://www.google.com',
   },
 ];
+
+export const SUBMIT_FORM_MESSAGES = [
+  'Required',
+  'Optional (but helpful!)',
+  'Review & Submit',
+];

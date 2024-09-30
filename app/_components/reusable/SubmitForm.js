@@ -1,9 +1,10 @@
 'use client';
 
-import StepIndicator from '@components/reusable/StepIndicator';
-import StepArrowButtons from './StepArrowButtons';
+import { SUBMIT_FORM_MESSAGES as messages } from '@lib/data';
 
-const messages = ['Required', 'Optional (but helpful!)', 'Review & Submit'];
+import StepIndicator from '@components/reusable/StepIndicator';
+import StepArrowButtons from '@components/reusable/StepArrowButtons';
+import { useState } from 'react';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
@@ -17,6 +18,17 @@ function StepMessage({ children }) {
 }
 
 function SubmitForm({ step, setStep }) {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file.name);
+    } else {
+      setSelectedFile(null);
+    }
+  };
+
   return (
     <div className='relative flex flex-col gap-10 px-10 py-14'>
       <StepIndicator step={step} setStep={setStep} />
@@ -25,6 +37,7 @@ function SubmitForm({ step, setStep }) {
 
       <div className='relative'>
         <StepArrowButtons step={step} setStep={setStep} />
+
         <form className='mx-auto flex max-w-2xl flex-col gap-12 text-black'>
           <div className='flex w-full gap-10'>
             <div className='w-full'>
@@ -82,6 +95,21 @@ function SubmitForm({ step, setStep }) {
             autoComplete='email'
             className={formItemStyles}
           />
+
+          <label htmlFor='file-upload' className='hidden'></label>
+          <input
+            type='file'
+            id='file-upload'
+            aria-label='Upload File'
+            accept='.pdf, .doc, .docx'
+            onChange={handleFileChange}
+          />
+
+          {selectedFile && (
+            <p className='mt-2 text-green-500'>
+              Selected file: <strong>{selectedFile}</strong>
+            </p>
+          )}
         </form>
       </div>
     </div>
