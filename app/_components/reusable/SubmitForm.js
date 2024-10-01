@@ -1,10 +1,12 @@
 'use client';
 
+import { useRef, useState } from 'react';
+
 import { SUBMIT_FORM_MESSAGES as messages } from '@lib/data';
+import useSwipe from '@lib/hooks/useSwipe';
 
 import StepIndicator from '@components/reusable/StepIndicator';
 import StepArrowButtons from '@components/reusable/StepArrowButtons';
-import { useEffect, useState } from 'react';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
@@ -19,6 +21,7 @@ function StepMessage({ children }) {
 
 function SubmitForm({ step, setStep }) {
   const [selectedFile, setSelectedFile] = useState(null);
+  const formRef = useRef(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -29,99 +32,12 @@ function SubmitForm({ step, setStep }) {
     }
   };
 
-  const isInputField = (target) => {
-    return target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
-  };
-
-  useEffect(() => {
-    let startX = 0;
-    let currentX = 0;
-    let isSwiping = false;
-
-    const formElement = document.getElementById('form-swipe-container');
-
-    const handleStart = (x) => {
-      startX = x;
-      currentX = x;
-      isSwiping = true;
-    };
-
-    const handleMove = (x) => {
-      if (!isSwiping || !formElement) return;
-
-      currentX = x;
-
-      if (Math.abs(currentX - startX) > 50) {
-        formElement.style.opacity = 0.5;
-        formElement.style.scale = 0.98;
-      }
-    };
-
-    const handleEnd = (e) => {
-      if (!formElement) return;
-
-      const swipeDistance = startX - currentX;
-      formElement.style.opacity = 1;
-      formElement.style.scale = 1;
-
-      if (swipeDistance > 50 && step < 3) {
-        setStep(step + 1);
-      }
-
-      if (swipeDistance < -50 && step > 1) {
-        setStep(step - 1);
-      }
-
-      isSwiping = false;
-    };
-
-    const handleTouchStart = (e) => {
-      if (isInputField(e.target)) return;
-      handleStart(e.touches[0].clientX);
-    };
-    const handleTouchMove = (e) => {
-      if (isInputField(e.target)) return;
-      handleMove(e.touches[0].clientX);
-    };
-
-    const handleMouseStart = (e) => {
-      if (isInputField(e.target)) return;
-      handleStart(e.clientX);
-    };
-    const handleMouseMove = (e) => {
-      if (isInputField(e.target)) return;
-      handleMove(e.clientX);
-    };
-
-    if (formElement) {
-      formElement.addEventListener('mousedown', handleMouseStart);
-      formElement.addEventListener('mousemove', handleMouseMove);
-      formElement.addEventListener('mouseup', handleEnd);
-      formElement.addEventListener('mouseleave', handleEnd);
-
-      formElement.addEventListener('touchstart', handleTouchStart);
-      formElement.addEventListener('touchmove', handleTouchMove);
-      formElement.addEventListener('touchend', handleEnd);
-    }
-
-    return () => {
-      if (formElement) {
-        formElement.removeEventListener('mousedown', handleMouseStart);
-        formElement.removeEventListener('mousemove', handleMouseMove);
-        formElement.removeEventListener('mouseup', handleEnd);
-        formElement.removeEventListener('mouseleave', handleEnd);
-
-        formElement.removeEventListener('touchstart', handleTouchStart);
-        formElement.removeEventListener('touchmove', handleTouchMove);
-        formElement.removeEventListener('touchend', handleEnd);
-      }
-    };
-  }, [step, setStep]);
+  useSwipe(formRef.current, step, setStep);
 
   return (
     <div
       className='relative flex flex-col gap-10 px-10 duration-200 select-none py-14'
-      id='form-swipe-container'
+      ref={formRef}
     >
       <StepIndicator step={step} setStep={setStep} />
 

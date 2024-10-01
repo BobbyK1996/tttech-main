@@ -11,13 +11,13 @@ export function useFindCurrentNav() {
 export function validateLinksArray(linksArray) {
   if (!Array.isArray(linksArray) || linksArray.length === 0)
     throw new Error(
-      'linksArray not present. Please include to use this component'
+      'linksArray not present. Please include to use this component',
     );
 
   linksArray.forEach(({ name, address }) => {
     if (typeof name !== 'string' || typeof address !== 'string') {
       throw new Error(
-        "Please provide a linksArray with valid values in the form of a string. The format for linksArray should be [{name: '', address: ''}]"
+        "Please provide a linksArray with valid values in the form of a string. The format for linksArray should be [{name: '', address: ''}]",
       );
     }
   });
@@ -45,7 +45,11 @@ export function validateColors(colors = {}) {
     ].every((color) => typeof color === 'string')
   ) {
     throw new Error(
-      "All color properties must be strings in the form of 'hover:bg-' or 'bg-' or 'hover:text-' or 'text-'"
+      "All color properties must be strings in the form of 'hover:bg-' or 'bg-' or 'hover:text-' or 'text-'",
     );
   }
+}
+
+export function isInputField(target) {
+  return target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
 }
