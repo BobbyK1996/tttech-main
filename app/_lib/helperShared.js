@@ -18,6 +18,27 @@ export function validateNumber(value, name, notes = '') {
   return value !== undefined;
 }
 
+export function validateFunction(value, name, notes = '') {
+  if (value !== undefined && (value === null || typeof value !== 'function')) {
+    console.error(`${name} must be a function. ${notes}.`);
+    return false;
+  }
+
+  return value !== undefined;
+}
+
+export function validateHTMLElement(value, name, notes = '') {
+  if (
+    value !== undefined &&
+    (value === null || !(value instanceof HTMLElement))
+  ) {
+    console.error(`${name} must be a valid HTML element. ${notes}.`);
+    return false;
+  }
+
+  return value !== undefined;
+}
+
 export function validateObject(value, name, notes = '') {
   if (typeof value !== 'object' || value === null) {
     throw new Error(`${name} must be an object. ${notes}.`);
