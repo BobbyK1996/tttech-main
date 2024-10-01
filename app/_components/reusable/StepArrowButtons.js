@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 
-import { validateNumber } from '@lib/helperShared';
+import { validateNumber, validateString } from '@lib/helperShared';
 
 import Button from '@components/reusable/Button';
 
-function StepArrowButtons({ step, setStep, maxSteps = 3 }) {
+function StepArrowButtons({ step, setStep, maxSteps = 3, customCSS = '' }) {
   const isValidMaxSteps = validateNumber(maxSteps, 'Max Step');
   if (!isValidMaxSteps || maxSteps < 1)
     throw new Error(
       'Invalid maxSteps prop. Please provide a numerical value greater than one',
     );
+
+  //don't care if CSS is undefined or an empty string
+  validateString(customCSS, 'CustomCSS');
 
   const [formStep, setFormStep] = useState(step || 1);
 
@@ -37,7 +40,7 @@ function StepArrowButtons({ step, setStep, maxSteps = 3 }) {
         <Button
           onClick={handlePrevious}
           type='arrow'
-          customCSS='left-0 bottom-1/2 -translate-y-1/2  rounded-tl-full rounded-bl-full bg-accent-500 hover:bg-primary-500 duration-300'
+          customCSS={`left-0 bottom-1/2 -translate-y-1/2  rounded-tl-full rounded-bl-full bg-accent-500 hover:bg-primary-500 duration-300 ${customCSS}`}
         >
           <span className='text-4xl'>
             <MdNavigateBefore />
@@ -49,7 +52,7 @@ function StepArrowButtons({ step, setStep, maxSteps = 3 }) {
         <Button
           onClick={handleNext}
           type='arrow'
-          customCSS='right-0 bottom-1/2 -translate-y-1/2 rounded-tr-full rounded-br-full bg-accent-500 hover:bg-primary-500 duration-300'
+          customCSS={`right-0 bottom-1/2 -translate-y-1/2 rounded-tr-full rounded-br-full bg-accent-500 hover:bg-primary-500 duration-300 ${customCSS}`}
         >
           <span className='text-4xl'>
             <MdNavigateNext />

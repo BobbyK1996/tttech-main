@@ -246,8 +246,4 @@ export const EMPLOYEE_DATA = [
   },
 ];
 
-export const SUBMIT_FORM_MESSAGES = [
-  'Required',
-  'Optional (but helpful!)',
-  'Review & Submit',
-];
+export const SUBMIT_FORM_MESSAGES = ['Required', 'Optional', 'Review & Submit'];
