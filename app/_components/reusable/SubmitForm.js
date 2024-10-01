@@ -37,18 +37,27 @@ function SubmitForm({ step, setStep }) {
 
     const handleTouchStart = (e) => {
       touchStartX = e.touches[0].clientX;
+      currentTouchX = e.touches[0].clientX;
+      console.log('Touch started');
     };
 
     const handleTouchMove = (e) => {
       currentTouchX = e.touches[0].clientX;
 
-      if (formElement) {
+      if (
+        formElement &&
+        (currentTouchX > touchStartX + 50 || currentTouchX < touchStartX - 50)
+      ) {
         formElement.style.opacity = 0.5;
       }
+
+      console.log('Touch moving');
     };
 
     const handleTouchEnd = (e) => {
       const swipeDistance = touchStartX - currentTouchX;
+
+      console.log('Touch finished');
 
       if (formElement) {
         formElement.style.opacity = 1;
