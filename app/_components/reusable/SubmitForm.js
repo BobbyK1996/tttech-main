@@ -29,19 +29,31 @@ function SubmitForm({ step, setStep }) {
     }
   };
 
+  const isInputField = (target) => {
+    return target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
+  };
+
   useEffect(() => {
     let touchStartX = 0;
     let currentTouchX = 0;
 
+    let mouseStartX = 0;
+    let currentMouseX = 0;
+
+    let isSwiping = false;
+
     const formElement = document.getElementById('form-swipe-container');
 
     const handleTouchStart = (e) => {
+      if (isInputField(e.target)) return;
+
       touchStartX = e.touches[0].clientX;
       currentTouchX = e.touches[0].clientX;
-      console.log('Touch started');
     };
 
     const handleTouchMove = (e) => {
+      if (isInputField(e.target)) return;
+
       currentTouchX = e.touches[0].clientX;
 
       if (
@@ -49,18 +61,16 @@ function SubmitForm({ step, setStep }) {
         (currentTouchX > touchStartX + 50 || currentTouchX < touchStartX - 50)
       ) {
         formElement.style.opacity = 0.5;
+        formElement.style.scale = 0.98;
       }
-
-      console.log('Touch moving');
     };
 
     const handleTouchEnd = (e) => {
       const swipeDistance = touchStartX - currentTouchX;
 
-      console.log('Touch finished');
-
       if (formElement) {
         formElement.style.opacity = 1;
+        formElement.style.scale = 1;
       }
 
       if (swipeDistance > 50 && step < 3) {
@@ -72,7 +82,55 @@ function SubmitForm({ step, setStep }) {
       }
     };
 
+    const handleMouseStart = (e) => {
+      if (isInputField(e.target)) return;
+
+      mouseStartX = e.clientX;
+      currentMouseX = e.clientX;
+
+      isSwiping = true;
+    };
+
+    const handleMouseMove = (e) => {
+      if (isInputField(e.target)) return;
+
+      currentMouseX = e.clientX;
+
+      if (
+        formElement &&
+        isSwiping &&
+        (currentMouseX > mouseStartX + 50 || currentMouseX < mouseStartX - 50)
+      ) {
+        formElement.style.opacity = 0.5;
+        formElement.style.scale = 0.98;
+      }
+    };
+
+    const handleMouseEnd = (e) => {
+      const mouseSwipeDistance = mouseStartX - currentMouseX;
+
+      if (formElement) {
+        formElement.style.opacity = 1;
+        formElement.style.scale = 1;
+      }
+
+      if (mouseSwipeDistance > 50 && step < 3 && isSwiping) {
+        setStep(step + 1);
+      }
+
+      if (mouseSwipeDistance < -50 && step > 1 && isSwiping) {
+        setStep(step - 1);
+      }
+
+      isSwiping = false;
+    };
+
     if (formElement) {
+      formElement.addEventListener('mousedown', handleMouseStart);
+      formElement.addEventListener('mousemove', handleMouseMove);
+      formElement.addEventListener('mouseup', handleMouseEnd);
+      formElement.addEventListener('mouseleave', handleMouseEnd);
+
       formElement.addEventListener('touchstart', handleTouchStart);
       formElement.addEventListener('touchmove', handleTouchMove);
       formElement.addEventListener('touchend', handleTouchEnd);
@@ -80,6 +138,11 @@ function SubmitForm({ step, setStep }) {
 
     return () => {
       if (formElement) {
+        formElement.removeEventListener('mousedown', handleMouseStart);
+        formElement.removeEventListener('mousemove', handleMouseMove);
+        formElement.removeEventListener('mouseup', handleMouseEnd);
+        formElement.removeEventListener('mouseleave', handleMouseEnd);
+
         formElement.removeEventListener('touchstart', handleTouchStart);
         formElement.removeEventListener('touchmove', handleTouchMove);
         formElement.removeEventListener('touchend', handleTouchEnd);
@@ -89,7 +152,7 @@ function SubmitForm({ step, setStep }) {
 
   return (
     <div
-      className='relative flex flex-col gap-10 px-10 duration-200 py-14'
+      className='relative flex flex-col gap-10 px-10 duration-200 select-none py-14'
       id='form-swipe-container'
     >
       <StepIndicator step={step} setStep={setStep} />
