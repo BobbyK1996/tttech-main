@@ -34,44 +34,35 @@ function SubmitForm({ step, setStep }) {
   };
 
   useEffect(() => {
-    let touchStartX = 0;
-    let currentTouchX = 0;
-
-    let mouseStartX = 0;
-    let currentMouseX = 0;
-
+    let startX = 0;
+    let currentX = 0;
     let isSwiping = false;
 
     const formElement = document.getElementById('form-swipe-container');
 
-    const handleTouchStart = (e) => {
-      if (isInputField(e.target)) return;
-
-      touchStartX = e.touches[0].clientX;
-      currentTouchX = e.touches[0].clientX;
+    const handleStart = (x) => {
+      startX = x;
+      currentX = x;
+      isSwiping = true;
     };
 
-    const handleTouchMove = (e) => {
-      if (isInputField(e.target)) return;
+    const handleMove = (x) => {
+      if (!isSwiping || !formElement) return;
 
-      currentTouchX = e.touches[0].clientX;
+      currentX = x;
 
-      if (
-        formElement &&
-        (currentTouchX > touchStartX + 50 || currentTouchX < touchStartX - 50)
-      ) {
+      if (Math.abs(currentX - startX) > 50) {
         formElement.style.opacity = 0.5;
         formElement.style.scale = 0.98;
       }
     };
 
-    const handleTouchEnd = (e) => {
-      const swipeDistance = touchStartX - currentTouchX;
+    const handleEnd = (e) => {
+      if (!formElement) return;
 
-      if (formElement) {
-        formElement.style.opacity = 1;
-        formElement.style.scale = 1;
-      }
+      const swipeDistance = startX - currentX;
+      formElement.style.opacity = 1;
+      formElement.style.scale = 1;
 
       if (swipeDistance > 50 && step < 3) {
         setStep(step + 1);
@@ -80,72 +71,49 @@ function SubmitForm({ step, setStep }) {
       if (swipeDistance < -50 && step > 1) {
         setStep(step - 1);
       }
+
+      isSwiping = false;
+    };
+
+    const handleTouchStart = (e) => {
+      if (isInputField(e.target)) return;
+      handleStart(e.touches[0].clientX);
+    };
+    const handleTouchMove = (e) => {
+      if (isInputField(e.target)) return;
+      handleMove(e.touches[0].clientX);
     };
 
     const handleMouseStart = (e) => {
       if (isInputField(e.target)) return;
-
-      mouseStartX = e.clientX;
-      currentMouseX = e.clientX;
-
-      isSwiping = true;
+      handleStart(e.clientX);
     };
-
     const handleMouseMove = (e) => {
       if (isInputField(e.target)) return;
-
-      currentMouseX = e.clientX;
-
-      if (
-        formElement &&
-        isSwiping &&
-        (currentMouseX > mouseStartX + 50 || currentMouseX < mouseStartX - 50)
-      ) {
-        formElement.style.opacity = 0.5;
-        formElement.style.scale = 0.98;
-      }
-    };
-
-    const handleMouseEnd = (e) => {
-      const mouseSwipeDistance = mouseStartX - currentMouseX;
-
-      if (formElement) {
-        formElement.style.opacity = 1;
-        formElement.style.scale = 1;
-      }
-
-      if (mouseSwipeDistance > 50 && step < 3 && isSwiping) {
-        setStep(step + 1);
-      }
-
-      if (mouseSwipeDistance < -50 && step > 1 && isSwiping) {
-        setStep(step - 1);
-      }
-
-      isSwiping = false;
+      handleMove(e.clientX);
     };
 
     if (formElement) {
       formElement.addEventListener('mousedown', handleMouseStart);
       formElement.addEventListener('mousemove', handleMouseMove);
-      formElement.addEventListener('mouseup', handleMouseEnd);
-      formElement.addEventListener('mouseleave', handleMouseEnd);
+      formElement.addEventListener('mouseup', handleEnd);
+      formElement.addEventListener('mouseleave', handleEnd);
 
       formElement.addEventListener('touchstart', handleTouchStart);
       formElement.addEventListener('touchmove', handleTouchMove);
-      formElement.addEventListener('touchend', handleTouchEnd);
+      formElement.addEventListener('touchend', handleEnd);
     }
 
     return () => {
       if (formElement) {
         formElement.removeEventListener('mousedown', handleMouseStart);
         formElement.removeEventListener('mousemove', handleMouseMove);
-        formElement.removeEventListener('mouseup', handleMouseEnd);
-        formElement.removeEventListener('mouseleave', handleMouseEnd);
+        formElement.removeEventListener('mouseup', handleEnd);
+        formElement.removeEventListener('mouseleave', handleEnd);
 
         formElement.removeEventListener('touchstart', handleTouchStart);
         formElement.removeEventListener('touchmove', handleTouchMove);
-        formElement.removeEventListener('touchend', handleTouchEnd);
+        formElement.removeEventListener('touchend', handleEnd);
       }
     };
   }, [step, setStep]);
