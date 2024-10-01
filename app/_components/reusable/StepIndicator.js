@@ -20,7 +20,7 @@ function StepIndicator({ step, setStep, length = 3 }) {
   const progressPercentage = (100 / (length - 1)) * (currentStep - 1);
 
   return (
-    <ul className='relative mx-auto flex w-full max-w-xl justify-between'>
+    <ul className='relative flex justify-between w-full max-w-xl mx-auto'>
       {Array.from({ length: length }, (_, index) => (
         <li
           key={index}
