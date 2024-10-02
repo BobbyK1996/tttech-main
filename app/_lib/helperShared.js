@@ -77,6 +77,32 @@ export function isValidName(name) {
   );
 }
 
+export function isValidJobTitle(title) {
+  const isValidString = validateString(title, 'Title');
+
+  const jobPattern = /^[a-zA-Z0-9\s\-'.()&]+$/;
+
+  return (
+    !(title.length < 3 || title.length > 100) &&
+    jobPattern.test(title) &&
+    isValidString
+  );
+}
+
+export function isValidUrl(url, linkedin = false) {
+  const isValidString = validateString(url, 'url');
+  const isValidLinkedinBoolean = typeof linkedin === 'boolean';
+
+  if (!isValidLinkedinBoolean)
+    throw new Error('The "linkedin" parameter must be a boolean');
+
+  const urlPattern = linkedin
+    ? /^(https?:\/\/)?(www\.)?(linkedin\.com)?\/in\/[a-zA-Z0-9-]+\/?$/
+    : /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
+
+  return url.length <= 256 && urlPattern.test(url) && isValidString;
+}
+
 export function isValidType(type, validTypes = []) {
   if (!Array.isArray(validTypes))
     throw new Error('validTypes must be an array');
@@ -111,11 +137,8 @@ export function isValidPhoneNumber(phoneNumber) {
     'Please provide a valid UK phone number as a string',
   );
 
-  //Allows 0XXXXXXXXXX and +44XXXXXXXXXX
-  // const phonePattern = /^(?:0\d{10}|\+44\d{10})$/;
-
-  //Allows 0XXXXXXXXXX, +44XXXXXXXXXX, 0XXX XXX XXXX and +44XXX XXX XXXX
-  const phonePattern = /^(?:0\d{3}\s?\d{3}\s?\d{4}|\+44\d{3}\s?\d{3}\s?\d{4})$/;
+  const phonePattern =
+    /^(?:0\d{3}\s?\d{3}\s?\d{4}|(?:\+?44)\d{3}\s?\d{3}\s?\d{4})$/;
 
   return phonePattern.test(phoneNumber) && isValidString;
 }
