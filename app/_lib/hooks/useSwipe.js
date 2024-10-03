@@ -7,8 +7,10 @@ import {
   validateNumber,
 } from '../helperShared';
 
-function useSwipe(htmlElement, step, setStep) {
+function useSwipe(ref, step, setStep) {
   useEffect(() => {
+    const htmlElement = ref.current;
+
     if (!htmlElement) return;
 
     const isValidStep = validateNumber(step, 'Step');
@@ -49,11 +51,11 @@ function useSwipe(htmlElement, step, setStep) {
       htmlElement.style.transform = 'scale(1)';
 
       if (swipeDistance > 50 && step < 3) {
-        setStep(step + 1);
+        setStep((previous) => previous + 1);
       }
 
       if (swipeDistance < -50 && step > 1) {
-        setStep(step - 1);
+        setStep((previous) => previous - 1);
       }
 
       isSwiping = false;
@@ -102,7 +104,7 @@ function useSwipe(htmlElement, step, setStep) {
         htmlElement.removeEventListener('touchend', handleEnd);
       }
     };
-  }, [step, setStep, htmlElement]);
+  }, [step, setStep]);
 }
 
 export default useSwipe;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SUBMIT_FORM_MESSAGES as messages } from '@lib/data';
 import useSwipe from '@lib/hooks/useSwipe';
@@ -19,15 +19,16 @@ function StepMessage({ children }) {
 
 function SubmitForm({ step, setStep }) {
   const formRef = useRef(null);
+  console.log(formRef);
 
-  useSwipe(formRef.current, step, setStep);
+  useSwipe(formRef, step, setStep);
 
   return (
     <div
       className='relative flex select-none flex-col gap-10 px-10 py-14 duration-200'
       ref={formRef}
     >
-      <StepIndicator step={step} setStep={setStep} />
+      <StepIndicator step={step} setStep={setStep} formRef={formRef} />
 
       <StepMessage>{messages[step - 1]}</StepMessage>
 

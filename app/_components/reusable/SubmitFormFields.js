@@ -17,7 +17,7 @@ const initialState = {
   formData: {
     givenName: '',
     surname: '',
-    number: null,
+    number: '',
     email: '',
     resumeFile: null,
     currentJobTitle: '',
@@ -78,17 +78,6 @@ const reducer = (state, action) => {
 
 function SubmitFormFields({ step }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  // const [selectedFile, setSelectedFile] = useState(null);
-
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setSelectedFile(file.name);
-  //   } else {
-  //     setSelectedFile(null);
-  //   }
-  // };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -293,3 +282,14 @@ function SubmitFormFields({ step }) {
 }
 
 export default SubmitFormFields;
+
+// const [selectedFile, setSelectedFile] = useState(null);
+
+// const handleFileChange = (e) => {
+//   const file = e.target.files[0];
+//   if (file) {
+//     setSelectedFile(file.name);
+//   } else {
+//     setSelectedFile(null);
+//   }
+// };
