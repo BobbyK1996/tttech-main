@@ -1,5 +1,6 @@
 'use client';
 
+import { useSubmitForm } from '@/app/context/SubmitFormContext';
 import {
   isValidEmail,
   isValidJobTitle,
@@ -7,77 +8,13 @@ import {
   isValidName,
   isValidPhoneNumber,
   isValidUrl,
-} from '@/app/_lib/helperShared';
-import { useReducer } from 'react';
+} from '@lib/helperShared';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
 
-const initialState = {
-  formData: {
-    givenName: '',
-    surname: '',
-    number: '',
-    email: '',
-    resumeFile: null,
-    currentJobTitle: '',
-    linkedinLink: '',
-    portfolioLink: '',
-    message: '',
-  },
-  recaptchaToken: null,
-  isSubmitting: false,
-  sendStatus: null,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_FORM_DATA':
-      return {
-        ...state,
-        formData: {
-          ...state.formData,
-          [action.payload.name]: action.payload.value,
-        },
-      };
-    case 'SET_RECAPTCHA_TOKEN':
-      return {
-        ...state,
-        recaptchaToken: action.payload,
-      };
-    case 'SET_IS_SUBMITTING':
-      return {
-        ...state,
-        isSubmitting: action.payload,
-      };
-    case 'SET_SEND_STATUS':
-      return {
-        ...state,
-        sendStatus: action.payload,
-      };
-    case 'RESET_FORM':
-      return {
-        ...state,
-        formData: {
-          givenName: '',
-          surname: '',
-          number: null,
-          email: '',
-          resumeFile: null,
-          currentJobTitle: '',
-          linkedinLink: '',
-          portfolioLink: '',
-          message: '',
-        },
-        recaptchaToken: null,
-      };
-    default:
-      return state;
-  }
-};
-
 function SubmitFormFields({ step }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { state, dispatch } = useSubmitForm();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
