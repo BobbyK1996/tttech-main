@@ -40,9 +40,12 @@ export function validateHTMLElement(value, name, notes = '') {
 }
 
 export function validateObject(value, name, notes = '') {
-  if (typeof value !== 'object' || value === null) {
-    throw new Error(`${name} must be an object. ${notes}.`);
+  if (value !== undefined && (typeof value !== 'object' || value === null)) {
+    console.error(`${name} must be a valid object. ${notes}.`);
+    return false;
   }
+
+  return value !== undefined;
 }
 
 export function convertToHttps(url) {

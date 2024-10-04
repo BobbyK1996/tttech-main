@@ -19,13 +19,12 @@ function StepMessage({ children }) {
 
 function SubmitForm({ step, setStep }) {
   const formRef = useRef(null);
-  console.log(formRef);
 
   useSwipe(formRef, step, setStep);
 
   return (
     <div
-      className='relative flex select-none flex-col gap-10 px-10 py-14 duration-200'
+      className='relative flex select-none flex-col gap-10 px-4 py-14 duration-200 sm:px-10'
       ref={formRef}
     >
       <StepIndicator step={step} setStep={setStep} formRef={formRef} />

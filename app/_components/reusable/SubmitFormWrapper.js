@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 import SubmitForm from '@components/reusable/SubmitForm';
-import { SubmitFormProvider } from '@/app/context/SubmitFormContext';
+import { SubmitFormProvider } from '@/app/context/submitFormContext';
 
 function SubmitFormWrapper({ isOpen, onOpen }) {
   const [step, setStep] = useState(1);
