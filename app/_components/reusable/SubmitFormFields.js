@@ -19,7 +19,20 @@ function SubmitFormFields({ step }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch({ type: 'SET_FORM_DATA', payload: { name, value } });
+
+    const isValidPrimitive = typeof value === 'string' || value === null;
+
+    if (isValidPrimitive) {
+      dispatch({
+        type: 'SET_FORM_DATA',
+        payload: {
+          name,
+          value: typeof value === 'string' ? value.trim() : null,
+        },
+      });
+    } else {
+      console.error(`${name} should be a valid primitive`);
+    }
   };
 
   return (

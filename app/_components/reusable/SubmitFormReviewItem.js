@@ -3,6 +3,18 @@ import { IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5';
 export const reviewItemStyles = 'text-xl self-start mt-0.5';
 
 function SubmitFormReviewItem({ icon: Icon, label, value, isValid }) {
+  if (typeof label !== 'string') {
+    console.error(
+      `Expected label to be a string but received: ${typeof label}`,
+    );
+  }
+
+  if (typeof isValid !== 'boolean') {
+    console.error(
+      `Expected isValid to be a boolean but received: ${typeof isValid}`,
+    );
+  }
+
   return (
     <>
       <div

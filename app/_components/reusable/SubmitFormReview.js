@@ -6,8 +6,6 @@ import {
   IoLogoLinkedin,
   IoLinkSharp,
   IoReader,
-  IoCheckmarkCircle,
-  IoCloseCircle,
 } from 'react-icons/io5';
 
 import {
@@ -24,8 +22,7 @@ import {
 import SubmitFormReviewItem from '@components/reusable/SubmitFormReviewItem';
 
 function SubmitFormReview({ formData }) {
-  const formDataTrimmed = returnTrimmed(formData);
-  const isValidObject = validateObject(formDataTrimmed, 'formatData');
+  const isValidObject = validateObject(formData, 'formData');
 
   if (!isValidObject)
     console.error(
@@ -43,28 +40,27 @@ function SubmitFormReview({ formData }) {
           icon={IoPersonCircleSharp}
           label='Name'
           value={
-            formDataTrimmed.givenName && formDataTrimmed.surname
-              ? `${formDataTrimmed.givenName} ${formDataTrimmed.surname}`
+            formData.givenName && formData.surname
+              ? `${formData.givenName} ${formData.surname}`
               : null
           }
           isValid={
-            isValidName(formDataTrimmed.givenName) &&
-            isValidName(formDataTrimmed.surname)
+            isValidName(formData.givenName) && isValidName(formData.surname)
           }
         />
 
         <SubmitFormReviewItem
           icon={IoPhonePortrait}
           label='Number'
-          value={formDataTrimmed.number}
-          isValid={isValidPhoneNumber(formDataTrimmed.number)}
+          value={formData.number}
+          isValid={isValidPhoneNumber(formData.number)}
         />
 
         <SubmitFormReviewItem
           icon={IoMail}
           label='Email'
-          value={formDataTrimmed.email}
-          isValid={isValidEmail(formDataTrimmed.email)}
+          value={formData.email}
+          isValid={isValidEmail(formData.email)}
         />
       </div>
 
@@ -75,29 +71,29 @@ function SubmitFormReview({ formData }) {
         <SubmitFormReviewItem
           icon={IoBriefcase}
           label='Current Job Title'
-          value={formDataTrimmed.currentJobTitle}
-          isValid={isValidJobTitle(formDataTrimmed.currentJobTitle)}
+          value={formData.currentJobTitle}
+          isValid={isValidJobTitle(formData.currentJobTitle)}
         />
 
         <SubmitFormReviewItem
           icon={IoLogoLinkedin}
           label='LinkedIn'
-          value={formDataTrimmed.linkedinLink}
-          isValid={isValidUrl(formDataTrimmed.linkedinLink, true)}
+          value={formData.linkedinLink}
+          isValid={isValidUrl(formData.linkedinLink, true)}
         />
 
         <SubmitFormReviewItem
           icon={IoLinkSharp}
           label='Portfolio'
-          value={formDataTrimmed.portfolioLink}
-          isValid={isValidUrl(formDataTrimmed.portfolioLink)}
+          value={formData.portfolioLink}
+          isValid={isValidUrl(formData.portfolioLink)}
         />
 
         <SubmitFormReviewItem
           icon={IoReader}
           label='Message'
-          value={formDataTrimmed.message}
-          isValid={isValidMessage(formDataTrimmed.message)}
+          value={formData.message}
+          isValid={isValidMessage(formData.message)}
         />
       </div>
     </div>
