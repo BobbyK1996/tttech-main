@@ -1,6 +1,8 @@
 import { IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5';
 
-export const reviewItemStyles = 'text-xl self-start mt-0.5';
+const reviewIconStyles = 'text-2xl sm:text-3xl';
+
+const reviewTextStyles = 'text-base sm:text-lg md:text-xl';
 
 function SubmitFormReviewItem({ icon: Icon, label, value, isValid }) {
   if (typeof label !== 'string') {
@@ -18,24 +20,28 @@ function SubmitFormReviewItem({ icon: Icon, label, value, isValid }) {
   return (
     <>
       <div
-        className={`${reviewItemStyles} ${isValid ? 'text-primary-500' : 'text-red-500'}`}
+        className={`${reviewIconStyles} ${isValid ? 'text-primary-500' : 'text-red-500'} self-start`}
       >
         <Icon />
       </div>
 
-      <div className={`${isValid ? 'text-primary-500' : 'text-red-500'}`}>
+      <div
+        className={`${reviewTextStyles} ${isValid ? 'text-primary-500' : 'text-red-500'} self-start`}
+      >
         {`${label}:`}
       </div>
 
-      <div className='line-clamp-6 break-all sm:line-clamp-none'>
+      <div
+        className={`${reviewTextStyles} line-clamp-6 self-start break-all align-text-top sm:line-clamp-none`}
+      >
         {value || '-'}
       </div>
 
-      <div className={reviewItemStyles}>
+      <div className={reviewIconStyles}>
         {isValid ? (
-          <IoCheckmarkCircle className='text-primary-500' />
+          <IoCheckmarkCircle className='align-top text-primary-500' />
         ) : (
-          <IoCloseCircle className='text-red-500' />
+          <IoCloseCircle className='text-red-500 align-top' />
         )}
       </div>
     </>

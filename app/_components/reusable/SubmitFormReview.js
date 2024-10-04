@@ -31,11 +31,11 @@ function SubmitFormReview({ formData }) {
 
   return (
     <div className='text-white'>
-      <h1 className='mb-2 text-2xl font-bold text-accent-500 underline'>
+      <h1 className='mb-2 text-2xl font-bold underline text-accent-500'>
         Required
       </h1>
 
-      <div className='grid grid-cols-[auto,0.25fr,2.5fr,auto] gap-x-2 gap-y-4 sm:gap-x-4 lg:grid-cols-[auto,0.25fr,2.5fr,auto]'>
+      <div className='grid grid-cols-[auto,0.25fr,0.75fr,auto] gap-x-2 gap-y-4 sm:grid-cols-[auto,0.25fr,2.5fr,auto] sm:gap-x-4'>
         <SubmitFormReviewItem
           icon={IoPersonCircleSharp}
           label='Name'
@@ -64,13 +64,13 @@ function SubmitFormReview({ formData }) {
         />
       </div>
 
-      <h1 className='mb-2 mt-6 text-2xl font-bold text-accent-500 underline'>
+      <h1 className='mt-6 mb-2 text-2xl font-bold underline text-accent-500'>
         Optional
       </h1>
-      <div className='xs:grid-cols-[auto,0.25fr,2.5fr,auto] grid grid-cols-[auto,0.25fr,0.75fr,auto] gap-x-2 gap-y-4 sm:gap-x-4 lg:grid-cols-[auto,0.25fr,2.5fr,auto]'>
+      <div className='grid grid-cols-[auto,0.25fr,0.75fr,auto] gap-x-2 gap-y-4 sm:grid-cols-[auto,0.25fr,2.5fr,auto] sm:gap-x-4'>
         <SubmitFormReviewItem
           icon={IoBriefcase}
-          label='Current Job Title'
+          label='Job Title'
           value={formData.currentJobTitle}
           isValid={isValidJobTitle(formData.currentJobTitle)}
         />
