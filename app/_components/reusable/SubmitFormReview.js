@@ -35,7 +35,7 @@ function SubmitFormReview({ formData }) {
         Required
       </h1>
 
-      <div className='grid grid-cols-[0.15fr,0.25fr,2.5fr,0.5fr] gap-x-2 gap-y-4 sm:gap-x-4 lg:grid-cols-[0.1fr,0.25fr,2.5fr,0.5fr]'>
+      <div className='grid grid-cols-[auto,0.25fr,2.5fr,auto] gap-x-2 gap-y-4 sm:gap-x-4 lg:grid-cols-[auto,0.25fr,2.5fr,auto]'>
         <SubmitFormReviewItem
           icon={IoPersonCircleSharp}
           label='Name'
@@ -67,7 +67,7 @@ function SubmitFormReview({ formData }) {
       <h1 className='mb-2 mt-6 text-2xl font-bold text-accent-500 underline'>
         Optional
       </h1>
-      <div className='grid grid-cols-[0.15fr,0.25fr,2.5fr,0.5fr] gap-x-2 gap-y-4 sm:gap-x-4 lg:grid-cols-[0.1fr,0.25fr,2.5fr,0.5fr]'>
+      <div className='xs:grid-cols-[auto,0.25fr,2.5fr,auto] grid grid-cols-[auto,0.25fr,0.75fr,auto] gap-x-2 gap-y-4 sm:gap-x-4 lg:grid-cols-[auto,0.25fr,2.5fr,auto]'>
         <SubmitFormReviewItem
           icon={IoBriefcase}
           label='Current Job Title'

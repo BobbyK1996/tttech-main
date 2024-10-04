@@ -7,9 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      screens: {
-        mdxl: '920px',
-      },
+      screens: {},
       fontFamily: {
         poppins: ['var(--font-poppins)'],
         marcellus: ['var(--font-marcellus)'],

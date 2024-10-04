@@ -27,7 +27,9 @@ function SubmitFormReviewItem({ icon: Icon, label, value, isValid }) {
         {`${label}:`}
       </div>
 
-      <div>{value || '-'}</div>
+      <div className='line-clamp-6 break-all sm:line-clamp-none'>
+        {value || '-'}
+      </div>
 
       <div className={reviewItemStyles}>
         {isValid ? (
