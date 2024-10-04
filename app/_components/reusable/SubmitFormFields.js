@@ -27,12 +27,26 @@ function SubmitFormFields({ step }) {
         type: 'SET_FORM_DATA',
         payload: {
           name,
-          value: typeof value === 'string' ? value.trim() : null,
+          value,
         },
       });
     } else {
       console.error(`${name} should be a valid primitive`);
     }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+
+    const trimmedValue = typeof value === 'string' ? value.trim() : null;
+
+    dispatch({
+      type: 'SET_FORM_DATA',
+      payload: {
+        name,
+        value: trimmedValue,
+      },
+    });
   };
 
   return (
@@ -41,7 +55,7 @@ function SubmitFormFields({ step }) {
     >
       {step === 1 && (
         <>
-          <div className='flex w-full flex-col gap-10 md:flex-row'>
+          <div className='flex flex-col w-full gap-10 md:flex-row'>
             <div className='w-full'>
               <label htmlFor='given-name' className='hidden'>
                 Name
@@ -53,6 +67,7 @@ function SubmitFormFields({ step }) {
                 required
                 value={state.formData.givenName}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder='Given name'
                 autoComplete='given-name'
                 aria-label='Given Name'
@@ -71,6 +86,7 @@ function SubmitFormFields({ step }) {
                 required
                 value={state.formData.surname}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder='Surname'
                 autoComplete='family-name'
                 aria-label='Surname'
@@ -90,6 +106,7 @@ function SubmitFormFields({ step }) {
             required
             value={state.formData.number}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder='Number'
             aria-label='Number'
             aria-required='true'
@@ -113,6 +130,7 @@ function SubmitFormFields({ step }) {
             required
             value={state.formData.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder='Email'
             aria-label='Email'
             aria-required='true'
@@ -159,6 +177,7 @@ function SubmitFormFields({ step }) {
             name='currentJobTitle'
             value={state.formData.currentJobTitle}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder='Current Job Title'
             aria-label='Current Job Title'
             className={`${formItemStyles} ${
@@ -179,6 +198,7 @@ function SubmitFormFields({ step }) {
             name='linkedinLink'
             value={state.formData.linkedinLink}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder='LinkedIn'
             aria-label='LinkedIn Link'
             className={`${formItemStyles} ${
@@ -199,6 +219,7 @@ function SubmitFormFields({ step }) {
             name='portfolioLink'
             value={state.formData.portfolioLink}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder='Digital Portfolio (GitHub, Behance, Dribbble, etc)'
             aria-label='Portfolio Link'
             className={`${formItemStyles} ${
@@ -218,6 +239,7 @@ function SubmitFormFields({ step }) {
             name='message'
             value={state.formData.message}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder='Message (Brief cover letter)'
             aria-label='Message'
             className={`${formItemStyles} ${
