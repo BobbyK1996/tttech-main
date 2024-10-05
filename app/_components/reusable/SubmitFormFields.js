@@ -72,7 +72,7 @@ function SubmitFormFields({ step }) {
                 autoComplete='given-name'
                 aria-label='Given Name'
                 aria-required='true'
-                className={`flex-grow basis-0 ${formItemStyles} ${state.formData.givenName ? (isValidName(state.formData.givenName.trim()) ? 'bg-primary-500' : 'bg-red-500') : 'bg-white'}`}
+                className={`flex-grow basis-0 ${formItemStyles} ${state.formData.givenName ? (isValidName(state.formData.givenName.trim()) ? 'bg-primary-500' : 'bg-red-500') : 'bg-white focus:bg-primary-500 focus:placeholder-white'}`}
               />
             </div>
             <div className='w-full'>
@@ -91,7 +91,7 @@ function SubmitFormFields({ step }) {
                 autoComplete='family-name'
                 aria-label='Surname'
                 aria-required='true'
-                className={`flex-grow basis-0 ${formItemStyles} ${state.formData.surname ? (isValidName(state.formData.surname.trim()) ? 'bg-primary-500' : 'bg-red-500') : 'bg-white'}`}
+                className={`flex-grow basis-0 ${formItemStyles} ${state.formData.surname ? (isValidName(state.formData.surname.trim()) ? 'bg-primary-500' : 'bg-red-500') : 'bg-white focus:bg-primary-500 focus:placeholder-white'}`}
               />
             </div>
           </div>
@@ -116,7 +116,7 @@ function SubmitFormFields({ step }) {
                 ? isValidPhoneNumber(state.formData.number.trim())
                   ? 'bg-primary-500'
                   : 'bg-red-500'
-                : 'bg-white'
+                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
             }`}
           />
 
@@ -140,7 +140,7 @@ function SubmitFormFields({ step }) {
                 ? isValidEmail(state.formData.email.trim())
                   ? 'bg-primary-500'
                   : 'bg-red-500'
-                : 'bg-white'
+                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
             }`}
           />
 
@@ -185,7 +185,7 @@ function SubmitFormFields({ step }) {
                 ? isValidJobTitle(state.formData.currentJobTitle.trim())
                   ? 'bg-primary-500'
                   : 'bg-red-500'
-                : 'bg-white'
+                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
             }`}
           />
 
@@ -206,7 +206,7 @@ function SubmitFormFields({ step }) {
                 ? isValidUrl(state.formData.linkedinLink.trim(), true)
                   ? 'bg-primary-500'
                   : 'bg-red-500'
-                : 'bg-white'
+                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
             }`}
           />
 
@@ -227,7 +227,7 @@ function SubmitFormFields({ step }) {
                 ? isValidUrl(state.formData.portfolioLink.trim())
                   ? 'bg-primary-500'
                   : 'bg-red-500'
-                : 'bg-white'
+                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
             }`}
           />
 
@@ -247,7 +247,7 @@ function SubmitFormFields({ step }) {
                 ? isValidMessage(state.formData.message.trim())
                   ? 'bg-primary-500'
                   : 'bg-red-500'
-                : 'bg-white'
+                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
             }`}
           />
         </>

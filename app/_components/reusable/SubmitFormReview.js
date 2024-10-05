@@ -30,73 +30,89 @@ function SubmitFormReview({ formData }) {
     );
 
   return (
-    <div className='text-white'>
-      <h1 className='mb-2 text-2xl font-bold underline text-accent-500'>
-        Required
-      </h1>
+    <>
+      <section
+        aria-labelledby='form-submit-required-header'
+        className='text-white'
+      >
+        <h2
+          id='form-submit-required-header'
+          className='mb-2 text-2xl font-bold underline text-accent-500'
+        >
+          Required
+        </h2>
 
-      <div className='grid grid-cols-[auto,0.25fr,0.75fr,auto] gap-x-2 gap-y-4 sm:grid-cols-[auto,0.25fr,2.5fr,auto] sm:gap-x-4'>
-        <SubmitFormReviewItem
-          icon={IoPersonCircleSharp}
-          label='Name'
-          value={
-            formData.givenName && formData.surname
-              ? `${formData.givenName} ${formData.surname}`
-              : null
-          }
-          isValid={
-            isValidName(formData.givenName) && isValidName(formData.surname)
-          }
-        />
+        <div className='grid grid-cols-[auto,0.2fr,1fr,auto] gap-x-2 gap-y-4 sm:grid-cols-[auto,minmax(0,1fr),minmax(0,2.5fr),auto] sm:gap-x-4 md:grid-cols-[auto,minmax(0,0.75fr),minmax(0,2.5fr),auto] lg:grid-cols-[auto,minmax(0,0.5fr),minmax(0,2.5fr),auto]'>
+          <SubmitFormReviewItem
+            icon={IoPersonCircleSharp}
+            label='Name'
+            value={
+              formData.givenName && formData.surname
+                ? `${formData.givenName} ${formData.surname}`
+                : null
+            }
+            isValid={
+              isValidName(formData.givenName) && isValidName(formData.surname)
+            }
+          />
 
-        <SubmitFormReviewItem
-          icon={IoPhonePortrait}
-          label='Number'
-          value={formData.number}
-          isValid={isValidPhoneNumber(formData.number)}
-        />
+          <SubmitFormReviewItem
+            icon={IoPhonePortrait}
+            label='Number'
+            value={formData.number}
+            isValid={isValidPhoneNumber(formData.number)}
+          />
 
-        <SubmitFormReviewItem
-          icon={IoMail}
-          label='Email'
-          value={formData.email}
-          isValid={isValidEmail(formData.email)}
-        />
-      </div>
+          <SubmitFormReviewItem
+            icon={IoMail}
+            label='Email'
+            value={formData.email}
+            isValid={isValidEmail(formData.email)}
+          />
+        </div>
+      </section>
+      <section
+        aria-labelledby='form-submit-required-header'
+        className='text-white'
+      >
+        <h2
+          id='form-submit-required-header'
+          className='mt-6 mb-2 text-2xl font-bold underline text-accent-500'
+        >
+          Optional
+        </h2>
 
-      <h1 className='mt-6 mb-2 text-2xl font-bold underline text-accent-500'>
-        Optional
-      </h1>
-      <div className='grid grid-cols-[auto,0.25fr,0.75fr,auto] gap-x-2 gap-y-4 sm:grid-cols-[auto,0.25fr,2.5fr,auto] sm:gap-x-4'>
-        <SubmitFormReviewItem
-          icon={IoBriefcase}
-          label='Job Title'
-          value={formData.currentJobTitle}
-          isValid={isValidJobTitle(formData.currentJobTitle)}
-        />
+        <div className='grid grid-cols-[auto,0.2fr,1fr,auto] gap-x-2 gap-y-4 sm:grid-cols-[auto,minmax(0,1fr),minmax(0,2.5fr),auto] sm:gap-x-4 md:grid-cols-[auto,minmax(0,0.75fr),minmax(0,2.5fr),auto] lg:grid-cols-[auto,minmax(0,0.5fr),minmax(0,2.5fr),auto]'>
+          <SubmitFormReviewItem
+            icon={IoBriefcase}
+            label='Job Title'
+            value={formData.currentJobTitle}
+            isValid={isValidJobTitle(formData.currentJobTitle)}
+          />
 
-        <SubmitFormReviewItem
-          icon={IoLogoLinkedin}
-          label='LinkedIn'
-          value={formData.linkedinLink}
-          isValid={isValidUrl(formData.linkedinLink, true)}
-        />
+          <SubmitFormReviewItem
+            icon={IoLogoLinkedin}
+            label='LinkedIn'
+            value={formData.linkedinLink}
+            isValid={isValidUrl(formData.linkedinLink, true)}
+          />
 
-        <SubmitFormReviewItem
-          icon={IoLinkSharp}
-          label='Portfolio'
-          value={formData.portfolioLink}
-          isValid={isValidUrl(formData.portfolioLink)}
-        />
+          <SubmitFormReviewItem
+            icon={IoLinkSharp}
+            label='Portfolio'
+            value={formData.portfolioLink}
+            isValid={isValidUrl(formData.portfolioLink)}
+          />
 
-        <SubmitFormReviewItem
-          icon={IoReader}
-          label='Message'
-          value={formData.message}
-          isValid={isValidMessage(formData.message)}
-        />
-      </div>
-    </div>
+          <SubmitFormReviewItem
+            icon={IoReader}
+            label='Message'
+            value={formData.message}
+            isValid={isValidMessage(formData.message)}
+          />
+        </div>
+      </section>
+    </>
   );
 }
 

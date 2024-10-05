@@ -21,6 +21,7 @@ function SubmitFormReviewItem({ icon: Icon, label, value, isValid }) {
     <>
       <div
         className={`${reviewIconStyles} ${isValid ? 'text-primary-500' : 'text-red-500'} self-start`}
+        aria-hidden='true'
       >
         <Icon />
       </div>
@@ -32,7 +33,7 @@ function SubmitFormReviewItem({ icon: Icon, label, value, isValid }) {
       </div>
 
       <div
-        className={`${reviewTextStyles} line-clamp-6 self-start break-all align-text-top sm:line-clamp-none`}
+        className={`${reviewTextStyles} line-clamp-6 self-start break-all align-text-top md:line-clamp-none`}
       >
         {value || '-'}
       </div>
