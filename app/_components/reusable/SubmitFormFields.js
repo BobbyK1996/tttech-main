@@ -9,10 +9,23 @@ import {
   isValidPhoneNumber,
   isValidUrl,
 } from '@lib/helperShared';
-import SubmitFormReview from './SubmitFormReview';
+
+import SubmitFormReview from '@components/reusable/SubmitFormReview';
+import InputField from './InputField';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
+
+const validators = {
+  givenName: isValidName,
+  surname: isValidName,
+  number: isValidPhoneNumber,
+  email: isValidEmail,
+  currentJobTitle: isValidJobTitle,
+  linkedinLink: (value) => isValidUrl(value, true),
+  portfolioLink: isValidUrl,
+  message: isValidMessage,
+};
 
 function SubmitFormFields({ step }) {
   const { state, dispatch } = useSubmitForm();
@@ -57,91 +70,52 @@ function SubmitFormFields({ step }) {
         <>
           <div className='flex flex-col w-full gap-10 md:flex-row'>
             <div className='w-full'>
-              <label htmlFor='given-name' className='hidden'>
-                Name
-              </label>
-              <input
-                type='text'
-                id='given-name'
+              <InputField
                 name='givenName'
-                required
-                value={state.formData.givenName}
-                onChange={handleChange}
-                onBlur={handleBlur}
                 placeholder='Given name'
-                autoComplete='given-name'
-                aria-label='Given Name'
-                aria-required='true'
-                className={`flex-grow basis-0 ${formItemStyles} ${state.formData.givenName ? (isValidName(state.formData.givenName.trim()) ? 'bg-primary-500' : 'bg-red-500') : 'bg-white focus:bg-primary-500 focus:placeholder-white'}`}
+                value={state.formData.givenName}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                required={true}
+                validationFunc={validators.givenName}
+                customCSS='flex-grow basis-0'
               />
             </div>
+
             <div className='w-full'>
-              <label htmlFor='surname' className='hidden'>
-                Surname
-              </label>
-              <input
-                type='text'
-                id='surname'
+              <InputField
                 name='surname'
-                required
-                value={state.formData.surname}
-                onChange={handleChange}
-                onBlur={handleBlur}
                 placeholder='Surname'
-                autoComplete='family-name'
-                aria-label='Surname'
-                aria-required='true'
-                className={`flex-grow basis-0 ${formItemStyles} ${state.formData.surname ? (isValidName(state.formData.surname.trim()) ? 'bg-primary-500' : 'bg-red-500') : 'bg-white focus:bg-primary-500 focus:placeholder-white'}`}
+                value={state.formData.surname}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+                required={true}
+                validationFunc={validators.surname}
+                customCSS='flex-grow basis-0'
               />
             </div>
           </div>
 
-          <label htmlFor='mobile' className='hidden'>
-            Mobile number
-          </label>
-          <input
-            type='tel'
-            id='mobile'
+          <InputField
             name='number'
-            required
-            value={state.formData.number}
-            onChange={handleChange}
-            onBlur={handleBlur}
+            type='tel'
             placeholder='Number'
-            aria-label='Number'
-            aria-required='true'
-            autoComplete='mobile tel'
-            className={`${formItemStyles} ${
-              state.formData.number
-                ? isValidPhoneNumber(state.formData.number.trim())
-                  ? 'bg-primary-500'
-                  : 'bg-red-500'
-                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
-            }`}
+            value={state.formData.number}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            required={true}
+            validationFunc={validators.number}
           />
 
-          <label htmlFor='email' className='hidden'>
-            Email
-          </label>
-          <input
-            type='email'
-            id='email'
+          <InputField
             name='email'
-            required
-            value={state.formData.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
+            type='email'
             placeholder='Email'
-            aria-label='Email'
-            aria-required='true'
-            autoComplete='email'
-            className={`${formItemStyles} ${
-              state.formData.email
-                ? isValidEmail(state.formData.email.trim())
-                  ? 'bg-primary-500'
-                  : 'bg-red-500'
-                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
-            }`}
+            value={state.formData.email}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            required={true}
+            validationFunc={validators.email}
           />
 
           <label htmlFor='file-upload' className='hidden'></label>
@@ -168,67 +142,34 @@ function SubmitFormFields({ step }) {
 
       {step === 2 && (
         <>
-          <label htmlFor='job-title' className='hidden'>
-            Job Title
-          </label>
-          <input
-            type='text'
-            id='job-title'
+          <InputField
             name='currentJobTitle'
-            value={state.formData.currentJobTitle}
-            onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='Current Job Title'
-            aria-label='Current Job Title'
-            className={`${formItemStyles} ${
-              state.formData.currentJobTitle
-                ? isValidJobTitle(state.formData.currentJobTitle.trim())
-                  ? 'bg-primary-500'
-                  : 'bg-red-500'
-                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
-            }`}
+            value={state.formData.currentJobTitle}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            required={true}
+            validationFunc={validators.currentJobTitle}
           />
 
-          <label htmlFor='linkedin-link' className='hidden'>
-            LinkedIn Link
-          </label>
-          <input
-            type='url'
-            id='linkedin-link'
+          <InputField
             name='linkedinLink'
+            placeholder='Linkedin'
             value={state.formData.linkedinLink}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder='LinkedIn'
-            aria-label='LinkedIn Link'
-            className={`${formItemStyles} ${
-              state.formData.linkedinLink
-                ? isValidUrl(state.formData.linkedinLink.trim(), true)
-                  ? 'bg-primary-500'
-                  : 'bg-red-500'
-                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
-            }`}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            required={true}
+            validationFunc={validators.linkedinLink}
           />
 
-          <label htmlFor='portfolio-link' className='hidden'>
-            Portfolio Link
-          </label>
-          <input
-            type='url'
-            id='portfolio-link'
+          <InputField
             name='portfolioLink'
-            value={state.formData.portfolioLink}
-            onChange={handleChange}
-            onBlur={handleBlur}
             placeholder='Digital Portfolio (GitHub, Behance, Dribbble, etc)'
-            aria-label='Portfolio Link'
-            className={`${formItemStyles} ${
-              state.formData.portfolioLink
-                ? isValidUrl(state.formData.portfolioLink.trim())
-                  ? 'bg-primary-500'
-                  : 'bg-red-500'
-                : 'bg-white focus:bg-primary-500 focus:placeholder-white'
-            }`}
+            value={state.formData.portfolioLink}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            required={true}
+            validationFunc={validators.portfolioLink}
           />
 
           <label htmlFor='message' className='hidden'>
