@@ -8,7 +8,10 @@ import {
   isValidName,
   isValidPhoneNumber,
   isValidUrl,
+  validateFile,
 } from '@lib/helperShared';
+
+import { VALID_FILE_TYPES } from '@lib/data';
 
 import SubmitFormReview from '@components/reusable/SubmitFormReview';
 import InputField from './InputField';
@@ -62,13 +65,35 @@ function SubmitFormFields({ step }) {
     });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    const isValidFile = validateFile(file, VALID_FILE_TYPES);
+
+    dispatch({
+      type: 'SET_FORM_DATA',
+      payload: {
+        name: 'resumeFile',
+        value: isValidFile.status ? file : null,
+      },
+    });
+
+    dispatch({
+      type: 'SET_FORM_DATA',
+      payload: {
+        name: 'resumeFileError',
+        value: isValidFile,
+      },
+    });
+  };
+
   return (
     <form
       className={`mx-auto flex max-w-xs flex-col gap-12 text-black md:max-w-md lg:max-w-2xl`}
     >
       {step === 1 && (
         <>
-          <div className='flex flex-col w-full gap-10 md:flex-row'>
+          <div className='flex w-full flex-col gap-10 md:flex-row'>
             <div className='w-full'>
               <InputField
                 name='givenName'
@@ -124,17 +149,22 @@ function SubmitFormFields({ step }) {
             id='file-upload'
             name='resumeFile'
             required
-            onChange={handleChange}
             aria-label='Upload File'
             aria-required='true'
             accept='.pdf, .doc, .docx'
-            // onChange={handleFileChange}
+            onChange={handleFileChange}
             className='block w-full p-3 text-white'
           />
 
-          {state.resumeFile && (
+          {state.formData.resumeFile === undefined ? (
+            <div></div>
+          ) : !state.formData.resumeFileError.status ? (
+            <div className='mt-2 text-red-500'>
+              {state.formData.resumeFileError.message}
+            </div>
+          ) : (
             <p className='mt-2 text-green-500'>
-              Selected file: <strong>{selectedFile}</strong>
+              Uploaded file: <strong>{state.formData.resumeFile.name}</strong>
             </p>
           )}
         </>
@@ -200,14 +230,3 @@ function SubmitFormFields({ step }) {
 }
 
 export default SubmitFormFields;
-
-// const [selectedFile, setSelectedFile] = useState(null);
-
-// const handleFileChange = (e) => {
-//   const file = e.target.files[0];
-//   if (file) {
-//     setSelectedFile(file.name);
-//   } else {
-//     setSelectedFile(null);
-//   }
-// };

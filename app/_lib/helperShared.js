@@ -106,6 +106,77 @@ export function isValidUrl(url, linkedin = false) {
   return url.length <= 256 && urlPattern.test(url) && isValidString;
 }
 
+export function validateFile(file, allowedTypes = [], maxSizeInMB = 1) {
+  if (!Array.isArray(allowedTypes)) {
+    console.error('Developer error. Please pass an array for allowedTypes');
+    return {
+      status: false,
+      message: 'Developer error. Please pass an array for allowedTypes',
+    };
+  }
+
+  if (!validateNumber(maxSizeInMB, 'maxSizeInMB')) {
+    console.error('Developer error. Please pass an number for maxSizeInMB');
+    return {
+      status: false,
+      message: 'Developer error. Please pass an number for maxSizeInMB',
+    };
+  }
+
+  if (!file)
+    return {
+      status: false,
+      message: 'No file provided. Please include a file',
+    };
+
+  if (!(file instanceof File)) {
+    console.error('Provided value is not a valid file');
+    return {
+      status: false,
+      message: 'Provided value is not a valid file',
+    };
+  }
+
+  if (file.size === 0) {
+    console.error('The file is empty (0 bytes)');
+    return {
+      status: false,
+      message: 'The file is empty (0 bytes)',
+    };
+  }
+
+  const allowedTypeNames = allowedTypes.map((item) => item.name);
+  const allowedTypeValues = allowedTypes.map((item) => item.type);
+  const isValidType =
+    allowedTypeValues.length === 0 || allowedTypeValues.includes(file.type);
+
+  if (!isValidType) {
+    console.error(
+      `Invalid file type. Allowed types: ${allowedTypeNames.join(', ')}. Provided: ${file.type}`,
+    );
+    return {
+      status: false,
+      message: `Invalid file type. Allowed types: ${allowedTypeNames.join(', ')}. Provided: ${file.type}`,
+    };
+  }
+
+  const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+  const isValidSize = file.size <= maxSizeInBytes;
+
+  if (!isValidSize) {
+    console.error(`File size exceeds the limit of ${maxSizeInMB} MB`);
+    return {
+      status: false,
+      message: `File size exceeds the limit of ${maxSizeInMB} MB`,
+    };
+  }
+
+  return {
+    status: true,
+    message: `Everything ok`,
+  };
+}
+
 export function isValidType(type, validTypes = []) {
   if (!Array.isArray(validTypes))
     throw new Error('validTypes must be an array');

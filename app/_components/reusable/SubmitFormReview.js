@@ -15,7 +15,7 @@ import {
   isValidName,
   isValidPhoneNumber,
   isValidUrl,
-  returnTrimmed,
+  validateFile as isValidFile,
   validateObject,
 } from '@lib/helperShared';
 
@@ -37,7 +37,7 @@ function SubmitFormReview({ formData }) {
       >
         <h2
           id='form-submit-required-header'
-          className='mb-2 text-2xl font-bold underline text-accent-500'
+          className='mb-2 text-2xl font-bold text-accent-500 underline'
         >
           Required
         </h2>
@@ -69,6 +69,13 @@ function SubmitFormReview({ formData }) {
             value={formData.email}
             isValid={isValidEmail(formData.email)}
           />
+
+          <SubmitFormReviewItem
+            icon={IoMail}
+            label='File'
+            value={formData.resumeFile?.name}
+            isValid={formData.resumeFileError.status || false}
+          />
         </div>
       </section>
       <section
@@ -77,7 +84,7 @@ function SubmitFormReview({ formData }) {
       >
         <h2
           id='form-submit-required-header'
-          className='mt-6 mb-2 text-2xl font-bold underline text-accent-500'
+          className='mb-2 mt-6 text-2xl font-bold text-accent-500 underline'
         >
           Optional
         </h2>

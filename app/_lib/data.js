@@ -247,3 +247,12 @@ export const EMPLOYEE_DATA = [
 ];
 
 export const SUBMIT_FORM_MESSAGES = ['Required', 'Optional', 'Review & Submit'];
+
+export const VALID_FILE_TYPES = [
+  { type: 'application/msword', name: '.doc' },
+  {
+    type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    name: '.docx',
+  },
+  { type: 'application/pdf', name: '.pdf' },
+];
