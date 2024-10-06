@@ -129,51 +129,41 @@ export function validateFile(file, allowedTypes = [], maxSizeInMB = 1) {
       message: 'No file provided. Please include a file',
     };
 
-  if (!(file instanceof File)) {
-    console.error('Provided value is not a valid file');
+  if (!(file instanceof File))
     return {
       status: false,
-      message: 'Provided value is not a valid file',
+      message:
+        'Provided value is not a valid file. Please do not edit the page structure',
     };
-  }
 
-  if (file.size === 0) {
-    console.error('The file is empty (0 bytes)');
+  if (file.size === 0)
     return {
       status: false,
-      message: 'The file is empty (0 bytes)',
+      message: 'The file is empty (0 bytes). Please check your file.',
     };
-  }
 
   const allowedTypeNames = allowedTypes.map((item) => item.name);
   const allowedTypeValues = allowedTypes.map((item) => item.type);
   const isValidType =
     allowedTypeValues.length === 0 || allowedTypeValues.includes(file.type);
 
-  if (!isValidType) {
-    console.error(
-      `Invalid file type. Allowed types: ${allowedTypeNames.join(', ')}. Provided: ${file.type}`,
-    );
+  if (!isValidType)
     return {
       status: false,
       message: `Invalid file type. Allowed types: ${allowedTypeNames.join(', ')}. Provided: ${file.type}`,
     };
-  }
 
   const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
-  const isValidSize = file.size <= maxSizeInBytes;
 
-  if (!isValidSize) {
-    console.error(`File size exceeds the limit of ${maxSizeInMB} MB`);
+  if (file.size > maxSizeInBytes)
     return {
       status: false,
-      message: `File size exceeds the limit of ${maxSizeInMB} MB`,
+      message: `File is too large. Max size ${maxSizeInMB}MB. Provided: ${(file.size / (1024 * 1024)).toFixed(2)}MB`,
     };
-  }
 
   return {
     status: true,
-    message: `Everything ok`,
+    message: `File is valid`,
   };
 }
 

@@ -158,14 +158,14 @@ function SubmitFormFields({ step }) {
 
           {state.formData.resumeFile === undefined ? (
             <div></div>
-          ) : !state.formData.resumeFileError.status ? (
-            <div className='mt-2 text-red-500'>
-              {state.formData.resumeFileError.message}
-            </div>
-          ) : (
+          ) : state.formData.resumeFileError.status ? (
             <p className='mt-2 text-green-500'>
               Uploaded file: <strong>{state.formData.resumeFile.name}</strong>
             </p>
+          ) : (
+            <div className='mt-2 text-red-500'>
+              {state.formData.resumeFileError.message}
+            </div>
           )}
         </>
       )}
