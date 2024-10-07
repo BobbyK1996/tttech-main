@@ -18,6 +18,7 @@ import { VALID_FILE_TYPES } from '@lib/data';
 import SubmitFormReview from '@components/reusable/SubmitFormReview';
 import InputField from './InputField';
 import useMediaQuery from '@/app/_lib/hooks/useMediaQuery';
+import FileUpload from './FileUpload';
 
 const EMAIL_FORM_RECAPTCHA_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
 
@@ -72,9 +73,7 @@ function SubmitFormFields({ step }) {
     });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    console.log(file);
+  const handleFileChange = (file) => {
     const isValidFile = validateFile(file, VALID_FILE_TYPES);
 
     dispatch({
@@ -150,18 +149,7 @@ function SubmitFormFields({ step }) {
             validationFunc={validators.email}
           />
 
-          <label htmlFor='file-upload' className='hidden'></label>
-          <input
-            type='file'
-            id='file-upload'
-            name='resumeFile'
-            required
-            aria-label='Upload File'
-            aria-required='true'
-            accept='.pdf, .doc, .docx'
-            onChange={handleFileChange}
-            className='block w-full p-3 text-white'
-          />
+          <FileUpload onFileChange={handleFileChange} />
 
           {state.formData.resumeFile === undefined ? (
             <div className='hidden'></div>
