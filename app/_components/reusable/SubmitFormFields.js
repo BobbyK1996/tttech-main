@@ -1,5 +1,7 @@
 'use client';
 
+import ReCAPTCHA from 'react-google-recaptcha';
+
 import { useSubmitForm } from '@/app/context/submitFormContext';
 import {
   isValidEmail,
@@ -15,6 +17,9 @@ import { VALID_FILE_TYPES } from '@lib/data';
 
 import SubmitFormReview from '@components/reusable/SubmitFormReview';
 import InputField from './InputField';
+import useMediaQuery from '@/app/_lib/hooks/useMediaQuery';
+
+const EMAIL_FORM_RECAPTCHA_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
@@ -32,6 +37,8 @@ const validators = {
 
 function SubmitFormFields({ step }) {
   const { state, dispatch } = useSubmitForm();
+
+  const isMobile = useMediaQuery('(max-width: 425px)');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -93,7 +100,7 @@ function SubmitFormFields({ step }) {
     >
       {step === 1 && (
         <>
-          <div className='flex w-full flex-col gap-10 md:flex-row'>
+          <div className='flex w-full flex-col items-start gap-10 md:flex-row'>
             <div className='w-full'>
               <InputField
                 name='givenName'
@@ -157,7 +164,7 @@ function SubmitFormFields({ step }) {
           />
 
           {state.formData.resumeFile === undefined ? (
-            <div></div>
+            <div className='hidden'></div>
           ) : state.formData.resumeFileError.status ? (
             <p className='mt-2 text-green-500'>
               Uploaded file: <strong>{state.formData.resumeFile.name}</strong>
@@ -167,6 +174,27 @@ function SubmitFormFields({ step }) {
               {state.formData.resumeFileError.message}
             </div>
           )}
+
+          <div>
+            {isMobile ? (
+              <ReCAPTCHA
+                key='recaptcha-compact'
+                sitekey={EMAIL_FORM_RECAPTCHA_SITEKEY}
+                onChange={(token) =>
+                  dispatch({ type: 'SET_RECAPTCHA_TOKEN', payload: token })
+                }
+                size='compact'
+              />
+            ) : (
+              <ReCAPTCHA
+                key='recaptcha-normal'
+                sitekey={EMAIL_FORM_RECAPTCHA_SITEKEY}
+                onChange={(token) =>
+                  dispatch({ type: 'SET_RECAPTCHA_TOKEN', payload: token })
+                }
+              />
+            )}
+          </div>
         </>
       )}
 
@@ -213,7 +241,7 @@ function SubmitFormFields({ step }) {
             onBlur={handleBlur}
             placeholder='Message (Brief cover letter)'
             aria-label='Message'
-            className={`${formItemStyles} ${
+            className={`min-h-52 ${formItemStyles} ${
               state.formData.message
                 ? isValidMessage(state.formData.message.trim())
                   ? 'bg-primary-500'

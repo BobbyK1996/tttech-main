@@ -55,7 +55,9 @@
   .job-content-enter-active {
     opacity: 1;
     height: auto;
-    transition: opacity 300ms ease-in, height 300ms ease-in;
+    transition:
+      opacity 300ms ease-in,
+      height 300ms ease-in;
   }
   .job-content-exit {
     opacity: 1;
@@ -64,7 +66,9 @@
   .job-content-exit-active {
     opacity: 0;
     height: 0;
-    transition: opacity 300ms ease-out, height 300ms ease-out;
+    transition:
+      opacity 300ms ease-out,
+      height 300ms ease-out;
   }
 
   @keyframes rotate {

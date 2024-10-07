@@ -10,10 +10,10 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <NavigationProvider>
         <body
-          className={`${quattrocento} ${marcellus} ${poppins} ${dmsans} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento -z-10 overflow-x-hidden`}
+          className={`${quattrocento} ${marcellus} ${poppins} ${dmsans} relative -z-10 flex min-h-screen w-full flex-col overflow-x-hidden bg-primary-950 font-quattrocento text-accent-50`}
         >
           {/* <body
           className={`${quattrocento} ${marcellus} ${poppins} relative flex flex-col min-h-screen bg-primary-950 text-accent-50 w-full font-quattrocento`}

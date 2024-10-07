@@ -8,6 +8,7 @@ import { sendContactForm as send } from '@lib/server-actions/sendContactForm';
 import { isValidEmail, isValidMessage, isValidName } from '@lib/helperShared';
 
 import Spinner from '@components/reusable/Spinner';
+import useMediaQuery from '@/app/_lib/hooks/useMediaQuery';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
@@ -16,6 +17,8 @@ const EMAIL_FORM_RECAPTCHA_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
 
 function ContactForm() {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const isMobile = useMediaQuery('(max-width: 425px)');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,46 +57,45 @@ function ContactForm() {
   };
 
   return (
-    <form className="w-full space-y-4 text-gray-700" onSubmit={handleSubmit}>
+    <form className='w-full space-y-4 text-gray-700' onSubmit={handleSubmit}>
       {state.isSubmitting ? (
         <Spinner />
       ) : (
         <>
           <div>
-            <label htmlFor="name" className="hidden"></label>
+            <label htmlFor='name' className='hidden'></label>
             <input
-              type="text"
-              id="name"
-              name="name"
+              type='text'
+              id='name'
+              name='name'
               required
               onChange={handleChange}
               onFocus={handleFocus}
-              placeholder="Full Name"
-              aria-label="Full Name"
-              autoComplete="name"
+              placeholder='Full Name'
+              aria-label='Full Name'
+              autoComplete='name'
               className={`${formItemStyles} ${
                 state.formData.name
                   ? isValidName(state.formData.name.trim())
                     ? 'bg-primary-500'
                     : 'bg-red-500'
                   : 'bg-white'
-              }
-              `}
+              } `}
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="hidden"></label>
+            <label htmlFor='email' className='hidden'></label>
             <input
-              type="email"
-              id="email"
-              name="email"
+              type='email'
+              id='email'
+              name='email'
               required
               onChange={handleChange}
               onFocus={handleFocus}
-              placeholder="Email"
-              aria-label="Email"
-              autoComplete="email"
+              placeholder='Email'
+              aria-label='Email'
+              autoComplete='email'
               className={`${formItemStyles} ${
                 state.formData.email
                   ? isValidEmail(state.formData.email.trim())
@@ -105,32 +107,32 @@ function ContactForm() {
           </div>
 
           <div>
-            <label htmlFor="type" className="hidden"></label>
+            <label htmlFor='type' className='hidden'></label>
             <select
-              id="type"
-              name="type"
+              id='type'
+              name='type'
               onChange={handleChange}
               onFocus={handleFocus}
-              aria-label="CandidateOrClient"
+              aria-label='CandidateOrClient'
               className={`${formItemStyles} max-w-[304px] ${
                 state.formData.type ? 'bg-primary-500' : 'bg-white'
               }`}
             >
-              <option value="Company">Company</option>
-              <option value="Candidate">Candidate</option>
+              <option value='Company'>Company</option>
+              <option value='Candidate'>Candidate</option>
             </select>
           </div>
 
           <div>
-            <label htmlFor="message" className="hidden"></label>
+            <label htmlFor='message' className='hidden'></label>
             <textarea
-              id="message"
-              name="message"
+              id='message'
+              name='message'
               required
               onChange={handleChange}
               onFocus={handleFocus}
-              placeholder="Message"
-              aria-label="Message"
+              placeholder='Message'
+              aria-label='Message'
               className={`${formItemStyles} ${
                 state.formData.message
                   ? isValidMessage(state.formData.message.trim())
@@ -142,29 +144,40 @@ function ContactForm() {
           </div>
 
           <div>
-            <ReCAPTCHA
-              sitekey={EMAIL_FORM_RECAPTCHA_SITEKEY}
-              onChange={(token) =>
-                dispatch({ type: 'SET_RECAPTCHA_TOKEN', payload: token })
-              }
-              // size="compact"
-            />
+            {isMobile ? (
+              <ReCAPTCHA
+                key='recaptcha-compact'
+                sitekey={EMAIL_FORM_RECAPTCHA_SITEKEY}
+                onChange={(token) =>
+                  dispatch({ type: 'SET_RECAPTCHA_TOKEN', payload: token })
+                }
+                size='compact'
+              />
+            ) : (
+              <ReCAPTCHA
+                key='recaptcha-normal'
+                sitekey={EMAIL_FORM_RECAPTCHA_SITEKEY}
+                onChange={(token) =>
+                  dispatch({ type: 'SET_RECAPTCHA_TOKEN', payload: token })
+                }
+              />
+            )}
           </div>
 
-          <div className="flex items-center justify-start gap-6">
+          <div className='flex items-center justify-start gap-6'>
             <button
-              type="submit"
-              className="px-4 py-2 text-white bg-blue-500 rounded sm:px-6 sm:py-4"
+              type='submit'
+              className='rounded bg-blue-500 px-4 py-2 text-white sm:px-6 sm:py-4'
             >
               Submit
             </button>
 
             {state.sendStatus && (
               <span
-                className={`p-2 text-center rounded-sm sm:px-6 sm:py-4 ${
+                className={`rounded-sm p-2 text-center sm:px-6 sm:py-4 ${
                   state.sendStatus === 'success'
-                    ? 'text-green-600 bg-green-300'
-                    : 'text-red-600 bg-red-300'
+                    ? 'bg-green-300 text-green-600'
+                    : 'bg-red-300 text-red-600'
                 }`}
               >
                 {state.sendStatus === 'success'
