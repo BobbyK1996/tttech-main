@@ -3,6 +3,7 @@
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import { useSubmitForm } from '@/app/context/submitFormContext';
+
 import {
   isValidEmail,
   isValidJobTitle,
@@ -14,11 +15,11 @@ import {
 } from '@lib/helperShared';
 
 import { VALID_FILE_TYPES } from '@lib/data';
+import useMediaQuery from '@lib/hooks/useMediaQuery';
 
 import SubmitFormReview from '@components/reusable/SubmitFormReview';
-import InputField from './InputField';
-import useMediaQuery from '@/app/_lib/hooks/useMediaQuery';
-import FileUpload from './FileUpload';
+import InputField from '@components/reusable/InputField';
+import FileUpload from '@components/reusable/FileUpload';
 
 const EMAIL_FORM_RECAPTCHA_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
 
@@ -149,22 +150,24 @@ function SubmitFormFields({ step }) {
             validationFunc={validators.email}
           />
 
-          <FileUpload
-            onFileChange={handleFileChange}
-            customCSS='max-w-80 rounded bg-primary-500 px-4 py-2 text-white duration-200 hover:bg-primary-400 sm:px-6 sm:py-4 md:max-w-[304px]'
-          />
+          <div className='flex flex-col gap-x-4 lg:flex-row'>
+            <FileUpload
+              onFileChange={handleFileChange}
+              customCSS='max-w-80 rounded bg-primary-500 px-4 py-2 text-white duration-200 hover:bg-primary-400 sm:px-6 sm:py-4 md:max-w-[304px] basis-full'
+            />
 
-          {state.formData.resumeFile === undefined ? (
-            <div className='hidden'></div>
-          ) : state.formData.resumeFileError.status ? (
-            <p className='mt-2 text-green-500'>
-              Uploaded file: <strong>{state.formData.resumeFile.name}</strong>
-            </p>
-          ) : (
-            <div className='mt-2 text-red-500'>
-              {state.formData.resumeFileError.message}
-            </div>
-          )}
+            {state.formData.resumeFile === undefined ? null : state.formData
+                .resumeFileError.status ? (
+              <span className='flex items-center gap-x-2 text-green-500'>
+                <span className='min-w-max'>Uploaded file: </span>
+                <strong>{state.formData.resumeFile.name}</strong>
+              </span>
+            ) : (
+              <span className='flex items-center text-red-500'>
+                {state.formData.resumeFileError.message}
+              </span>
+            )}
+          </div>
 
           <div>
             {isMobile ? (

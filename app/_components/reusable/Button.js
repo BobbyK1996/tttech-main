@@ -1,4 +1,4 @@
-import { validateString } from '@/app/_lib/helperShared';
+import { validateString } from '@lib/helperShared';
 import Link from 'next/link';
 
 const buttonTypes = {

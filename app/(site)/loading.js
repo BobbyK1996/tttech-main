@@ -1,4 +1,4 @@
-import Spinner from '@/app/_components/reusable/Spinner';
+import Spinner from '@components/reusable/Spinner';
 
 function Loading() {
   return <Spinner />;

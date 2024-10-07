@@ -1,4 +1,4 @@
-import JobPageClientWrapper from '@/app/_components/non-reusable/JobPageClientWrapper';
+import JobPageClientWrapper from '@components/non-reusable/JobPageClientWrapper';
 import { getJob } from '@lib/data-services';
 import { convertToObject, formatDate } from '@lib/helper';
 

@@ -5,7 +5,7 @@ import {
   validateFunction,
   validateHTMLElement,
   validateNumber,
-} from '../helperShared';
+} from '@lib/helperShared';
 
 function useSwipe(ref, step, setStep) {
   useEffect(() => {

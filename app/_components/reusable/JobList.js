@@ -1,4 +1,4 @@
-import JobCard from '@/app/_components/reusable/JobCard';
+import JobCard from '@components/reusable/JobCard';
 
 function JobList({ filter, jobs, categories }) {
   const categorizedJobs = categories.reduce((acc, cat) => {
@@ -15,7 +15,7 @@ function JobList({ filter, jobs, categories }) {
       return (
         <p
           key={index}
-          className="flex justify-center mt-24 mb-10 text-lg font-bold text-accent-50"
+          className='mb-10 mt-24 flex justify-center text-lg font-bold text-accent-50'
         >
           There doesn&apos;t appear to be any jobs available at the moment.
           Please try again later.
@@ -35,12 +35,12 @@ function JobList({ filter, jobs, categories }) {
       const titleWithoutLastWord = categoryTitleSplit.join(' ');
 
       return (
-        <div key={categoryTag} className="my-10">
-          <h1 className="pb-6 mb-10 text-5xl font-medium text-white border-b">
+        <div key={categoryTag} className='my-10'>
+          <h1 className='mb-10 border-b pb-6 text-5xl font-medium text-white'>
             {titleWithoutLastWord}{' '}
-            <span className="text-accent-500">{lastWord}</span>
+            <span className='text-accent-500'>{lastWord}</span>
           </h1>
-          <div className="grid grid-cols-1 gap-8 mb-16">
+          <div className='mb-16 grid grid-cols-1 gap-8'>
             {categorizedJobs[categoryTag].map((job) => (
               <JobCard job={job} key={job.id} />
             ))}
@@ -54,13 +54,13 @@ function JobList({ filter, jobs, categories }) {
   return (
     <div>
       {jobs.length === 0 && filter === 'all' && (
-        <p className="flex justify-center mt-24 mb-10 text-lg font-bold text-accent-50">
+        <p className='mb-10 mt-24 flex justify-center text-lg font-bold text-accent-50'>
           There doesn&apos;t appear to be any jobs available at the moment.
           Please try again later.
         </p>
       )}
       {Object.keys(categorizedJobs).map((categoryTag, index) =>
-        renderCategory(categoryTag, index)
+        renderCategory(categoryTag, index),
       )}
     </div>
   );

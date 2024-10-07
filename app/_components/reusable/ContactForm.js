@@ -8,7 +8,7 @@ import { sendContactForm as send } from '@lib/server-actions/sendContactForm';
 import { isValidEmail, isValidMessage, isValidName } from '@lib/helperShared';
 
 import Spinner from '@components/reusable/Spinner';
-import useMediaQuery from '@/app/_lib/hooks/useMediaQuery';
+import useMediaQuery from '@lib/hooks/useMediaQuery';
 
 const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';

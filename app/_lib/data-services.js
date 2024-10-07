@@ -1,6 +1,6 @@
 import { convertToObject } from '@lib/helper';
 import supabase from '@lib/supabase';
-import { validateString } from './helperShared';
+import { validateString } from '@lib/helperShared';
 
 let refreshingPromise = null;
 
@@ -68,7 +68,7 @@ export async function revalidateZoho() {
         `https://accounts.zoho.eu/oauth/v2/token?${params.toString()}`,
         {
           method: 'POST',
-        }
+        },
       );
 
       if (!res.ok) {
@@ -88,7 +88,7 @@ export async function revalidateZoho() {
 
       if (updateError)
         throw new Error(
-          `Failed to update database with token: ${updateError.message}`
+          `Failed to update database with token: ${updateError.message}`,
         );
 
       //save the token and expiration date in cached memory
@@ -144,7 +144,7 @@ export async function getJobs() {
         headers: {
           Authorization: `Zoho-oauthtoken ${access_token}`,
         },
-      }
+      },
     );
 
     if (!res.ok) {
@@ -204,7 +204,7 @@ export async function getJob(id) {
           Authorization: `Zoho-oauthtoken ${access_token}`,
         },
         next: { revalidate: 86400 },
-      }
+      },
     );
 
     if (!res.ok) {

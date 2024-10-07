@@ -1,4 +1,4 @@
-import { validateFunction } from '@/app/_lib/helperShared';
+import { validateFunction } from '@lib/helperShared';
 
 function FileUpload({ onFileChange, customCSS = '' }) {
   const isValidFunction = validateFunction(onFileChange, 'onFileChange');

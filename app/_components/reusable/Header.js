@@ -1,14 +1,14 @@
-import Logo from '@/app/_components/reusable/Logo';
-import Navigation from '@/app/_components/reusable/Navigation';
+import Logo from '@components/reusable/Logo';
+import Navigation from '@components/reusable/Navigation';
 
 function Header({ border }) {
   return (
     <header
       className={`w-full px-3 py-5 ${
-        border && `border-b shadow-2xl border-primary-900`
+        border && `border-b border-primary-900 shadow-2xl`
       }`}
     >
-      <div className="flex items-center justify-between mx-auto max-w-7xl">
+      <div className='mx-auto flex max-w-7xl items-center justify-between'>
         <Logo />
         <Navigation />
       </div>

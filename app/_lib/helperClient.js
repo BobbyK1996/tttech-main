@@ -51,5 +51,9 @@ export function validateColors(colors = {}) {
 }
 
 export function isInputField(target) {
-  return target.tagName === 'INPUT' || target.tagName === 'TEXTAREA';
+  return (
+    target.tagName === 'INPUT' ||
+    target.tagName === 'TEXTAREA' ||
+    target.tagName === 'BUTTON'
+  );
 }
