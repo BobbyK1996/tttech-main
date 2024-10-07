@@ -149,7 +149,10 @@ function SubmitFormFields({ step }) {
             validationFunc={validators.email}
           />
 
-          <FileUpload onFileChange={handleFileChange} />
+          <FileUpload
+            onFileChange={handleFileChange}
+            customCSS='max-w-80 rounded bg-primary-500 px-4 py-2 text-white duration-200 hover:bg-primary-400 sm:px-6 sm:py-4 md:max-w-[304px]'
+          />
 
           {state.formData.resumeFile === undefined ? (
             <div className='hidden'></div>

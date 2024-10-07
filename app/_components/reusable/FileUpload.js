@@ -24,7 +24,7 @@ function FileUpload({ onFileChange, customCSS = '' }) {
       <button
         type='button'
         onClick={() => document.getElementById('file-upload').click()}
-        className={`block w-full text-white ${customCSS}`}
+        className={`border border-black ${customCSS}`}
         aria-label='Select CV'
       >
         Select CV
