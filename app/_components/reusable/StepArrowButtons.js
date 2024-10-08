@@ -39,7 +39,7 @@ function StepArrowButtons({ step, setStep, maxSteps = 3, customCSS = '' }) {
       {currentStep > 1 && (
         <Button
           onClick={handlePrevious}
-          type='arrow'
+          variant='arrow'
           customCSS={`left-0 bottom-1/2 -translate-y-1/2  rounded-tl-full rounded-bl-full bg-accent-500 hover:bg-primary-500 duration-300 ${customCSS}`}
         >
           <span className='text-4xl'>
@@ -51,7 +51,7 @@ function StepArrowButtons({ step, setStep, maxSteps = 3, customCSS = '' }) {
       {currentStep < maxSteps && (
         <Button
           onClick={handleNext}
-          type='arrow'
+          variant='arrow'
           customCSS={`right-0 bottom-1/2 -translate-y-1/2 rounded-tr-full rounded-br-full bg-accent-500 hover:bg-primary-500 duration-300 ${customCSS}`}
         >
           <span className='text-4xl'>

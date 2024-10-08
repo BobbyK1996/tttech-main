@@ -8,11 +8,24 @@ const buttonTypes = {
   formSubmit: 'px-4 py-2 text-white bg-blue-500 rounded sm:px-6 sm:py-4',
 };
 
-function Button({ children, href, type = 'md', customCSS, onSubmit, onClick }) {
+function Button({
+  children,
+  href,
+  variant = 'md',
+  customCSS,
+  onSubmit,
+  onClick,
+  type = 'button',
+}) {
+  const isVariantValidString = validateString(variant, 'Variant');
   const isTypeValidString = validateString(type, 'Type');
   const isHrefValidString = validateString(href, 'Href');
 
-  if (!isTypeValidString || (href && !isHrefValidString))
+  if (
+    !isVariantValidString ||
+    !isTypeValidString ||
+    (href && !isHrefValidString)
+  )
     throw new Error('Please provide a non-empty string');
 
   return href ? (
@@ -21,9 +34,10 @@ function Button({ children, href, type = 'md', customCSS, onSubmit, onClick }) {
     </Link>
   ) : (
     <button
+      type={type}
       onSubmit={onSubmit}
       onClick={onClick}
-      className={`${buttonTypes[type]} ${customCSS}`}
+      className={`${buttonTypes[variant]} ${customCSS}`}
     >
       {children}
     </button>

@@ -23,6 +23,7 @@ import SubmitFormReview from '@components/reusable/SubmitFormReview';
 import InputField from '@components/reusable/InputField';
 import FileUpload from '@components/reusable/FileUpload';
 import RenderFileUploadMessage from '@components/reusable/RenderFileUploadMessage';
+import Button from '@components/reusable/Button';
 
 const EMAIL_FORM_RECAPTCHA_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
 
@@ -30,14 +31,19 @@ const formItemStyles =
   'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
 
 const validators = {
-  givenName: isValidName,
-  surname: isValidName,
-  number: isValidPhoneNumber,
-  email: isValidEmail,
-  currentJobTitle: isValidJobTitle,
-  linkedinLink: (value) => isValidUrl(value, true),
-  portfolioLink: isValidUrl,
-  message: isValidMessage,
+  required: {
+    givenName: isValidName,
+    surname: isValidName,
+    number: isValidPhoneNumber,
+    email: isValidEmail,
+    resumeFile: validateFile,
+  },
+  optional: {
+    currentJobTitle: isValidJobTitle,
+    linkedinLink: (value) => isValidUrl(value, true),
+    portfolioLink: isValidUrl,
+    message: isValidMessage,
+  },
 };
 
 function SubmitFormFields({ step }) {
@@ -88,9 +94,47 @@ function SubmitFormFields({ step }) {
     [dispatch],
   );
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch({ type: 'SET_IS_SUBMITTING', payload: true });
+
+    const isValidRequiredArray = Object.keys(state.formData).map((key) => {
+      if (validators.required[key])
+        return validators.required[key](state.formData[key]);
+
+      return true;
+    });
+
+    const isValidOptionalArray = Object.keys(state.formData).map((key) => {
+      if (validators.optional[key]) {
+        if (state.formData[key] !== '')
+          return validators.optional[key](state.formData[key]);
+
+        return true;
+      }
+      return true;
+    });
+
+    const isFormValid = [
+      ...isValidRequiredArray,
+      ...isValidOptionalArray,
+    ].every((isValid) => isValid);
+
+    if (!state.recaptchaToken || !isFormValid) {
+      console.log('failed');
+      dispatch({ type: 'SET_SEND_STATUS', payload: 'failed' });
+      dispatch({ type: 'SET_IS_SUBMITTING', payload: false });
+      return;
+    }
+    console.log('passed');
+  };
+
   const handleFileChange = useCallback(
     (file) => {
-      const isValidFile = validateFile(file, VALID_FILE_TYPES);
+      const isValidFile = validators.required.resumeFile(
+        file,
+        VALID_FILE_TYPES,
+      );
 
       dispatch({
         type: 'SET_FORM_DATA',
@@ -114,6 +158,7 @@ function SubmitFormFields({ step }) {
   return (
     <form
       className={`mx-auto flex max-w-xs flex-col gap-12 text-black md:max-w-md lg:max-w-2xl`}
+      onSubmit={handleSubmit}
     >
       {step === 1 && (
         <>
@@ -126,7 +171,7 @@ function SubmitFormFields({ step }) {
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 required={true}
-                validationFunc={validators.givenName}
+                validationFunc={validators.required.givenName}
                 customCSS='flex-grow basis-0'
               />
             </div>
@@ -139,7 +184,7 @@ function SubmitFormFields({ step }) {
                 handleChange={handleChange}
                 handleBlur={handleBlur}
                 required={true}
-                validationFunc={validators.surname}
+                validationFunc={validators.required.surname}
                 customCSS='flex-grow basis-0'
               />
             </div>
@@ -153,7 +198,7 @@ function SubmitFormFields({ step }) {
             handleChange={handleChange}
             handleBlur={handleBlur}
             required={true}
-            validationFunc={validators.number}
+            validationFunc={validators.required.number}
           />
 
           <InputField
@@ -164,7 +209,7 @@ function SubmitFormFields({ step }) {
             handleChange={handleChange}
             handleBlur={handleBlur}
             required={true}
-            validationFunc={validators.email}
+            validationFunc={validators.required.email}
           />
 
           <div className='flex flex-col gap-x-4 lg:flex-row'>
@@ -211,7 +256,7 @@ function SubmitFormFields({ step }) {
             handleChange={handleChange}
             handleBlur={handleBlur}
             required={true}
-            validationFunc={validators.currentJobTitle}
+            validationFunc={validators.optional.currentJobTitle}
           />
 
           <InputField
@@ -221,7 +266,7 @@ function SubmitFormFields({ step }) {
             handleChange={handleChange}
             handleBlur={handleBlur}
             required={true}
-            validationFunc={validators.linkedinLink}
+            validationFunc={validators.optional.linkedinLink}
           />
 
           <InputField
@@ -231,7 +276,7 @@ function SubmitFormFields({ step }) {
             handleChange={handleChange}
             handleBlur={handleBlur}
             required={true}
-            validationFunc={validators.portfolioLink}
+            validationFunc={validators.optional.portfolioLink}
           />
 
           <label htmlFor='message' className='hidden'>
@@ -245,9 +290,9 @@ function SubmitFormFields({ step }) {
             onBlur={handleBlur}
             placeholder='Message (Brief cover letter)'
             aria-label='Message'
-            className={`min-h-52 ${formItemStyles} ${
+            className={`min-h-64 ${formItemStyles} ${
               state.formData.message
-                ? isValidMessage(state.formData.message.trim())
+                ? validators.optional.message(state.formData.message.trim())
                   ? 'bg-primary-500'
                   : 'bg-red-500'
                 : 'bg-white focus:bg-primary-500 focus:placeholder-white'
@@ -256,7 +301,14 @@ function SubmitFormFields({ step }) {
         </>
       )}
 
-      {step === 3 && <SubmitFormReview formData={state.formData} />}
+      {step === 3 && (
+        <>
+          <SubmitFormReview formData={state.formData} />{' '}
+          <Button variant='formSubmit' type='submit'>
+            Submit
+          </Button>
+        </>
+      )}
     </form>
   );
 }

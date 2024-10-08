@@ -31,7 +31,7 @@ function SubmitForm({ step, setStep }) {
 
       <StepMessage>{messages[step - 1]}</StepMessage>
 
-      <div className='relative min-h-[520px] md:min-h-96'>
+      <div className='relative min-h-[520px] md:min-h-[600px]'>
         <StepArrowButtons
           step={step}
           setStep={setStep}
