@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { validateFunction } from '@lib/helperShared';
 
 function FileUpload({ onFileChange, customCSS = '' }) {
@@ -44,4 +46,4 @@ function FileUpload({ onFileChange, customCSS = '' }) {
   );
 }
 
-export default FileUpload;
+export default memo(FileUpload);

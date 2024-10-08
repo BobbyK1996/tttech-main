@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 function RenderFileUploadMessage({ resumeFile, resumeFileError }) {
   const isValidFile =
     resumeFile !== undefined &&
@@ -21,4 +23,4 @@ function RenderFileUploadMessage({ resumeFile, resumeFileError }) {
   );
 }
 
-export default RenderFileUploadMessage;
+export default memo(RenderFileUploadMessage);

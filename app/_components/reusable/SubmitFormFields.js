@@ -1,5 +1,7 @@
 'use client';
 
+import { useCallback } from 'react';
+
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import { useSubmitForm } from '@/app/context/submitFormContext';
@@ -20,7 +22,7 @@ import useMediaQuery from '@lib/hooks/useMediaQuery';
 import SubmitFormReview from '@components/reusable/SubmitFormReview';
 import InputField from '@components/reusable/InputField';
 import FileUpload from '@components/reusable/FileUpload';
-import RenderFileUploadMessage from './renderFileUploadMessage';
+import RenderFileUploadMessage from '@components/reusable/RenderFileUploadMessage';
 
 const EMAIL_FORM_RECAPTCHA_SITEKEY = '6Le-FUcqAAAAAGBtLzXfW7FeOcA9VLKp911h6L4m';
 
@@ -43,57 +45,66 @@ function SubmitFormFields({ step }) {
 
   const isMobile = useMediaQuery('(max-width: 425px)');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    const isValidPrimitive = typeof value === 'string' || value === null;
+      const isValidPrimitive = typeof value === 'string' || value === null;
 
-    if (isValidPrimitive) {
+      if (isValidPrimitive) {
+        dispatch({
+          type: 'SET_FORM_DATA',
+          payload: {
+            name,
+            value,
+          },
+        });
+      } else {
+        console.error(`${name} should be a valid primitive`);
+      }
+    },
+    [dispatch],
+  );
+
+  const handleBlur = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+
+      const trimmedValue = typeof value === 'string' ? value.trim() : null;
+
       dispatch({
         type: 'SET_FORM_DATA',
         payload: {
           name,
-          value,
+          value: trimmedValue,
         },
       });
-    } else {
-      console.error(`${name} should be a valid primitive`);
-    }
-  };
+    },
+    [dispatch],
+  );
 
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
+  const handleFileChange = useCallback(
+    (file) => {
+      const isValidFile = validateFile(file, VALID_FILE_TYPES);
 
-    const trimmedValue = typeof value === 'string' ? value.trim() : null;
+      dispatch({
+        type: 'SET_FORM_DATA',
+        payload: {
+          name: 'resumeFile',
+          value: isValidFile.status ? file : null,
+        },
+      });
 
-    dispatch({
-      type: 'SET_FORM_DATA',
-      payload: {
-        name,
-        value: trimmedValue,
-      },
-    });
-  };
-
-  const handleFileChange = (file) => {
-    const isValidFile = validateFile(file, VALID_FILE_TYPES);
-
-    dispatch({
-      type: 'SET_FORM_DATA',
-      payload: {
-        name: 'resumeFile',
-        value: isValidFile.status ? file : null,
-      },
-    });
-
-    dispatch({
-      type: 'SET_FORM_DATA',
-      payload: {
-        name: 'resumeFileError',
-        value: isValidFile,
-      },
-    });
-  };
+      dispatch({
+        type: 'SET_FORM_DATA',
+        payload: {
+          name: 'resumeFileError',
+          value: isValidFile,
+        },
+      });
+    },
+    [dispatch],
+  );
 
   return (
     <form

@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { validateFunction, validateString } from '@lib/helperShared';
 
 const formItemStyles =
@@ -62,4 +64,4 @@ function InputField({
   );
 }
 
-export default InputField;
+export default memo(InputField);
