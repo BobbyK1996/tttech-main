@@ -49,14 +49,19 @@ function SubmitFormFields({ step }) {
     (e) => {
       const { name, value } = e.target;
 
-      const isValidPrimitive = typeof value === 'string' || value === null;
+      let processedValue = value;
+
+      if (name === 'number') processedValue = value.replace(/[^0-9+]/g, '');
+
+      const isValidPrimitive =
+        typeof processedValue === 'string' || processedValue === null;
 
       if (isValidPrimitive) {
         dispatch({
           type: 'SET_FORM_DATA',
           payload: {
             name,
-            value,
+            value: processedValue,
           },
         });
       } else {
