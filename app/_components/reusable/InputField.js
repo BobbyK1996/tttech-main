@@ -2,9 +2,6 @@ import { memo } from 'react';
 
 import { validateFunction, validateString } from '@lib/helperShared';
 
-const formItemStyles =
-  'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
-
 function InputField({
   name,
   type = 'text',
@@ -58,7 +55,7 @@ function InputField({
         placeholder={placeholder}
         aria-label={placeholder}
         aria-required={required}
-        className={`${formItemStyles} ${value ? (isValid ? 'bg-primary-500' : 'bg-red-500') : 'bg-white focus:bg-primary-500 focus:placeholder-white'} ${customCSS}`}
+        className={`${value ? (isValid ? 'bg-primary-500' : 'bg-red-500') : 'bg-white focus:bg-primary-500 focus:placeholder-white'} ${customCSS}`}
       />
     </div>
   );
