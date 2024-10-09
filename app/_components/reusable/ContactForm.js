@@ -76,7 +76,7 @@ function ContactForm() {
               autoComplete='name'
               className={`${formItemStyles} ${
                 state.formData.name
-                  ? isValidName(state.formData.name.trim())
+                  ? isValidName(state.formData.name.trim()).status
                     ? 'bg-primary-500'
                     : 'bg-red-500'
                   : 'bg-white'
@@ -98,7 +98,7 @@ function ContactForm() {
               autoComplete='email'
               className={`${formItemStyles} ${
                 state.formData.email
-                  ? isValidEmail(state.formData.email.trim())
+                  ? isValidEmail(state.formData.email.trim()).status
                     ? 'bg-primary-500'
                     : 'bg-red-500'
                   : 'bg-white'
@@ -135,7 +135,7 @@ function ContactForm() {
               aria-label='Message'
               className={`${formItemStyles} ${
                 state.formData.message
-                  ? isValidMessage(state.formData.message.trim())
+                  ? isValidMessage(state.formData.message.trim()).status
                     ? 'bg-primary-500'
                     : 'bg-red-500'
                   : 'bg-white'

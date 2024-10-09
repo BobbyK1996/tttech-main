@@ -65,7 +65,15 @@ export function isValidEmail(email) {
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  return email.length <= 256 && emailPattern.test(email) && isValidString;
+  const returnBool =
+    email.length <= 256 && emailPattern.test(email) && isValidString;
+
+  return {
+    status: returnBool,
+    message: returnBool
+      ? 'Email is valid'
+      : 'Email is invalid. Please ensure that a valid email format is used (e.g. example@gmail.com)',
+  };
 }
 
 export function isValidName(name) {
@@ -73,11 +81,17 @@ export function isValidName(name) {
 
   const namePattern = /^[a-zA-Z\s'-]+$/;
 
-  return (
+  const returnBool =
     !(name.length < 3 || name.length > 100) &&
     namePattern.test(name) &&
-    isValidString
-  );
+    isValidString;
+
+  return {
+    status: returnBool,
+    message: returnBool
+      ? 'Name is valid'
+      : 'Name is invalid. Please ensure that name is between 3 and 100 characters long',
+  };
 }
 
 export function isValidJobTitle(title) {
@@ -85,11 +99,17 @@ export function isValidJobTitle(title) {
 
   const jobPattern = /^[a-zA-Z0-9\s\-'.()&]+$/;
 
-  return (
+  const returnBool =
     !(title.length < 3 || title.length > 100) &&
     jobPattern.test(title) &&
-    isValidString
-  );
+    isValidString;
+
+  return {
+    status: returnBool,
+    message: returnBool
+      ? 'Job Title is valid'
+      : 'Job Title is invalid. Please ensure that Job Title is between 3 and 100 characters long',
+  };
 }
 
 export function isValidUrl(url, linkedin = false) {
@@ -103,7 +123,16 @@ export function isValidUrl(url, linkedin = false) {
     ? /^(https?:\/\/)?(www\.)?(linkedin\.com)?\/in\/[a-zA-Z0-9-]+\/?$/
     : /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/;
 
-  return url.length <= 256 && urlPattern.test(url) && isValidString;
+  const returnBool = url.length <= 256 && urlPattern.test(url) && isValidString;
+
+  return {
+    status: returnBool,
+    message: returnBool
+      ? 'URL is valid'
+      : linkedin
+        ? 'URL is invalid. Please provide a valid LinkedIn profile link, such as https://www.linkedin.com/in/username or www.linkedin.com/in/username or /in/username'
+        : 'URL is invalid. Please provide a valid URL, such as https://www.example.com or https://example.com/page',
+  };
 }
 
 export function validateFile(file, allowedTypes = [], maxSizeInMB = 1) {
@@ -179,7 +208,15 @@ export function isValidType(type, validTypes = []) {
 export function isValidMessage(message) {
   const isValidString = validateString(message, 'Message');
 
-  return !(message.length < 10 || message.length > 1000) && isValidString;
+  const returnBool =
+    !(message.length < 10 || message.length > 1000) && isValidString;
+
+  return {
+    status: returnBool,
+    message: returnBool
+      ? 'Message is valid'
+      : 'Message is invalid. Please ensure that the message is between 10 and 1000 characters long',
+  };
 }
 
 export function isValidGMapsLink(addressLink) {
@@ -204,7 +241,14 @@ export function isValidPhoneNumber(phoneNumber) {
   const phonePattern =
     /^(?:0\d{3}\s?\d{3}\s?\d{4}|(?:\+?44)\d{3}\s?\d{3}\s?\d{4})$/;
 
-  return phonePattern.test(phoneNumber) && isValidString;
+  const returnBool = phonePattern.test(phoneNumber) && isValidString;
+
+  return {
+    status: returnBool,
+    message: returnBool
+      ? 'Phone number is valid'
+      : 'Phone number is invalid. Please provide a valid UK mobile or landline number. Valid formats include 01234 567 890 or +44 1234 567 890',
+  };
 }
 
 export function returnTrimmed(toTrim) {

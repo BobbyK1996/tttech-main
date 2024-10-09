@@ -21,11 +21,11 @@ function ContactDetails({
 
   validateString(address, 'Address', 'Please provide an address as a string');
   const addressLinkIsValid = isValidGMapsLink(addressLink);
-  const emailIsValid = isValidEmail(email);
-  const phoneNumberIsValid = isValidPhoneNumber(phoneNumber);
+  const emailIsValid = isValidEmail(email).status;
+  const phoneNumberIsValid = isValidPhoneNumber(phoneNumber).status;
 
   return (
-    <div className="flex flex-col gap-3 break-words">
+    <div className='flex flex-col gap-3 break-words'>
       {!isFooter && (
         <>
           <div className={containerClassMain}>
@@ -59,8 +59,8 @@ function ContactDetails({
             {addressLinkIsValid ? (
               <a
                 href={addressLink}
-                target="_blank"
-                rel="noopener noreferrer"
+                target='_blank'
+                rel='noopener noreferrer'
                 className={anchorClassMain}
               >
                 {address}
@@ -76,9 +76,9 @@ function ContactDetails({
 
       {isFooter && (
         <>
-          <div className="duration-200 hover:text-primary-500">
+          <div className='duration-200 hover:text-primary-500'>
             {addressLinkIsValid ? (
-              <a href={addressLink} target="_blank" rel="noopener noreferrer">
+              <a href={addressLink} target='_blank' rel='noopener noreferrer'>
                 {address}
               </a>
             ) : (
@@ -87,14 +87,14 @@ function ContactDetails({
               </span>
             )}
           </div>
-          <div className="duration-200 hover:text-primary-500">
+          <div className='duration-200 hover:text-primary-500'>
             {emailIsValid ? (
               <a href={`mailto:${email}`}>{email}</a>
             ) : (
               <span className={errorClass}>Invalid email: {email}</span>
             )}
           </div>
-          <div className="duration-200 hover:text-primary-500">
+          <div className='duration-200 hover:text-primary-500'>
             {phoneNumberIsValid ? (
               <a href={`tel:${phoneNumber}`}>{phoneNumber}</a>
             ) : (

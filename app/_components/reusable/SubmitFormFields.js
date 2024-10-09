@@ -98,22 +98,23 @@ function SubmitFormFields({ step }) {
     e.preventDefault();
     dispatch({ type: 'SET_IS_SUBMITTING', payload: true });
 
-    const isValidRequiredArray = Object.keys(state.formData).map((key) => {
-      if (validators.required[key])
-        return validators.required[key](state.formData[key]);
+    const isValidRequiredArray = Object.keys(state.formData)
+      .map((key) => {
+        if (validators.required[key])
+          return validators.required[key](state.formData[key]).status;
+      })
+      .filter((result) => result !== undefined);
 
-      return true;
-    });
+    const isValidOptionalArray = Object.keys(state.formData)
+      .map((key) => {
+        if (validators.optional[key]) {
+          if (state.formData[key] !== '')
+            return validators.optional[key](state.formData[key]).status;
 
-    const isValidOptionalArray = Object.keys(state.formData).map((key) => {
-      if (validators.optional[key]) {
-        if (state.formData[key] !== '')
-          return validators.optional[key](state.formData[key]);
-
-        return true;
-      }
-      return true;
-    });
+          return true;
+        }
+      })
+      .filter((result) => result !== undefined);
 
     const isFormValid = [
       ...isValidRequiredArray,
@@ -121,12 +122,10 @@ function SubmitFormFields({ step }) {
     ].every((isValid) => isValid);
 
     if (!state.recaptchaToken || !isFormValid) {
-      console.log('failed');
       dispatch({ type: 'SET_SEND_STATUS', payload: 'failed' });
       dispatch({ type: 'SET_IS_SUBMITTING', payload: false });
       return;
     }
-    console.log('passed');
   };
 
   const handleFileChange = useCallback(
@@ -293,6 +292,7 @@ function SubmitFormFields({ step }) {
             className={`min-h-64 ${formItemStyles} ${
               state.formData.message
                 ? validators.optional.message(state.formData.message.trim())
+                    .status
                   ? 'bg-primary-500'
                   : 'bg-red-500'
                 : 'bg-white focus:bg-primary-500 focus:placeholder-white'

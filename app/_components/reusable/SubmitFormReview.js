@@ -15,7 +15,6 @@ import {
   isValidName,
   isValidPhoneNumber,
   isValidUrl,
-  validateFile as isValidFile,
   validateObject,
 } from '@lib/helperShared';
 
@@ -52,7 +51,8 @@ function SubmitFormReview({ formData }) {
                 : null
             }
             isValid={
-              isValidName(formData.givenName) && isValidName(formData.surname)
+              isValidName(formData.givenName).status &&
+              isValidName(formData.surname).status
             }
           />
 
@@ -60,14 +60,14 @@ function SubmitFormReview({ formData }) {
             icon={IoPhonePortrait}
             label='Number'
             value={formData.number}
-            isValid={isValidPhoneNumber(formData.number)}
+            isValid={isValidPhoneNumber(formData.number).status}
           />
 
           <SubmitFormReviewItem
             icon={IoMail}
             label='Email'
             value={formData.email}
-            isValid={isValidEmail(formData.email)}
+            isValid={isValidEmail(formData.email).status}
           />
 
           <SubmitFormReviewItem
@@ -94,28 +94,28 @@ function SubmitFormReview({ formData }) {
             icon={IoBriefcase}
             label='Job Title'
             value={formData.currentJobTitle}
-            isValid={isValidJobTitle(formData.currentJobTitle)}
+            isValid={isValidJobTitle(formData.currentJobTitle).status}
           />
 
           <SubmitFormReviewItem
             icon={IoLogoLinkedin}
             label='LinkedIn'
             value={formData.linkedinLink}
-            isValid={isValidUrl(formData.linkedinLink, true)}
+            isValid={isValidUrl(formData.linkedinLink, true).status}
           />
 
           <SubmitFormReviewItem
             icon={IoLinkSharp}
             label='Portfolio'
             value={formData.portfolioLink}
-            isValid={isValidUrl(formData.portfolioLink)}
+            isValid={isValidUrl(formData.portfolioLink).status}
           />
 
           <SubmitFormReviewItem
             icon={IoReader}
             label='Message'
             value={formData.message}
-            isValid={isValidMessage(formData.message)}
+            isValid={isValidMessage(formData.message).status}
           />
         </div>
       </section>

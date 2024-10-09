@@ -2,13 +2,13 @@ import nodemailer from 'nodemailer';
 import { isValidEmail, validateString } from '@lib/helperShared';
 
 export async function sendMail({ to, subject, body }) {
-  if (!isValidEmail(to)) return;
+  if (!isValidEmail(to).status) return;
   const isValidStringSubject = validateString(subject, 'Subject');
   const isValidStringBody = validateString(body, 'Body');
 
   if (!isValidStringSubject && !isValidStringBody)
     throw new Error(
-      'subject and body must be valid strings. Subject can be an interpolated header. Body needs to be valid html'
+      'subject and body must be valid strings. Subject can be an interpolated header. Body needs to be valid html',
     );
 
   const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;

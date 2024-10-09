@@ -17,10 +17,10 @@ export async function sendContactForm(formData) {
 
   const { name, email, type, message, recaptchaToken } = trimmedData;
 
-  const nameValid = isValidName(name);
-  const emailValid = isValidEmail(email);
+  const nameValid = isValidName(name).status;
+  const emailValid = isValidEmail(email).status;
   const typeValid = isValidType(type, ['Company', 'Candidate']);
-  const messageValid = isValidMessage(message);
+  const messageValid = isValidMessage(message).status;
 
   if (!nameValid || !emailValid || !typeValid || !messageValid) {
     console.error('Validation failed:', {
@@ -48,7 +48,7 @@ export async function sendContactForm(formData) {
           secret: EMAIL_FORM_RECAPTCHA_SECRET_KEY,
           response: recaptchaToken,
         }),
-      }
+      },
     );
 
     const recaptchaData = await recaptchaResponse.json();

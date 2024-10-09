@@ -16,7 +16,7 @@ function InputField({
   validationFunc,
   customCSS = '',
 }) {
-  const isValidName = validateString(name, 'Name');
+  const isValidNameProp = validateString(name, 'Name');
   const isValidPlaceholder = validateString(placeholder, 'Placeholder');
   const isValidValue = typeof value === 'string';
   const isValidHandleChange = validateFunction(handleChange, 'handleChange');
@@ -29,7 +29,7 @@ function InputField({
   const isValidCustomCSS = typeof customCSS === 'string';
 
   if (
-    !isValidName ||
+    !isValidNameProp ||
     !isValidPlaceholder ||
     !isValidValue ||
     !isValidHandleChange ||
@@ -40,7 +40,7 @@ function InputField({
   )
     console.error('Error in one of the input props');
 
-  const isValid = validationFunc ? validationFunc(value.trim()) : true;
+  const isValid = validationFunc ? validationFunc(value.trim()).status : true;
 
   return (
     <div className='flex flex-col'>
