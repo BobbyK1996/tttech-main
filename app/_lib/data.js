@@ -22,6 +22,16 @@ import {
   TiSocialTwitterCircular,
 } from 'react-icons/ti';
 
+import {
+  isValidEmail,
+  isValidJobTitle,
+  isValidMessage,
+  isValidName,
+  isValidPhoneNumber,
+  isValidUrl,
+  validateFile,
+} from '@lib/helperShared';
+
 export const LOGO_DESC_LOGO_DATA = {
   content: logoBase,
   alt: 'TT Tech Logo',
@@ -256,3 +266,19 @@ export const VALID_FILE_TYPES = [
   },
   { type: 'application/pdf', name: '.pdf' },
 ];
+
+export const SUBMIT_FORM_VALIDATORS = {
+  required: {
+    givenName: isValidName,
+    surname: isValidName,
+    number: isValidPhoneNumber,
+    email: isValidEmail,
+    resumeFile: validateFile,
+  },
+  optional: {
+    currentJobTitle: isValidJobTitle,
+    linkedinLink: (value) => isValidUrl(value, true),
+    portfolioLink: isValidUrl,
+    message: isValidMessage,
+  },
+};

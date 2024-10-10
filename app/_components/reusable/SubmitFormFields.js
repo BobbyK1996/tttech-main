@@ -2,6 +2,8 @@
 
 import { useSubmitForm } from '@/app/context/submitFormContext';
 
+import { validateFields } from '@lib/helperShared';
+
 import Spinner from '@components/reusable/Spinner';
 import SubmitFormFieldsRequired from '@components/reusable/SubmitFormFieldsRequired';
 import SubmitFormFieldsOptional from '@components/reusable/SubmitFormFieldsOptional';
@@ -11,32 +13,16 @@ import Button from '@components/reusable/Button';
 function SubmitFormFields({ step }) {
   const { state, dispatch, validators } = useSubmitForm();
 
-  const validateFields = (fields, isRequired) => {
-    return Object.keys(fields).reduce((results, key) => {
-      const value = fields[key];
-
-      const validator = isRequired
-        ? validators.required[key]
-        : validators.optional[key];
-
-      if (!validator) return results;
-
-      if (isRequired) {
-        results.push(validator(value).status);
-      } else {
-        results.push(value !== '' ? validator(value).status : true);
-      }
-
-      return results;
-    }, []);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: 'SET_IS_SUBMITTING', payload: true });
 
-    const isValidRequiredArray = validateFields(state.formData, true);
-    const isValidOptionalArray = validateFields(state.formData, false);
+    const isValidRequiredArray = validateFields(state.formData, validators);
+    const isValidOptionalArray = validateFields(
+      state.formData,
+      validators,
+      false,
+    );
 
     const isFormValid = [
       ...isValidRequiredArray,

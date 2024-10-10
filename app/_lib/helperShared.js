@@ -276,3 +276,35 @@ export function returnTrimmed(toTrim) {
 
   return toTrim;
 }
+
+export const validateFields = (fields, validators, isRequired = true) => {
+  const isValidFields = validateObject(fields, 'Fields');
+  const isValidValidators = validateObject(validators, 'Validators');
+  const isValidRequired = typeof isRequired === 'boolean';
+
+  if (!isValidFields || !isValidValidators || !isValidRequired) {
+    console.error(
+      'Developer error. One of the fields in validateFields is not the correct type',
+    );
+
+    return;
+  }
+
+  return Object.keys(fields).reduce((results, key) => {
+    const value = fields[key];
+
+    const validator = isRequired
+      ? validators?.required[key]
+      : validators?.optional[key];
+
+    if (!validator) return results;
+
+    if (isRequired) {
+      results.push(validator(value).status);
+    } else {
+      results.push(value !== '' ? validator(value).status : true);
+    }
+
+    return results;
+  }, []);
+};

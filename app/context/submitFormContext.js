@@ -7,40 +7,17 @@ import {
 } from 'react';
 
 import { initialState, reducer } from '@lib/reducers/submitFormReducer';
-import { VALID_FILE_TYPES } from '@lib/data';
 import {
-  isValidEmail,
-  isValidJobTitle,
-  isValidMessage,
-  isValidName,
-  isValidPhoneNumber,
-  isValidUrl,
-  validateFile,
-} from '@lib/helperShared';
+  VALID_FILE_TYPES,
+  SUBMIT_FORM_VALIDATORS as importedValidators,
+} from '@lib/data';
 
 const SubmitFormContext = createContext();
 
 function SubmitFormProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const validators = useMemo(
-    () => ({
-      required: {
-        givenName: isValidName,
-        surname: isValidName,
-        number: isValidPhoneNumber,
-        email: isValidEmail,
-        resumeFile: validateFile,
-      },
-      optional: {
-        currentJobTitle: isValidJobTitle,
-        linkedinLink: (value) => isValidUrl(value, true),
-        portfolioLink: isValidUrl,
-        message: isValidMessage,
-      },
-    }),
-    [],
-  );
+  const validators = useMemo(() => importedValidators, []);
 
   const formItemStyles = useMemo(() => {
     return 'block w-full p-3 text-white duration-700 ease-in-out border-gray-300 rounded-sm shadow-sm hover:bg-primary-500 placeholder-slate-400 hover:placeholder-white focus:outline-none active:color-slate-500';
