@@ -238,6 +238,8 @@ export async function createResumeEntryDB(email, resumeFile) {
     .from('tempResume')
     .insert([{ associatedEmail: email, resumeLink: resumePath }]);
 
+  console.log(data);
+
   if (error) {
     console.error(error);
     throw new Error('Resume entry could not be created');
@@ -248,6 +250,14 @@ export async function createResumeEntryDB(email, resumeFile) {
     .upload(resumePathName, resumeFile, {
       upsert: false,
     });
+
+  if (storageError) {
+    await supabase.from('tempResume').delete().eq('id', data.id);
+    console.log(storageError);
+    throw new Error(
+      'Resume could not be uploaded and the Resume Entry was not created',
+    );
+  }
 }
 
 //1. create the resume entry
