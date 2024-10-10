@@ -11,27 +11,32 @@ import Button from '@components/reusable/Button';
 function SubmitFormFields({ step }) {
   const { state, dispatch, validators } = useSubmitForm();
 
+  const validateFields = (fields, isRequired) => {
+    return Object.keys(fields).reduce((results, key) => {
+      const value = fields[key];
+
+      const validator = isRequired
+        ? validators.required[key]
+        : validators.optional[key];
+
+      if (!validator) return results;
+
+      if (isRequired) {
+        results.push(validator(value).status);
+      } else {
+        results.push(value !== '' ? validator(value).status : true);
+      }
+
+      return results;
+    }, []);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: 'SET_IS_SUBMITTING', payload: true });
 
-    const isValidRequiredArray = Object.keys(state.formData)
-      .map((key) => {
-        if (validators.required[key])
-          return validators.required[key](state.formData[key]).status;
-      })
-      .filter((result) => result !== undefined);
-
-    const isValidOptionalArray = Object.keys(state.formData)
-      .map((key) => {
-        if (validators.optional[key]) {
-          if (state.formData[key] !== '')
-            return validators.optional[key](state.formData[key]).status;
-
-          return true;
-        }
-      })
-      .filter((result) => result !== undefined);
+    const isValidRequiredArray = validateFields(state.formData, true);
+    const isValidOptionalArray = validateFields(state.formData, false);
 
     const isFormValid = [
       ...isValidRequiredArray,
