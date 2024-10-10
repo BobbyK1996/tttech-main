@@ -1,5 +1,7 @@
-import { convertToObject } from '@lib/helper';
+import { v4 as uuidv4 } from 'uuid';
+
 import supabase from '@lib/supabase';
+import { convertToObject } from '@lib/helper';
 import { validateString } from '@lib/helperShared';
 
 let refreshingPromise = null;
@@ -226,3 +228,29 @@ export async function getJob(id) {
     throw new Error(`Error fetching jobs: ${error.message}`);
   }
 }
+
+export async function createResumeEntryDB(email, resumeFile) {
+  const resumePathName = `${uuidv4()}-${resumeFile.lastModified}`;
+
+  const resumePath = `${process.env.SUPABASE_URL}/storage/v1/object/public/CVs/${resumePathName}`;
+
+  const { data, error } = await supabase
+    .from('tempResume')
+    .insert([{ associatedEmail: email, resumeLink: resumePath }]);
+
+  if (error) {
+    console.error(error);
+    throw new Error('Resume entry could not be created');
+  }
+
+  const { error: storageError } = await supabase.storage
+    .from('CVs')
+    .upload(resumePathName, resumeFile, {
+      upsert: false,
+    });
+}
+
+//1. create the resume entry
+// const {data, error} = await supabase.from("tempResume").upsert([{associatedEmail: email, token: token } ], {
+//   onConflict: ['associatedEmail']
+// })
