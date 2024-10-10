@@ -64,9 +64,24 @@ function SubmitFormFields({ step }) {
           {step === 3 && (
             <>
               <SubmitFormReview formData={state.formData} />{' '}
-              <Button variant='formSubmit' type='submit'>
-                Submit
-              </Button>
+              <div className='flex w-full flex-col gap-y-2'>
+                <Button variant='formSubmit' type='submit'>
+                  Submit
+                </Button>
+                {state.sendStatus && (
+                  <span
+                    className={`rounded-sm p-2 text-center sm:px-6 sm:py-4 ${
+                      state.sendStatus === 'success'
+                        ? 'bg-green-300 text-green-600'
+                        : 'bg-red-300 text-red-600'
+                    }`}
+                  >
+                    {state.sendStatus === 'success'
+                      ? 'Message sent successfully!'
+                      : 'Message failed to send'}
+                  </span>
+                )}
+              </div>
             </>
           )}
         </>
