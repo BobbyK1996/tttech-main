@@ -10,10 +10,12 @@ import SubmitFormFieldsOptional from '@components/reusable/SubmitFormFieldsOptio
 import SubmitFormReview from '@components/reusable/SubmitFormReview';
 import Button from '@components/reusable/Button';
 
+import { sendSubmitForm as send } from '@lib/server-actions/sendSubmitForm';
+
 function SubmitFormFields({ step }) {
   const { state, dispatch, validators } = useSubmitForm();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch({ type: 'SET_IS_SUBMITTING', payload: true });
 
@@ -33,6 +35,30 @@ function SubmitFormFields({ step }) {
       dispatch({ type: 'SET_SEND_STATUS', payload: 'failed' });
       dispatch({ type: 'SET_IS_SUBMITTING', payload: false });
       return;
+    }
+
+    try {
+      const formData = new FormData();
+      Object.entries(state.formData).forEach(([key, value]) => {
+        formData.append(key, value);
+        console.log(`${key}: ${value instanceof File ? value.name : value}`);
+      });
+
+      formData.append('recaptchaToken', state.recaptchaToken);
+
+      const { status, message } = await send(formData);
+
+      console.log('From Form Fields', status);
+      console.log('From Form Fields', message);
+
+      dispatch({ type: 'SET_SEND_STATUS', payload: status });
+      if (status === 'success') dispatch({ type: 'RESET_FORM' });
+    } catch (error) {
+      console.error('Caught error:', error);
+
+      dispatch({ type: 'SET_SEND_STATUS', payload: 'failed' });
+    } finally {
+      dispatch({ type: 'SET_IS_SUBMITTING', payload: false });
     }
   };
 

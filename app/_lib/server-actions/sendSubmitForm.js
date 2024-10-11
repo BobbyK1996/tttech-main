@@ -1,12 +1,18 @@
 'use server';
 
 import { SUBMIT_FORM_VALIDATORS as validators } from '../data';
+import { createResumeEntryDB } from '../data-services';
 import { returnTrimmed, validateFields } from '../helperShared';
 
 const { EMAIL_FORM_RECAPTCHA_SECRET_KEY } = process.env;
 
 export async function sendSubmitForm(formData) {
-  const trimmedData = returnTrimmed(formData);
+  const trimmedData = {};
+
+  for (const [key, value] of formData.entries()) {
+    console.log(`Received ${key}:`, value instanceof File ? value.name : value);
+    trimmedData[key] = returnTrimmed(value);
+  }
 
   const {
     givenName,
@@ -76,6 +82,8 @@ export async function sendSubmitForm(formData) {
       console.error('reCAPTCHA validation failed', recaptchaData);
       return { status: 'failed', message: 'reCAPTCHA validation failed' };
     }
+
+    await createResumeEntryDB(email, resumeFile);
   } catch (error) {
     console.error('Error sending data', error.message);
     return { status: 'failed', message: 'Failed to send data' };

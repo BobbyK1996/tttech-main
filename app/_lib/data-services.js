@@ -238,7 +238,7 @@ export async function createResumeEntryDB(email, resumeFile) {
     .from('tempResume')
     .insert([{ associatedEmail: email, resumeLink: resumePath }]);
 
-  console.log(data);
+  console.log('From tempResume', data);
 
   if (error) {
     console.error(error);

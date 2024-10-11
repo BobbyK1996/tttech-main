@@ -252,6 +252,16 @@ export function isValidPhoneNumber(phoneNumber) {
 }
 
 export function returnTrimmed(toTrim) {
+  if (toTrim instanceof File) {
+    // Log the file details to confirm
+    console.log('Detected File:', {
+      name: toTrim.name,
+      size: toTrim.size,
+      type: toTrim.type,
+    });
+    return toTrim; // Directly return the file object
+  }
+
   if (typeof toTrim === 'string') return toTrim.trim();
 
   if (Array.isArray(toTrim)) {
