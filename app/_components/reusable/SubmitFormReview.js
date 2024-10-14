@@ -74,7 +74,7 @@ function SubmitFormReview({ formData }) {
             icon={IoMail}
             label='File'
             value={formData.resumeFile?.name}
-            isValid={formData.resumeFileError.status || false}
+            isValid={formData.resumeFileError?.status || false}
           />
         </div>
       </section>

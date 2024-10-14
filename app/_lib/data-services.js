@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { randomBytes } from 'crypto';
 
 import supabase from '@lib/supabase';
 import { convertToObject } from '@lib/helper';
@@ -10,14 +11,14 @@ let REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 let ACCESS_TOKEN = null;
 let EXPIRATION_TIME = null;
 
-const TOKEN_EXPIRATION_BUFFER = 300 * 1000;
+const TOKEN_EXPIRATION_BUFFER = 300;
 
 function isTokenValid(expirationTime) {
   return Date.now() < expirationTime;
 }
 
-function calculateExpirationTime(expires_in) {
-  return Date.now() + expires_in * 1000 - TOKEN_EXPIRATION_BUFFER;
+function calculateExpirationTime(expires_in, buffer = 0) {
+  return Date.now() + expires_in * 1000 - buffer * 1000;
 }
 
 export async function revalidateZoho() {
@@ -79,7 +80,10 @@ export async function revalidateZoho() {
 
       const { access_token, expires_in } = await res.json();
 
-      const expirationTime = calculateExpirationTime(expires_in);
+      const expirationTime = calculateExpirationTime(
+        expires_in,
+        TOKEN_EXPIRATION_BUFFER,
+      );
       const expirationTimeISO = new Date(expirationTime).toISOString();
 
       //update db with new token data
@@ -243,8 +247,12 @@ export async function createApplicantEntry(formData) {
   } = formData;
 
   const resumePathName = `${uuidv4()}-${resumeFile.lastModified}`;
-
   const resumePath = `${process.env.SUPABASE_URL}/storage/v1/object/public/CVs/${resumePathName}`;
+
+  const token = randomBytes(32).toString('hex');
+
+  const expirationTime = calculateExpirationTime(900);
+  const expirationTimeISO = new Date(expirationTime).toISOString();
 
   const { data, error } = await supabase.from('tempResume').insert([
     {
@@ -257,6 +265,10 @@ export async function createApplicantEntry(formData) {
       linkedinLink,
       portfolioLink,
       message,
+      verificationToken: token,
+      tokenExpiry: expirationTimeISO,
+      verified: false,
+      submitted: false,
     },
   ]);
 
