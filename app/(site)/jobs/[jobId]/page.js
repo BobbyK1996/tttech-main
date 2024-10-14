@@ -128,7 +128,8 @@ async function Page({ params }) {
   // const job = await getJob(params.jobId);
   const job = TEMP_DATA;
   const {
-    Job_Opening_ID: id,
+    Job_Opening_ID: jobOpeningID,
+    id: digitID,
     Created_Time: created_date,
     Posting_Title: title,
     Salary: salary,
@@ -136,6 +137,8 @@ async function Page({ params }) {
     Associated_Tags: tags,
     PublicDescription: jobDescription,
   } = job;
+
+  const id = `${jobOpeningID}-${digitID}`;
 
   // const descriptionObject = convertToObject([jobDescription]);
   const descriptionObject = jobDescription;
@@ -148,6 +151,7 @@ async function Page({ params }) {
     <JobPageClientWrapper
       job={{
         id,
+        jobOpeningID,
         created_date,
         title,
         salary,

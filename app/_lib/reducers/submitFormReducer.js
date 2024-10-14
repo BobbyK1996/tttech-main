@@ -11,6 +11,7 @@ export const initialState = {
     portfolioLink: '',
     message: '',
   },
+  idPath: '',
   recaptchaToken: null,
   isSubmitting: false,
   sendStatus: null,
@@ -30,6 +31,11 @@ export const reducer = (state, action) => {
       return {
         ...state,
         recaptchaToken: action.payload,
+      };
+    case 'SET_URL':
+      return {
+        ...state,
+        idPath: action.payload,
       };
     case 'SET_IS_SUBMITTING':
       return {

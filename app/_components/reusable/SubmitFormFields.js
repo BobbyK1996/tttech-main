@@ -44,6 +44,7 @@ function SubmitFormFields({ step }) {
       });
 
       formData.append('recaptchaToken', state.recaptchaToken);
+      formData.append('idPath', state.idPath);
 
       const { status, message } = await send(formData);
 

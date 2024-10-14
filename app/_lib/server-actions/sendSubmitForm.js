@@ -25,7 +25,10 @@ export async function sendSubmitForm(formData) {
     portfolioLink,
     message,
     recaptchaToken,
+    idPath,
   } = trimmedData;
+
+  if (typeof idPath !== 'string' || idPath.split('-').length !== 2) return;
 
   const dataFields = {
     givenName,
@@ -94,6 +97,7 @@ export async function sendSubmitForm(formData) {
       portfolioLink,
       message,
       recaptchaToken,
+      idPath: idPath.split('-')[1],
     });
   } catch (error) {
     console.error('Error sending data', error.message);

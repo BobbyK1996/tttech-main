@@ -4,6 +4,7 @@ import {
   useReducer,
   useCallback,
   useMemo,
+  useEffect,
 } from 'react';
 
 import { initialState, reducer } from '@lib/reducers/submitFormReducer';
@@ -92,6 +93,20 @@ function SubmitFormProvider({ children }) {
     [dispatch],
   );
 
+  const saveIdPath = useCallback(() => {
+    const url = window.location.href.split('/');
+    const idPath = url[url.length - 1];
+
+    dispatch({
+      type: 'SET_URL',
+      payload: idPath,
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    saveIdPath();
+  }, [saveIdPath]);
+
   return (
     <SubmitFormContext.Provider
       value={{
@@ -100,6 +115,7 @@ function SubmitFormProvider({ children }) {
         handleChange,
         handleBlur,
         handleFileChange,
+        saveIdPath,
         validators,
         formItemStyles,
       }}

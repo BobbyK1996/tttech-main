@@ -18,7 +18,15 @@ function JobPageClientWrapper({ job, utils }) {
     setIsOpen((prevState) => !prevState);
   };
 
-  const { id, created_date, salary, location, tags, descriptionObject } = job;
+  const {
+    id,
+    jobOpeningID,
+    created_date,
+    salary,
+    location,
+    tags,
+    descriptionObject,
+  } = job;
 
   const { lastWord, titleWithoutLastWord } = utils;
 
@@ -47,7 +55,7 @@ function JobPageClientWrapper({ job, utils }) {
         </div>
 
         <div className='col-span-2 flex gap-4 text-sm text-slate-400'>
-          <span>Job Reference #{id.toString().padStart(4, '0')}</span>
+          <span>Job Reference #{jobOpeningID}</span>
           <span className='flex items-center gap-1'>
             <FaCalendar />
             <span>Posted on {formatDate(created_date)}</span>

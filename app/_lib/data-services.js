@@ -244,6 +244,7 @@ export async function createApplicantEntry(formData) {
     linkedinLink,
     portfolioLink,
     message,
+    idPath,
   } = formData;
 
   const resumePathName = `${uuidv4()}-${resumeFile.lastModified}`;
@@ -267,6 +268,7 @@ export async function createApplicantEntry(formData) {
       message,
       verificationToken: token,
       tokenExpiry: expirationTimeISO,
+      jobId: idPath,
       verified: false,
       submitted: false,
     },

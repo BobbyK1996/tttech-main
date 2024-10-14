@@ -10,8 +10,11 @@ function JobCard({ job }) {
     Salary: salary,
     City: location = 'Remote',
     Associated_Tags: tags,
-    Job_Opening_ID: id,
+    Job_Opening_ID: jobOpeningID,
+    id: digitID,
   } = job;
+
+  const id = `${jobOpeningID}-${digitID}`;
 
   console.log('This is the ID:', id);
 
