@@ -41,15 +41,11 @@ function SubmitFormFields({ step }) {
       const formData = new FormData();
       Object.entries(state.formData).forEach(([key, value]) => {
         formData.append(key, value);
-        console.log(`${key}: ${value instanceof File ? value.name : value}`);
       });
 
       formData.append('recaptchaToken', state.recaptchaToken);
 
       const { status, message } = await send(formData);
-
-      console.log('From Form Fields', status);
-      console.log('From Form Fields', message);
 
       dispatch({ type: 'SET_SEND_STATUS', payload: status });
       if (status === 'success') dispatch({ type: 'RESET_FORM' });

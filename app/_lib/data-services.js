@@ -229,14 +229,36 @@ export async function getJob(id) {
   }
 }
 
-export async function createResumeEntryDB(email, resumeFile) {
+export async function createApplicantEntry(formData) {
+  const {
+    givenName,
+    surname,
+    number,
+    email,
+    resumeFile,
+    currentJobTitle,
+    linkedinLink,
+    portfolioLink,
+    message,
+  } = formData;
+
   const resumePathName = `${uuidv4()}-${resumeFile.lastModified}`;
 
   const resumePath = `${process.env.SUPABASE_URL}/storage/v1/object/public/CVs/${resumePathName}`;
 
-  const { data, error } = await supabase
-    .from('tempResume')
-    .insert([{ associatedEmail: email, resumeLink: resumePath }]);
+  const { data, error } = await supabase.from('tempResume').insert([
+    {
+      email,
+      resumeLink: resumePath,
+      givenName,
+      number,
+      currentJobTitle,
+      surname,
+      linkedinLink,
+      portfolioLink,
+      message,
+    },
+  ]);
 
   console.log('From tempResume', data);
 

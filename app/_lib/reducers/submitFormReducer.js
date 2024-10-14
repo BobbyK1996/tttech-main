@@ -47,7 +47,7 @@ export const reducer = (state, action) => {
         formData: {
           givenName: '',
           surname: '',
-          number: null,
+          number: '',
           email: '',
           resumeFile: null,
           currentJobTitle: '',

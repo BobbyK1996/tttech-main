@@ -16,24 +16,24 @@ function JobCard({ job }) {
   console.log('This is the ID:', id);
 
   return (
-    <div className="grid grid-cols-3 px-8 py-6 transition duration-300 ease-in-out border-2 rounded-md border-primary-900 bg-primary-950 hover:scale-105 hover:border-white hover:shadow-2xl filter">
-      <div className="grid grid-cols-[auto,1fr] col-span-2 grid-rows-[1fr,auto] gap-x-4 gap-y-2 p-2 text-xl font-bold place-items-start">
-        <span className="p-1 text-3xl rounded-md bg-primary-800">
+    <div className='grid grid-cols-3 rounded-md border-2 border-primary-900 bg-primary-950 px-8 py-6 filter transition duration-300 ease-in-out hover:scale-105 hover:border-white hover:shadow-2xl'>
+      <div className='col-span-2 grid grid-cols-[auto,1fr] grid-rows-[1fr,auto] place-items-start gap-x-4 gap-y-2 p-2 text-xl font-bold'>
+        <span className='rounded-md bg-primary-800 p-1 text-3xl'>
           <IoBriefcaseOutline />
         </span>
-        <span className="flex items-center h-full">{title}</span>
-        <span className="col-span-2 text-base text-primary-400">
+        <span className='flex h-full items-center'>{title}</span>
+        <span className='col-span-2 text-base text-primary-400'>
           {location}
         </span>
       </div>
 
       <Salary salary={salary} />
 
-      <div className="flex items-center col-span-2 gap-2 pl-2">
+      <div className='col-span-2 flex items-center gap-2 pl-2'>
         {tags.slice(0, 3).map((tag) => (
           <span
             key={tag.id}
-            className="px-4 py-2 shadow-lg rounded-xl hover:filter hover:saturate-100"
+            className='rounded-xl px-4 py-2 shadow-lg hover:saturate-100 hover:filter'
             style={{
               backgroundColor: `${tag.color_code}`,
             }}
@@ -45,7 +45,7 @@ function JobCard({ job }) {
 
       <Link
         href={`/jobs/${id}`}
-        className="w-full px-6 py-4 text-center transition duration-300 ease-in-out rounded-md hover:bg-accent-300 bg-accent-500"
+        className='w-full rounded-md bg-accent-500 px-6 py-4 text-center transition duration-300 ease-in-out hover:bg-accent-300'
       >
         Apply
       </Link>
