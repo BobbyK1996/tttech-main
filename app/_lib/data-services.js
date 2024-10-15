@@ -113,9 +113,15 @@ export async function revalidateZoho() {
 }
 
 async function saveBackupData(key, data) {
+  const jobIdArray = data.reduce((acc, job) => {
+    acc.push(job.id);
+    return acc;
+  }, []);
+  console.log('From saveBackupData:', jobIdArray);
+
   const { data: result, error } = await supabase
     .from(key)
-    .update({ jobs: data })
+    .update({ jobs: data, jobIds: jobIdArray })
     .eq('id', 1)
     .select();
 
@@ -128,7 +134,7 @@ async function saveBackupData(key, data) {
 }
 
 async function getBackupData(key, column) {
-  const { data, error } = await supabase.from(key).eq('id', 1).select(column);
+  const { data, error } = await supabase.from(key).select(column);
 
   const dataObject = data.map((dataString) => JSON.parse(dataString));
 
@@ -313,24 +319,68 @@ async function getVerifiedUnsubmittedCandidates() {
   }
 }
 
+async function getCurrentJobIds() {
+  try {
+    const { data, error } = await supabase
+      .from('jobsBackup')
+      // .eq('id', 1)
+      .select('jobIds');
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error('Could not get current job ID list');
+    }
+
+    if (!data || data.length === 0) return [];
+
+    return data[0].jobIds;
+  } catch (error) {
+    console.error('Unexpected error connecting to Supabase:', error);
+    throw error;
+  }
+}
+
 function sortApplicantsByJob(applicantData) {
   const sortedApplicants = applicantData.reduce((acc, app) => {
     if (!acc[app.jobId]) acc[app.jobId] = [];
 
     acc[app.jobId].push(app);
+    return acc;
   }, {});
 
   return sortedApplicants;
 }
 
+function reduceToAvailableJobs(availableJobs, applicantsData) {
+  return Object.keys(applicantsData).reduce((acc, key) => {
+    const isValidJob = availableJobs.includes(key);
+    if (isValidJob) acc[key] = applicantsData[key];
+    return acc;
+  }, {});
+}
+
 export async function createZohoEntry() {
   try {
-    //Get applicantData from database
+    // Get applicantData from database
     const applicantsToSubmit = await getVerifiedUnsubmittedCandidates();
-    console.log('Candidates from Supabase:', applicantsToSubmit);
+    if (!applicantsToSubmit || applicantsToSubmit.length === 0) return;
 
     //Sort the data by jobId
     const sortedApplicants = sortApplicantsByJob(applicantsToSubmit);
+
+    //Get the current job Ids
+    const currentJobIds = await getCurrentJobIds();
+    if (!currentJobIds || currentJobIds.length === 0) return;
+
+    //Filter applicants by available jobs
+    const sortedFilteredApplicants = reduceToAvailableJobs(
+      currentJobIds,
+      sortedApplicants,
+    );
+    console.log('Current job Ids from supabase:', currentJobIds);
+
+    //Upsert validated & unsubmitted candidate profiles to Zoho
+    // const { access_token } = await revalidateZoho();
   } catch (error) {
     console.error('Error creating Zoho entry:', error);
     return;

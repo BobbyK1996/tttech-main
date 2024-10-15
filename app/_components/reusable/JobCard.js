@@ -16,8 +16,6 @@ function JobCard({ job }) {
 
   const id = `${jobOpeningID}-${digitID}`;
 
-  console.log('This is the ID:', id);
-
   return (
     <div className='grid grid-cols-3 rounded-md border-2 border-primary-900 bg-primary-950 px-8 py-6 filter transition duration-300 ease-in-out hover:scale-105 hover:border-white hover:shadow-2xl'>
       <div className='col-span-2 grid grid-cols-[auto,1fr] grid-rows-[1fr,auto] place-items-start gap-x-4 gap-y-2 p-2 text-xl font-bold'>
