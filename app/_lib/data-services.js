@@ -233,7 +233,7 @@ export async function getJob(id) {
   }
 }
 
-export async function createApplicantEntry(formData) {
+export async function createApplicantEntryDB(formData) {
   const {
     givenName,
     surname,
@@ -274,8 +274,6 @@ export async function createApplicantEntry(formData) {
     },
   ]);
 
-  console.log('From tempResume', data);
-
   if (error) {
     console.error(error);
     throw new Error('Resume entry could not be created');
@@ -296,7 +294,45 @@ export async function createApplicantEntry(formData) {
   }
 }
 
-//1. create the resume entry
-// const {data, error} = await supabase.from("tempResume").upsert([{associatedEmail: email, token: token } ], {
-//   onConflict: ['associatedEmail']
-// })
+async function getVerifiedUnsubmittedCandidates() {
+  try {
+    const { data, error } = await supabase
+      .from('tempResume')
+      .select('*')
+      .match({ verified: true, submitted: false });
+
+    if (error) {
+      console.error('Supabase error:', error);
+      throw new Error('Could not get candidates eligible for submission');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Unexpected error connecting to Supabase:', error);
+    throw error;
+  }
+}
+
+function sortApplicantsByJob(applicantData) {
+  const sortedApplicants = applicantData.reduce((acc, app) => {
+    if (!acc[app.jobId]) acc[app.jobId] = [];
+
+    acc[app.jobId].push(app);
+  }, {});
+
+  return sortedApplicants;
+}
+
+export async function createZohoEntry() {
+  try {
+    //Get applicantData from database
+    const applicantsToSubmit = await getVerifiedUnsubmittedCandidates();
+    console.log('Candidates from Supabase:', applicantsToSubmit);
+
+    //Sort the data by jobId
+    const sortedApplicants = sortApplicantsByJob(applicantsToSubmit);
+  } catch (error) {
+    console.error('Error creating Zoho entry:', error);
+    return;
+  }
+}

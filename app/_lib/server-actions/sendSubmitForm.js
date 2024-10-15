@@ -1,7 +1,7 @@
 'use server';
 
 import { SUBMIT_FORM_VALIDATORS as validators } from '@lib/data';
-import { createApplicantEntry } from '@lib/data-services';
+import { createApplicantEntryDB } from '@lib/data-services';
 import { returnTrimmed, validateFields } from '@lib/helperShared';
 
 const { EMAIL_FORM_RECAPTCHA_SECRET_KEY } = process.env;
@@ -85,7 +85,7 @@ export async function sendSubmitForm(formData) {
       return { status: 'failed', message: 'reCAPTCHA validation failed' };
     }
 
-    await createApplicantEntry({
+    await createApplicantEntryDB({
       givenName,
       surname,
       number,
