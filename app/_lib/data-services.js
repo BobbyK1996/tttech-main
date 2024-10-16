@@ -359,6 +359,29 @@ function reduceToAvailableJobs(availableJobs, applicantsData) {
   }, {});
 }
 
+function generateBodyData(applicants) {
+  const upsertApplicantData = applicants.map((applicant) => {
+    return {
+      Email: applicant.email,
+      Origin: 'Applied',
+      First_Name: applicant.givenName,
+      Last_Name: applicant.surname,
+      Full_Name: `${applicant.givenName} ${applicant.surname}`,
+      Phone: applicant.number,
+      Current_Job_Title: applicant.currentJobTitle,
+      LinkedIn__s: 'https://www.linkedin.com/in/johnsmith1234',
+      Website: applicant.portfolioLink,
+    };
+  });
+
+  const upsertData = {
+    data: upsertApplicantData,
+    duplicate_check_fields: ['Email'],
+  };
+
+  return upsertData;
+}
+
 export async function createZohoEntry() {
   try {
     // Get applicantData from database
@@ -377,12 +400,84 @@ export async function createZohoEntry() {
       currentJobIds,
       sortedApplicants,
     );
-    console.log('Current job Ids from supabase:', currentJobIds);
 
     //Upsert validated & unsubmitted candidate profiles to Zoho
-    // const { access_token } = await revalidateZoho();
+    const { access_token } = await revalidateZoho();
+
+    const candidateIdsToJobId = await Object.entries(
+      sortedFilteredApplicants,
+    ).reduce(async (accPromise, [jobId, applicants]) => {
+      const acc = await accPromise;
+
+      const bodyData = generateBodyData(applicants);
+
+      const res = await fetch(
+        'https://recruit.zoho.eu/recruit/v2/Candidates/upsert',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Zoho-oauthtoken ${access_token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bodyData),
+        },
+      );
+
+      const responseData = await res.json();
+      const candidateIds = responseData.data.map(
+        (candidate) => candidate.details.id,
+      );
+
+      acc[jobId] = candidateIds;
+
+      return acc;
+    }, Promise.resolve({}));
+
+    console.log('Candidates IDs to Job IDs:', candidateIdsToJobId);
+    //Generate body data
   } catch (error) {
     console.error('Error creating Zoho entry:', error);
     return;
   }
 }
+
+const sortedFilteredApplicants = {
+  '31464000003635007': [
+    {
+      id: 9,
+      email: 'johnsmith@smith.com',
+      resumeLink:
+        'https://supabase.co/storage/v1/object/public/CVs/283270b4-4e6c-4c67-813e-68acd4cfdfa2-1728945385355',
+      verificationToken:
+        'fbfd0592b162cf70f318b5ae9e38921fca1223f72127e258e67c13b874c1e9bd',
+      tokenExpiry: '2024-10-14T22:51:26.015+00:00',
+      givenName: 'John',
+      number: '01111111111',
+      currentJobTitle: 'JohnSmithsJob',
+      surname: 'Smith',
+      linkedinLink: '/in/johnsmith',
+      portfolioLink: 'www.website.com',
+      verified: true,
+      submitted: false,
+      jobId: '31464000003635007',
+    },
+    {
+      id: 10,
+      email: 'johnsmith2@smith.com',
+      resumeLink:
+        'https://supabase.co/storage/v1/object/public/CVs/283270b4-4e6c-4c67-813e-68acd4cfdfa2-1728945385355',
+      verificationToken:
+        'fbfd0592b162cf70f287b5ae9e38921fca1223f72127e258e67c13b874c1e9bd',
+      tokenExpiry: '2024-10-14T22:51:26.015+00:00',
+      givenName: 'Johno',
+      number: '01111111112',
+      currentJobTitle: 'JohnSmithsJob2',
+      surname: 'Smitho',
+      linkedinLink: '/in/johnosmitho',
+      portfolioLink: 'www.website.com',
+      verified: true,
+      submitted: false,
+      jobId: '31464000003635007',
+    },
+  ],
+};
