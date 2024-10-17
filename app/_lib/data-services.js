@@ -365,7 +365,7 @@ async function upsertCandidatesToZoho(sortedFilteredApplicants, access_token) {
   ).reduce(async (accPromise, [jobId, applicants]) => {
     const acc = await accPromise;
 
-    const bodyData = generateBodyData(applicants);
+    const bodyData = generateUpsertBodyData(applicants);
 
     const res = await fetch(
       'https://recruit.zoho.eu/recruit/v2/Candidates/upsert',
@@ -381,7 +381,7 @@ async function upsertCandidatesToZoho(sortedFilteredApplicants, access_token) {
 
     const responseData = await res.json();
 
-    console.log('Response Data:', responseData);
+    // console.log('Response Data:', responseData);
     const candidateIds = responseData.data.map(
       (candidate) => candidate.details.id,
     );
@@ -394,7 +394,7 @@ async function upsertCandidatesToZoho(sortedFilteredApplicants, access_token) {
   return candidateIdsToJobId;
 }
 
-function generateBodyData(applicants) {
+function generateUpsertBodyData(applicants) {
   const upsertApplicantData = applicants.map((applicant) => {
     return {
       Email: applicant.email,
@@ -414,9 +414,49 @@ function generateBodyData(applicants) {
     duplicate_check_fields: ['Email'],
   };
 
-  console.log('Upsert Data:', upsertData);
+  // console.log('Upsert Data:', upsertData);
 
   return upsertData;
+}
+
+function generateAssociateBodyData(jobId, applicantIds) {
+  return {
+    data: [
+      {
+        jobids: [jobId],
+        ids: applicantIds,
+        comments: 'Record successfully associated',
+      },
+    ],
+  };
+}
+
+async function associateToZohoJob(jobsToCandidates, access_token) {
+  const statusCodes = await Promise.all(
+    Object.entries(jobsToCandidates).map(async ([jobId, applicantIds]) => {
+      const bodyData = generateAssociateBodyData(jobId, applicantIds);
+
+      const res = await fetch(
+        'https://recruit.zoho.eu/recruit/v2/Candidates/actions/associate',
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Zoho-oauthtoken ${access_token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bodyData),
+          redirect: 'follow',
+        },
+      );
+
+      const responseText = await res.text();
+      console.log('res:', responseText);
+
+      return res.status;
+    }),
+  );
+
+  return statusCodes;
 }
 
 function matchZohoToDB(applicantsDB, zohoIds) {
@@ -473,18 +513,28 @@ export async function createZohoEntry() {
     //Upsert validated & unsubmitted candidate profiles to Zoho
     const { access_token } = await revalidateZoho();
 
+    console.log('Access token before Zcitjd:', access_token);
+
     const zohoCandidateIdsToJobId = await upsertCandidatesToZoho(
       sortedFilteredApplicants,
       access_token,
     );
 
+    //Associate the candidate to the job applied for.
+    const statusCodes = await associateToZohoJob(
+      zohoCandidateIdsToJobId,
+      access_token,
+    );
+
     console.log('Candidates IDs to Job IDs:', zohoCandidateIdsToJobId);
 
+    console.log('statusCodes after associating:', statusCodes);
+
     //the index of the ids returned should be the same as sortedFilteredApplicants
-    const zohoIdsToSupabaseCandidateData = matchZohoToDB(
-      sortedFilteredApplicants,
-      zohoCandidateIdsToJobId,
-    );
+    // const zohoIdsToSupabaseCandidateData = matchZohoToDB(
+    //   sortedFilteredApplicants,
+    //   zohoCandidateIdsToJobId,
+    // );
   } catch (error) {
     console.error('Error creating Zoho entry:', error);
     return;
