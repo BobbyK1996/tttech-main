@@ -359,6 +359,41 @@ function reduceToAvailableJobs(availableJobs, applicantsData) {
   }, {});
 }
 
+async function upsertCandidatesToZoho(sortedFilteredApplicants, access_token) {
+  const candidateIdsToJobId = await Object.entries(
+    sortedFilteredApplicants,
+  ).reduce(async (accPromise, [jobId, applicants]) => {
+    const acc = await accPromise;
+
+    const bodyData = generateBodyData(applicants);
+
+    const res = await fetch(
+      'https://recruit.zoho.eu/recruit/v2/Candidates/upsert',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Zoho-oauthtoken ${access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyData),
+      },
+    );
+
+    const responseData = await res.json();
+
+    console.log('Response Data:', responseData);
+    const candidateIds = responseData.data.map(
+      (candidate) => candidate.details.id,
+    );
+
+    acc[jobId] = candidateIds;
+
+    return acc;
+  }, Promise.resolve({}));
+
+  return candidateIdsToJobId;
+}
+
 function generateBodyData(applicants) {
   const upsertApplicantData = applicants.map((applicant) => {
     return {
@@ -378,6 +413,8 @@ function generateBodyData(applicants) {
     data: upsertApplicantData,
     duplicate_check_fields: ['Email'],
   };
+
+  console.log('Upsert Data:', upsertData);
 
   return upsertData;
 }
@@ -404,37 +441,14 @@ export async function createZohoEntry() {
     //Upsert validated & unsubmitted candidate profiles to Zoho
     const { access_token } = await revalidateZoho();
 
-    const candidateIdsToJobId = await Object.entries(
+    const candidateIdsToJobId = await upsertCandidatesToZoho(
       sortedFilteredApplicants,
-    ).reduce(async (accPromise, [jobId, applicants]) => {
-      const acc = await accPromise;
-
-      const bodyData = generateBodyData(applicants);
-
-      const res = await fetch(
-        'https://recruit.zoho.eu/recruit/v2/Candidates/upsert',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Zoho-oauthtoken ${access_token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(bodyData),
-        },
-      );
-
-      const responseData = await res.json();
-      const candidateIds = responseData.data.map(
-        (candidate) => candidate.details.id,
-      );
-
-      acc[jobId] = candidateIds;
-
-      return acc;
-    }, Promise.resolve({}));
+      access_token,
+    );
 
     console.log('Candidates IDs to Job IDs:', candidateIdsToJobId);
-    //Generate body data
+
+    //the index of the ids returned should be the same as sortedFilteredApplicants
   } catch (error) {
     console.error('Error creating Zoho entry:', error);
     return;
