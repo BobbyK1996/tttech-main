@@ -419,11 +419,43 @@ function generateBodyData(applicants) {
   return upsertData;
 }
 
+function matchZohoToDB(applicantsDB, zohoIds) {
+  const matchedEntries = Object.entries(applicantsDB).reduce(
+    (acc, [jobId, applicants]) => {
+      candidateIds = zohoIds[jobId];
+
+      if (
+        candidateIds &&
+        applicants &&
+        candidateIds.length === applicants.length
+      ) {
+        const matchedData = applicants.map((applicant, index) => ({
+          zohoId: candidateIds[index],
+          DBId: applicant.id,
+          email: applicant.email,
+          resumeLink: applicant.resumeLink,
+        }));
+
+        return {
+          ...acc,
+          [jobId]: matchedData,
+        };
+      } else {
+        console.error(`Mismatch or missing data for jobId: ${jobId}`);
+        return acc;
+      }
+    },
+    {},
+  );
+
+  return matchedEntries;
+}
+
 export async function createZohoEntry() {
   try {
     // Get applicantData from database
     const applicantsToSubmit = await getVerifiedUnsubmittedCandidates();
-    if (!applicantsToSubmit || applicantsToSubmit.length === 0) return;
+    if (applicantsToSubmit?.length === 0) return;
 
     //Sort the data by jobId
     const sortedApplicants = sortApplicantsByJob(applicantsToSubmit);
@@ -441,14 +473,18 @@ export async function createZohoEntry() {
     //Upsert validated & unsubmitted candidate profiles to Zoho
     const { access_token } = await revalidateZoho();
 
-    const candidateIdsToJobId = await upsertCandidatesToZoho(
+    const zohoCandidateIdsToJobId = await upsertCandidatesToZoho(
       sortedFilteredApplicants,
       access_token,
     );
 
-    console.log('Candidates IDs to Job IDs:', candidateIdsToJobId);
+    console.log('Candidates IDs to Job IDs:', zohoCandidateIdsToJobId);
 
     //the index of the ids returned should be the same as sortedFilteredApplicants
+    const zohoIdsToSupabaseCandidateData = matchZohoToDB(
+      sortedFilteredApplicants,
+      zohoCandidateIdsToJobId,
+    );
   } catch (error) {
     console.error('Error creating Zoho entry:', error);
     return;
