@@ -4,13 +4,6 @@ import { randomBytes } from 'crypto';
 import supabase from '@lib/supabase';
 import { convertToObject } from '@lib/helper';
 import { validateString } from '@lib/helperShared';
-import FormData from 'form-data';
-import { createReadStream } from 'streamifier';
-import { exec } from 'child_process';
-import https from 'https';
-import http from 'http';
-import path from 'path';
-import { Readable } from 'stream';
 
 let refreshingPromise = null;
 
@@ -500,6 +493,8 @@ async function attachResumeToZoho(
   access_token,
   submissionCategory = 'WebsiteSubmission',
 ) {
+  //The Zoho API always returns 'SUCCESS' for non-unique categories like 'WebsiteSubmission'. If a file with the same `attachment_url` is already attached, it doesn't modify the record. If the `attachment_url` is different, it adds a new record. Therefore, ensure the third-party database only allows one entry per email, as email is the unique key in Zoho.
+
   const apiUrl = `https://recruit.zoho.eu/recruit/v2/Candidates/${applicant.zohoId}/Attachments?attachments_category=${submissionCategory}`;
 
   const headers = {
@@ -507,34 +502,36 @@ async function attachResumeToZoho(
     'Content-Type': 'application/x-www-form-urlencoded',
   };
 
-  const body = `attachment_url=${applicant.resumeLink}`;
+  const body = `attachment_url=${encodeURIComponent(applicant.resumeLink)}`;
 
   try {
     const res = await fetch(apiUrl, {
       method: 'POST',
-      headers: headers,
-      body: body,
+      headers,
+      body,
     });
 
     if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
 
-    const data = await response.json();
+    const data = await res.json();
 
-    if (data?.data?.[0]?.code !== 'SUCCESS')
+    const [result] = data?.data || [];
+
+    if (result?.code !== 'SUCCESS')
       throw new Error(
-        `API error: ${data?.data?.[0]?.message} - ${JSON.stringify(data?.data?.[0]?.details)} `,
+        `API error: ${result?.message} - ${JSON.stringify(result?.details)} `,
       );
 
-    console.log('Full data:', data);
-    console.log('Data details:', data.data[0].details);
+    console.log('API Response:', { fullData: data, details: result.details });
 
-    //the way the api works, for non-unique only categories, such as WebsiteSubmission, unless there is an error in the api itself, it always returns SUCCESS. If there is already a file attached that is of the same attachment_url, it doesn't change the record. If the attachment_url is different to what already exists, it adds a new record.
-    //That means the third party DB has to be changed to only allow one entry per email, as email is the unique key for the Zoho database.
     return data;
   } catch (error) {
-    console.error('Error during upload:', error.message || error);
+    console.error(
+      `Error during upload for applicant ${applicant.zohoId}:`,
+      error.message || error,
+    );
     throw error;
   }
 }
