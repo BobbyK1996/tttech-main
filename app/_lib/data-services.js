@@ -4,6 +4,13 @@ import { randomBytes } from 'crypto';
 import supabase from '@lib/supabase';
 import { convertToObject } from '@lib/helper';
 import { validateString } from '@lib/helperShared';
+import FormData from 'form-data';
+import { createReadStream } from 'streamifier';
+import { exec } from 'child_process';
+import https from 'https';
+import http from 'http';
+import path from 'path';
+import { Readable } from 'stream';
 
 let refreshingPromise = null;
 
@@ -381,7 +388,7 @@ async function upsertCandidatesToZoho(sortedFilteredApplicants, access_token) {
 
     const responseData = await res.json();
 
-    // console.log('Response Data:', responseData);
+    console.log('Response Data:', responseData);
     const candidateIds = responseData.data.map(
       (candidate) => candidate.details.id,
     );
@@ -449,9 +456,6 @@ async function associateToZohoJob(jobsToCandidates, access_token) {
         },
       );
 
-      const responseText = await res.text();
-      console.log('res:', responseText);
-
       return res.status;
     }),
   );
@@ -462,7 +466,7 @@ async function associateToZohoJob(jobsToCandidates, access_token) {
 function matchZohoToDB(applicantsDB, zohoIds) {
   const matchedEntries = Object.entries(applicantsDB).reduce(
     (acc, [jobId, applicants]) => {
-      candidateIds = zohoIds[jobId];
+      const candidateIds = zohoIds[jobId];
 
       if (
         candidateIds &&
@@ -491,8 +495,72 @@ function matchZohoToDB(applicantsDB, zohoIds) {
   return matchedEntries;
 }
 
+async function attachResumeToZoho(
+  applicant,
+  access_token,
+  submissionCategory = 'WebsiteSubmission',
+) {
+  const apiUrl = `https://recruit.zoho.eu/recruit/v2/Candidates/${applicant.zohoId}/Attachments?attachments_category=${submissionCategory}`;
+
+  const headers = {
+    Authorization: `Zoho-oauthtoken ${access_token}`,
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+
+  const body = `attachment_url=${applicant.resumeLink}`;
+
+  try {
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data?.data?.[0]?.code !== 'SUCCESS')
+      throw new Error(
+        `API error: ${data?.data?.[0]?.message} - ${JSON.stringify(data?.data?.[0]?.details)} `,
+      );
+
+    console.log('Full data:', data);
+    console.log('Data details:', data.data[0].details);
+
+    //the way the api works, for non-unique only categories, such as WebsiteSubmission, unless there is an error in the api itself, it always returns SUCCESS. If there is already a file attached that is of the same attachment_url, it doesn't change the record. If the attachment_url is different to what already exists, it adds a new record.
+    //That means the third party DB has to be changed to only allow one entry per email, as email is the unique key for the Zoho database.
+    return data;
+  } catch (error) {
+    console.error('Error during upload:', error.message || error);
+    throw error;
+  }
+}
+
+async function submitBatchResumeToZoho(matchedApplicants, access_token) {
+  attachmentUpload(applicant, access_token);
+}
+
 export async function createZohoEntry() {
   try {
+    const res = await attachmentUpload(
+      {
+        zohoId: '31464000003960020',
+        DBId: 10,
+        email: 'johnsmith2@gmail.com',
+        resumeLink:
+          'https://mhutzektmxsuhpdqteph.supabase.co/storage/v1/object/public/CVs/7996adba-a565-4ac5-b501-03db26ba6e8d-1728945685737',
+        resumeLinkTwo:
+          'https://mhutzektmxsuhpdqteph.supabase.co/storage/v1/object/public/CVs/283270b4-4e6c-4c67-813e-68acd4cfdfa2-1728945385355',
+      },
+      '1000.26fd516a0e5a668edd90532e8f59ca41.d0293f6bd31bc6b97cb36dc8f325b099',
+    );
+
+    // console.log('File uploaded to Zoho successfully:', res);
+
+    return;
     // Get applicantData from database
     const applicantsToSubmit = await getVerifiedUnsubmittedCandidates();
     if (applicantsToSubmit?.length === 0) return;
@@ -511,9 +579,9 @@ export async function createZohoEntry() {
     );
 
     //Upsert validated & unsubmitted candidate profiles to Zoho
-    const { access_token } = await revalidateZoho();
+    // const { access_token } = await revalidateZoho();
 
-    console.log('Access token before Zcitjd:', access_token);
+    console.log('Access token:', access_token);
 
     const zohoCandidateIdsToJobId = await upsertCandidatesToZoho(
       sortedFilteredApplicants,
@@ -521,19 +589,25 @@ export async function createZohoEntry() {
     );
 
     //Associate the candidate to the job applied for.
-    const statusCodes = await associateToZohoJob(
+    const statusCodesAssociate = await associateToZohoJob(
       zohoCandidateIdsToJobId,
       access_token,
     );
 
     console.log('Candidates IDs to Job IDs:', zohoCandidateIdsToJobId);
 
-    console.log('statusCodes after associating:', statusCodes);
+    //The index of the ids returned should be the same as sortedFilteredApplicants
+    const zohoIdsToDBCandidateData = matchZohoToDB(
+      sortedFilteredApplicants,
+      zohoCandidateIdsToJobId,
+    );
 
-    //the index of the ids returned should be the same as sortedFilteredApplicants
-    // const zohoIdsToSupabaseCandidateData = matchZohoToDB(
-    //   sortedFilteredApplicants,
-    //   zohoCandidateIdsToJobId,
+    console.log('Zoho IDs matched to DB IDs:', zohoIdsToDBCandidateData);
+
+    //Submit the resume to the correct candidate profile
+    // const statusCodesSubmitResume = await submitBatchResumeToZoho(
+    //   zohoIdsToDBCandidateData,
+    //   access_token,
     // );
   } catch (error) {
     console.error('Error creating Zoho entry:', error);

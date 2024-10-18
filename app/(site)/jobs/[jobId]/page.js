@@ -126,7 +126,7 @@ const TEMP_DATA = {
 
 async function Page({ params }) {
   // const job = await getJob(params.jobId);
-  // await createZohoEntry();
+  await createZohoEntry();
 
   const job = TEMP_DATA;
   const {
