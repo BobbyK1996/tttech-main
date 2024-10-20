@@ -528,10 +528,17 @@ async function attachResumeToZoho(
 
     return data;
   } catch (error) {
-    console.error(
-      `Error during upload for applicant ${applicant.zohoId}:`,
-      error.message || error,
-    );
+    console.error(`Error during upload for applicant ${applicant.zohoId}:`, {
+      applicant: {
+        zohoId: applicant.zohoId,
+        dbId: applicant.DBId,
+        email: applicant.email,
+        resumeLink: applicant.resumeLink,
+        submissionCategory,
+      },
+      error: error.message || error,
+      stack: error.stack,
+    });
     throw error;
   }
 }
