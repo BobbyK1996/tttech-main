@@ -583,22 +583,6 @@ async function attachBatchResumeToZoho(
 
 export async function createZohoEntry() {
   try {
-    const res = await attachBatchResumeToZoho(
-      {
-        zohoId: '31464000003960020',
-        DBId: 10,
-        email: 'johnsmith2@gmail.com',
-        resumeLink:
-          'https://supabase.co/storage/v1/object/public/CVs/7996adba-a565-4ac5-b501-03db26ba6e8d-1728945685737',
-        resumeLinkTwo:
-          'https://supabase.co/storage/v1/object/public/CVs/283270b4-4e6c-4c67-813e-68acd4cfdfa2-1728945385355',
-      },
-      '1000.26fd516a0e5a668edd90532e8f59ca41.d0293f6bd31bc6b97cb36dc8f325b099',
-    );
-
-    // console.log('File uploaded to Zoho successfully:', res);
-
-    return;
     // Get applicantData from database
     const applicantsToSubmit = await getVerifiedUnsubmittedCandidates();
     if (applicantsToSubmit?.length === 0) return;
@@ -616,10 +600,13 @@ export async function createZohoEntry() {
       sortedApplicants,
     );
 
-    //Upsert validated & unsubmitted candidate profiles to Zoho
-    // const { access_token } = await revalidateZoho();
+    console.log(
+      'Sorted & Filtered candidates, ready for submission:',
+      sortedFilteredApplicants,
+    );
 
-    console.log('Access token:', access_token);
+    //Upsert validated & unsubmitted candidate profiles to Zoho
+    const { access_token } = await revalidateZoho();
 
     const zohoCandidateIdsToJobId = await upsertCandidatesToZoho(
       sortedFilteredApplicants,
@@ -632,21 +619,19 @@ export async function createZohoEntry() {
       access_token,
     );
 
-    console.log('Candidates IDs to Job IDs:', zohoCandidateIdsToJobId);
-
-    //The index of the ids returned should be the same as sortedFilteredApplicants
+    //The index of the ids returned should match sortedFilteredApplicants
     const zohoIdsToDBCandidateData = matchZohoToDB(
       sortedFilteredApplicants,
       zohoCandidateIdsToJobId,
     );
 
-    console.log('Zoho IDs matched to DB IDs:', zohoIdsToDBCandidateData);
+    console.log(
+      'Zoho IDs matched to DB IDs & Applied Job(s):',
+      zohoIdsToDBCandidateData,
+    );
 
     //Submit the resume to the correct candidate profile
-    // const statusCodesSubmitResume = await submitBatchResumeToZoho(
-    //   zohoIdsToDBCandidateData,
-    //   access_token,
-    // );
+    await attachBatchResumeToZoho(zohoIdsToDBCandidateData, access_token, 6);
   } catch (error) {
     console.error('Error creating Zoho entry:', error);
     return;
