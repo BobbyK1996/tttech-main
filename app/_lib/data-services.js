@@ -543,21 +543,55 @@ async function attachResumeToZoho(
   }
 }
 
-async function submitBatchResumeToZoho(matchedApplicants, access_token) {
-  attachmentUpload(applicant, access_token);
+async function attachBatchResumeToZoho(
+  matchedApplicants,
+  access_token,
+  batchSize = 8,
+  submissionCategory = 'Website Submission',
+) {
+  const applicants = Object.values(matchedApplicants).flat();
+
+  let validToken = access_token;
+
+  const batches = Array.from(
+    { length: Math.ceil(applicants.length / batchSize) },
+    (_, i) => applicants.slice(i * batchSize, i * batchSize + batchSize),
+  );
+
+  for (const batch of batches) {
+    if (!isTokenValid(EXPIRATION_TIME)) {
+      const tokenResponse = await revalidateZoho();
+      validToken = tokenResponse.access_token;
+    }
+
+    const promiseResults = await Promise.allSettled(
+      batch.map((applicant) =>
+        attachResumeToZoho(applicant, validToken, submissionCategory),
+      ),
+    );
+
+    promiseResults.map((result, index) => {
+      if (result.status === 'rejected')
+        console.error(
+          `Error processing applicant ${batch[index].zohoId}: ${result.reason}}`,
+        );
+    });
+  }
+
+  console.log('Batches processed successfully');
 }
 
 export async function createZohoEntry() {
   try {
-    const res = await attachmentUpload(
+    const res = await attachBatchResumeToZoho(
       {
         zohoId: '31464000003960020',
         DBId: 10,
         email: 'johnsmith2@gmail.com',
         resumeLink:
-          'https://mhutzektmxsuhpdqteph.supabase.co/storage/v1/object/public/CVs/7996adba-a565-4ac5-b501-03db26ba6e8d-1728945685737',
+          'https://supabase.co/storage/v1/object/public/CVs/7996adba-a565-4ac5-b501-03db26ba6e8d-1728945685737',
         resumeLinkTwo:
-          'https://mhutzektmxsuhpdqteph.supabase.co/storage/v1/object/public/CVs/283270b4-4e6c-4c67-813e-68acd4cfdfa2-1728945385355',
+          'https://supabase.co/storage/v1/object/public/CVs/283270b4-4e6c-4c67-813e-68acd4cfdfa2-1728945385355',
       },
       '1000.26fd516a0e5a668edd90532e8f59ca41.d0293f6bd31bc6b97cb36dc8f325b099',
     );
