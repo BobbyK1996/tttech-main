@@ -1,7 +1,8 @@
-import JobPageClientWrapper from '@components/non-reusable/JobPageClientWrapper';
-import { getJob, createZohoEntry } from '@lib/data-services';
-import { convertToObject, formatDate } from '@lib/helper';
 import { notFound } from 'next/navigation';
+
+import JobPageClientWrapper from '@components/non-reusable/JobPageClientWrapper';
+import { getJob, createZohoEntry } from '@data/index';
+import { convertToObject, formatDate } from '@lib/helper';
 
 const TEMP_DATA = {
   Client_Name: { name: 'TTTechSolutionsLtd', id: '31464000000284047' },

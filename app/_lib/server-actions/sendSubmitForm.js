@@ -1,7 +1,7 @@
 'use server';
 
 import { SUBMIT_FORM_VALIDATORS as validators } from '@lib/data';
-import { createApplicantEntryDB } from '@lib/data-services';
+import { createApplicantEntryDB } from '@data/index';
 import { returnTrimmed, validateFields } from '@lib/helperShared';
 
 const { EMAIL_FORM_RECAPTCHA_SECRET_KEY } = process.env;

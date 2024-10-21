@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { unstable_cache } from 'next/cache';
 
-import { getCategories, getJobs } from '@lib/data-services';
+import { getCategories, getJobs } from '@data/index';
 
 import Filter from '@components/reusable/Filter';
 import JobList from '@components/reusable/JobList';
