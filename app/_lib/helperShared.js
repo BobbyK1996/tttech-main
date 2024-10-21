@@ -312,3 +312,11 @@ export const validateFields = (fields, validators, isRequired = true) => {
     return results;
   }, []);
 };
+
+export function isTokenValid(expirationTime) {
+  return Date.now() < expirationTime;
+}
+
+export function calculateExpirationTime(expires_in, buffer = 0) {
+  return Date.now() + expires_in * 1000 - buffer * 1000;
+}

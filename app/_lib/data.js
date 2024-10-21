@@ -32,6 +32,14 @@ import {
   validateFile,
 } from '@lib/helperShared';
 
+let refreshingPromise = null;
+
+let REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+let ACCESS_TOKEN = null;
+let EXPIRATION_TIME = null;
+
+const TOKEN_EXPIRATION_BUFFER = 300;
+
 export const LOGO_DESC_LOGO_DATA = {
   content: logoBase,
   alt: 'TT Tech Logo',

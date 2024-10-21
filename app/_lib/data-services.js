@@ -24,7 +24,7 @@ function calculateExpirationTime(expires_in, buffer = 0) {
 export async function revalidateZoho() {
   if (refreshingPromise) {
     await refreshingPromise;
-    return { access_token: ACCESS_TOKEN };
+    return { access_token: ACCESS_TOKEN, expiration_time: EXPIRATION_TIME };
   }
 
   try {
@@ -56,7 +56,7 @@ export async function revalidateZoho() {
       }
     }
 
-    return { access_token: ACCESS_TOKEN };
+    return { access_token: ACCESS_TOKEN, expiration_time: EXPIRATION_TIME };
   } catch (error) {
     //if no valid token from either this server instance or from the database, generate a new token
     refreshingPromise = (async () => {
@@ -106,18 +106,18 @@ export async function revalidateZoho() {
     })();
 
     await refreshingPromise;
-    return { access_token: ACCESS_TOKEN };
+    return { access_token: ACCESS_TOKEN, expiration_time: EXPIRATION_TIME };
   } finally {
     refreshingPromise = null;
   }
 }
 
-async function saveBackupData(key, data) {
+async function saveBackupJobData(key, data) {
   const jobIdArray = data.reduce((acc, job) => {
     acc.push(job.id);
     return acc;
   }, []);
-  console.log('From saveBackupData:', jobIdArray);
+  console.log('From saveBackupJobData:', jobIdArray);
 
   const { data: result, error } = await supabase
     .from(key)
@@ -133,7 +133,7 @@ async function saveBackupData(key, data) {
   return { success: true, data: result };
 }
 
-async function getBackupData(key, column) {
+async function getBackupJobData(key, column) {
   const { data, error } = await supabase.from(key).select(column);
 
   const dataObject = data.map((dataString) => JSON.parse(dataString));
@@ -165,7 +165,7 @@ export async function getJobs() {
 
     const { data } = await res.json();
 
-    const dataBackupResult = await saveBackupData('jobsBackup', data);
+    const dataBackupResult = await saveBackupJobData('jobsBackup', data);
 
     if (!dataBackupResult.success) {
       console.error('Failed to save backup data:', dataBackupResult.error);
@@ -177,7 +177,7 @@ export async function getJobs() {
   } catch (error) {
     console.error(`Error fetching jobs: ${error.message}`);
 
-    const backupData = await getBackupData('jobsBackup', 'jobs');
+    const backupData = await getBackupJobData('jobsBackup', 'jobs');
     if (!backupData) {
       throw new Error('No cached data available and API request failed');
     }

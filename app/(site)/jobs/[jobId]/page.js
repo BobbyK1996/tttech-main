@@ -1,6 +1,7 @@
 import JobPageClientWrapper from '@components/non-reusable/JobPageClientWrapper';
 import { getJob, createZohoEntry } from '@lib/data-services';
 import { convertToObject, formatDate } from '@lib/helper';
+import { notFound } from 'next/navigation';
 
 const TEMP_DATA = {
   Client_Name: { name: 'TTTechSolutionsLtd', id: '31464000000284047' },
@@ -125,45 +126,57 @@ const TEMP_DATA = {
 };
 
 async function Page({ params }) {
-  // const job = await getJob(params.jobId);
+  const zohoId = params.jobId.split('-')[1];
   // await createZohoEntry();
 
-  const job = TEMP_DATA;
-  const {
-    Job_Opening_ID: jobOpeningID,
-    id: digitID,
-    Created_Time: created_date,
-    Posting_Title: title,
-    Salary: salary,
-    City: location = 'Remote',
-    Associated_Tags: tags,
-    PublicDescription: jobDescription,
-  } = job;
+  try {
+    const { data: job, resStatus, notFound: isNotFound } = await getJob(zohoId);
 
-  const id = `${jobOpeningID}-${digitID}`;
+    if (isNotFound) {
+      notFound();
+      return;
+    }
 
-  // const descriptionObject = convertToObject([jobDescription]);
-  const descriptionObject = jobDescription;
+    // const job = TEMP_DATA;
+    const {
+      Job_Opening_ID: jobOpeningID,
+      id: digitID,
+      Created_Time: created_date,
+      Posting_Title: title,
+      Salary: salary,
+      City: location = 'Remote',
+      Associated_Tags: tags,
+      PublicDescription: jobDescription,
+    } = job;
 
-  const titleSplit = title.split(' ');
-  const lastWord = titleSplit.pop();
-  const titleWithoutLastWord = titleSplit.join(' ');
+    const id = `${jobOpeningID}-${digitID}`;
 
-  return (
-    <JobPageClientWrapper
-      job={{
-        id,
-        jobOpeningID,
-        created_date,
-        title,
-        salary,
-        location,
-        tags,
-        descriptionObject,
-      }}
-      utils={{ titleSplit, lastWord, titleWithoutLastWord }}
-    />
-  );
+    // const descriptionObject = convertToObject([jobDescription]);
+    const descriptionObject = jobDescription;
+
+    const titleSplit = title.split(' ');
+    const lastWord = titleSplit.pop();
+    const titleWithoutLastWord = titleSplit.join(' ');
+
+    return (
+      <JobPageClientWrapper
+        job={{
+          id,
+          jobOpeningID,
+          created_date,
+          title,
+          salary,
+          location,
+          tags,
+          descriptionObject,
+        }}
+        utils={{ titleSplit, lastWord, titleWithoutLastWord }}
+      />
+    );
+  } catch (err) {
+    notFound();
+    return;
+  }
 }
 
 export default Page;
