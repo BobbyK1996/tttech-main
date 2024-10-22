@@ -46,7 +46,10 @@ async function attachResumeToZoho(
     'Content-Type': 'application/x-www-form-urlencoded',
   };
 
-  const body = `attachment_url=${encodeURIComponent(applicant.resumeLink)}`;
+  const attachmentName = `Resume - ${applicant.zohoId}`;
+
+  // const body = `attachment_url=${encodeURIComponent(applicant.resumeLink)}`;
+  const body = `attachment_url=${encodeURIComponent(applicant.resumeLink)}&attachment_name=${encodeURIComponent(attachmentName)}`;
 
   try {
     const res = await fetch(apiUrl, {
