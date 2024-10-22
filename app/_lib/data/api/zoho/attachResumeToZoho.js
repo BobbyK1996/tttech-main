@@ -39,7 +39,7 @@ async function attachResumeToZoho(
 ) {
   //The Zoho API always returns 'SUCCESS' for non-unique categories like 'WebsiteSubmission'. If a file with the same `attachment_url` is already attached, it doesn't modify the record. If the `attachment_url` is different, it adds a new record. Therefore, ensure the third-party database only allows one entry per email, as email is the unique key in Zoho.
 
-  const apiUrl = `https://recruit.zoho.eu/recruit/v2/Candidates/${applicant.zohoId}/Attachments?attachments_category=${submissionCategory}`;
+  const apiUrl = `https://recruit.zoho.eu/recruit/v2/Candidates/${applicant.zohoId}/Attachments?attachments_category=WebsiteSubmission`;
 
   const headers = {
     Authorization: `Zoho-oauthtoken ${access_token}`,
@@ -68,7 +68,7 @@ async function attachResumeToZoho(
         `API error: ${result?.message} - ${JSON.stringify(result?.details)} `,
       );
 
-    console.log('API Response:', { fullData: data, details: result.details });
+    // console.log('API Response:', { fullData: data, details: result.details });
 
     return data;
   } catch (error) {

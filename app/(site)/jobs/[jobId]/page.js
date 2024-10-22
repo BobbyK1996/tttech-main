@@ -152,8 +152,8 @@ async function Page({ params }) {
 
     const id = `${jobOpeningID}-${digitID}`;
 
-    // const descriptionObject = convertToObject([jobDescription]);
-    const descriptionObject = jobDescription;
+    const descriptionObject = convertToObject([jobDescription]);
+    // const descriptionObject = jobDescription;
 
     const titleSplit = title.split(' ');
     const lastWord = titleSplit.pop();

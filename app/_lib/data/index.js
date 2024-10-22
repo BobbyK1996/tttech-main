@@ -7,6 +7,7 @@ export { default as upsertCandidatesToZoho } from '@data/api/zoho/upsertCandidat
 export { default as associateToZohoJob } from '@data/api/zoho/associateToZohoJob';
 export { default as attachResumeToZoho } from '@data/api/zoho/attachResumeToZoho';
 export { default as attachBatchResumeToZoho } from '@data/api/zoho/attachBatchResumeToZoho';
+export { default as createZohoEntry } from '@data/api/zoho/createZohoEntry';
 
 //DB - ASYNC
 export { default as saveBackupJobData } from '@data/db/saveBackupJobData';

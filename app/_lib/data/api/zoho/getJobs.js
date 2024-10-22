@@ -31,6 +31,7 @@ async function getJobs() {
         },
       },
     );
+    console.log('Res.ok:', res.ok);
 
     if (!res.ok) {
       const { code: errorCode, message: errorMessage } = await res.json();
@@ -43,6 +44,8 @@ async function getJobs() {
 
     const { data } = await res.json();
 
+    console.log('from getjobs:', data);
+
     const dataBackupResult = await saveBackupJobData('jobsBackup', data);
 
     if (!dataBackupResult.success) {
@@ -53,7 +56,7 @@ async function getJobs() {
 
     return data;
   } catch (error) {
-    console.error(`Error fetching jobs: ${error.message}`);
+    console.error(`Error fetching jobs getJobs: ${error.message}`);
 
     const backupData = await getBackupJobData('jobsBackup', 'jobs');
     if (!backupData) {

@@ -16,13 +16,19 @@
 import supabase from '@lib/supabase';
 
 async function getBackupJobData(key, column) {
-  const { data, error } = await supabase.from(key).select(column);
+  // console.log('supabase from getBackup:', supabase);
 
-  const dataObject = data.map((dataString) => JSON.parse(dataString));
+  const { data, error } = await supabase.from(key).select(column);
 
   if (error) {
     console.error('Error getting backup data from database', error);
   }
+
+  // console.log(data);
+
+  const jobs = data[0]?.jobs || [];
+
+  const dataObject = jobs.map((jobsString) => JSON.parse(jobsString));
 
   return dataObject;
 }

@@ -15,15 +15,18 @@
 
 import {
   getVerifiedUnsubmittedCandidates,
-  sortApplicantsByJob,
   getCurrentJobIds,
-  reduceToAvailableJobs,
   revalidateZoho,
   upsertCandidatesToZoho,
   associateToZohoJob,
-  matchZohoToDB,
   attachBatchResumeToZoho,
 } from '@data/index';
+
+import {
+  sortApplicantsByJob,
+  reduceToAvailableJobs,
+  matchZohoToDB,
+} from '@helpers/index';
 
 export async function createZohoEntry() {
   try {
@@ -50,7 +53,7 @@ export async function createZohoEntry() {
     );
 
     //Upsert validated & unsubmitted candidate profiles to Zoho
-    const { access_token } = await revalidateZoho();
+    const { access_token, expiration_time } = await revalidateZoho();
 
     const zohoCandidateIdsToJobId = await upsertCandidatesToZoho(
       sortedFilteredApplicants,
@@ -75,9 +78,15 @@ export async function createZohoEntry() {
     );
 
     //Submit the resume to the correct candidate profile
-    await attachBatchResumeToZoho(zohoIdsToDBCandidateData, access_token, 6);
+    await attachBatchResumeToZoho(
+      zohoIdsToDBCandidateData,
+      { access_token, expiration_time },
+      6,
+    );
   } catch (error) {
     console.error('Error creating Zoho entry:', error);
     return;
   }
 }
+
+export default createZohoEntry;

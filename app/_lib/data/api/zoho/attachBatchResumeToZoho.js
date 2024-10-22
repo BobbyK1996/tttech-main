@@ -35,13 +35,14 @@ import { isTokenValid } from '@lib/helperShared';
 
 async function attachBatchResumeToZoho(
   matchedApplicants,
-  access_token,
+  { access_token, expiration_time },
   batchSize = 8,
   submissionCategory = 'Website Submission',
 ) {
   const applicants = Object.values(matchedApplicants).flat();
 
   let validToken = access_token;
+  let validExpiry = expiration_time;
 
   const batches = Array.from(
     { length: Math.ceil(applicants.length / batchSize) },
@@ -49,9 +50,10 @@ async function attachBatchResumeToZoho(
   );
 
   for (const batch of batches) {
-    if (!isTokenValid(EXPIRATION_TIME)) {
+    if (!isTokenValid(validExpiry)) {
       const tokenResponse = await revalidateZoho();
       validToken = tokenResponse.access_token;
+      validExpiry = tokenResponse.expiration_time;
     }
 
     const promiseResults = await Promise.allSettled(

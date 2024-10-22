@@ -26,7 +26,7 @@ async function getJob(id) {
 
     const { access_token } = await revalidateZoho();
     const res = await fetch(
-      `https://recruit.zoho.eu/recruit/v2/Job_Openings/${id})`,
+      `https://recruit.zoho.eu/recruit/v2/Job_Openings/${id}`,
       {
         method: 'GET',
         headers: {

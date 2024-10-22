@@ -48,7 +48,7 @@ async function upsertCandidatesToZoho(sortedFilteredApplicants, access_token) {
 
     const responseData = await res.json();
 
-    console.log('Response Data:', responseData);
+    // console.log('Response Data:', responseData);
     const candidateIds = responseData.data.map(
       (candidate) => candidate.details.id,
     );

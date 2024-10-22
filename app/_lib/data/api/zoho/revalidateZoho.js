@@ -21,6 +21,7 @@ let EXPIRATION_TIME = null;
 
 const TOKEN_EXPIRATION_BUFFER = 300;
 
+import supabase from '@lib/supabase';
 import { isTokenValid, calculateExpirationTime } from '@lib/helperShared';
 
 async function revalidateZoho() {
@@ -42,7 +43,6 @@ async function revalidateZoho() {
 
       if (dbError)
         throw new Error(`Database query for token failed: ${dbError.message}`);
-      console.log(dbTokenData);
 
       if (dbTokenData?.length > 0) {
         const { token, expiration_time } = dbTokenData[0];

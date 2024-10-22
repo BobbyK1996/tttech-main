@@ -9,11 +9,13 @@
 import supabase from '@lib/supabase';
 
 async function saveBackupJobData(key, data) {
+  // console.log('supabase from saveBackup:', supabase);
+
   const jobIdArray = data.reduce((acc, job) => {
     acc.push(job.id);
     return acc;
   }, []);
-  console.log('From saveBackupJobData:', jobIdArray);
+  // console.log('From saveBackupJobData:', jobIdArray);
 
   const { data: result, error } = await supabase
     .from(key)
