@@ -24,7 +24,7 @@
  * Output: { job1: ['candidateId1', 'candidateId2'], job2: ['candidateId3'] }
  */
 
-import { generateUpsertBodyData } from '@helpers/index';
+import { generateUpsertBodyData } from '@helpers/indexServer';
 
 async function upsertCandidatesToZoho(sortedFilteredApplicants, access_token) {
   const candidateIdsToJobId = await Object.entries(

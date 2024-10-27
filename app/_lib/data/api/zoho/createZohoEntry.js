@@ -20,13 +20,13 @@ import {
   upsertCandidatesToZoho,
   associateToZohoJob,
   attachBatchResumeToZoho,
-} from '@data/index';
+} from '@data/indexServer';
 
 import {
   sortApplicantsByJob,
   reduceToAvailableJobs,
   matchZohoToDB,
-} from '@helpers/index';
+} from '@helpers/indexServer';
 
 export async function createZohoEntry() {
   try {

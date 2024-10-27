@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import JobPageClientWrapper from '@components/non-reusable/JobPageClientWrapper';
-import { getJob, createZohoEntry } from '@data/index';
+import { getJob, createZohoEntry } from '@data/indexServer';
 import { convertToObject, formatDate } from '@lib/helper';
 
 const TEMP_DATA = {

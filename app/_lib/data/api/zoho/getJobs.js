@@ -16,7 +16,7 @@ import {
   revalidateZoho,
   saveBackupJobData,
   getBackupJobData,
-} from '@data/index';
+} from '@data/indexServer';
 
 async function getJobs() {
   try {

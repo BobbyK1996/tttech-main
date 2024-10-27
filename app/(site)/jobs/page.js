@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { unstable_cache } from 'next/cache';
 
-import { getCategories, getJobs } from '@data/index';
+import { getCategories, getJobs } from '@data/indexServer';
 
 import Filter from '@components/reusable/Filter';
 import JobList from '@components/reusable/JobList';
@@ -23,7 +23,7 @@ async function Page({ searchParams }) {
 
   return (
     <div>
-      <h1 className='mb-5 text-7xl font-medium text-white'>
+      <h1 className='mb-5 font-medium text-white text-7xl'>
         Live <span className='text-accent-500'>Jobs</span>
       </h1>
       <p className='mb-10 text-lg text-accent-50'>
@@ -31,7 +31,7 @@ async function Page({ searchParams }) {
         vetted clients. See if anything appeals to you!
       </p>
 
-      <div className='mb-8 flex justify-end gap-1'>
+      <div className='flex justify-end gap-1 mb-8'>
         <Filter categories={categories} />
       </div>
 

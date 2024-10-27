@@ -1,4 +1,4 @@
-import { generateAssociateBodyData } from '@helpers/index';
+import { generateAssociateBodyData } from '@helpers/indexServer';
 
 async function associateToZohoJob(jobsToCandidates, access_token) {
   const statusCodes = await Promise.all(

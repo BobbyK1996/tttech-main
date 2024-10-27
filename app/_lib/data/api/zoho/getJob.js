@@ -13,7 +13,7 @@
  * console.log(data); // Logs the job data retrieved from Zoho API.
  */
 
-import { revalidateZoho } from '@data/index';
+import { revalidateZoho } from '@data/indexServer';
 
 import { validateString } from '@lib/helperShared';
 

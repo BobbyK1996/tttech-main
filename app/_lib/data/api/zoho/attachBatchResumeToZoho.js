@@ -30,7 +30,7 @@
  * console.log('All resumes attached successfully');
  */
 
-import { revalidateZoho, attachResumeToZoho } from '@data/index';
+import { revalidateZoho, attachResumeToZoho } from '@data/indexServer';
 import { isTokenValid } from '@lib/helperShared';
 
 async function attachBatchResumeToZoho(
