@@ -10,6 +10,8 @@
  * @throws {void} Logs an error message to the console if the parameters are not valid or if validation fails. Returns an object indicating failure if validation fails
  */
 
+import { validateNumber } from '@helpers/indexShared';
+
 function validateFile(file, allowedTypes = [], maxSizeInMB = 1) {
   if (!Array.isArray(allowedTypes)) {
     console.error('Developer error. Please pass an array for allowedTypes');

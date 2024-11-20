@@ -4,7 +4,7 @@
       "@/*": ["./*"],
       "@components/*": ["./app/_components/*"],
       "@lib/*": ["./app/_lib/*"],
-      "@data/*": ["app/_lib/data/*"],
+      "@data/*": ["./app/_lib/data/*"],
       "@helpers/*": ["./app/_lib/helpers/*"]
     }
   }
