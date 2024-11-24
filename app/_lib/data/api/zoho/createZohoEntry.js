@@ -60,11 +60,8 @@ export async function createZohoEntry() {
       access_token,
     );
 
-    //Associate the candidate to the job applied for.
-    const statusCodesAssociate = await associateToZohoJob(
-      zohoCandidateIdsToJobId,
-      access_token,
-    );
+    //Associate the candidate to the job applied for. No need for this return to be saved in this current instance.
+    await associateToZohoJob(zohoCandidateIdsToJobId, access_token);
 
     //The index of the ids returned should match sortedFilteredApplicants
     const zohoIdsToDBCandidateData = matchZohoToDB(
