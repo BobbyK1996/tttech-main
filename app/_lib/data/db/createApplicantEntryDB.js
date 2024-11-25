@@ -86,6 +86,7 @@ async function createApplicantEntryDB(formData) {
 
   console.log('previous resume link', previousResumeLink);
 
+  //upsert the new entry
   const { data, error } = await supabase
     .from('tempResume')
     .upsert(
@@ -128,6 +129,18 @@ async function createApplicantEntryDB(formData) {
     throw new Error(
       'Resume could not be uploaded and the Resume Entry was not created',
     );
+  }
+
+  //delete the previously stored CV
+  if (previousResumeLink) {
+    const oldFileName = previousResumeLink.split('/').pop();
+
+    const { error: deleteCVError } = await supabase.storage
+      .from('CVs')
+      .remove([oldFileName]);
+
+    if (deleteCVError)
+      console.error('Failed to delete old resume file:', deleteCVError);
   }
 
   return {
