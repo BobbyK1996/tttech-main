@@ -1,6 +1,7 @@
 import { memo } from 'react';
 
-import { validateFunction } from '@lib/helperShared';
+// import { validateFunction } from '@helpers/indexShared';
+import { validateFunction } from '@helpers/indexShared';
 
 function FileUpload({ onFileChange, customCSS = '' }) {
   const isValidFunction = validateFunction(onFileChange, 'onFileChange');

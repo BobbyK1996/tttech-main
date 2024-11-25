@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import { isValidEmail, validateString } from '@lib/helperShared';
+import { isValidEmail, validateString } from '@helpers/indexShared';
 
 export async function sendMail({ to, subject, body }) {
   if (!isValidEmail(to).status) return;

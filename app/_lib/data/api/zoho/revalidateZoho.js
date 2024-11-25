@@ -22,7 +22,7 @@ let EXPIRATION_TIME = null;
 const TOKEN_EXPIRATION_BUFFER = 300;
 
 import supabase from '@lib/supabase';
-import { isTokenValid, calculateExpirationTime } from '@lib/helperShared';
+import { isTokenValid, calculateExpirationTime } from '@helpers/indexShared';
 
 async function revalidateZoho() {
   if (refreshingPromise) {

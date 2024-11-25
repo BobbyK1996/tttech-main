@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 
-import { validateNumber, validateString } from '@lib/helperShared';
+// import { validateNumber, validateString } from '@helpers/indexShared';
+import { validateNumber, validateString } from '@helpers/indexShared';
 
 import Button from '@components/reusable/Button';
 

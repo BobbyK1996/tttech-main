@@ -30,7 +30,7 @@ import {
   isValidPhoneNumber,
   isValidUrl,
   validateFile,
-} from '@lib/helperShared';
+} from '@helpers/indexShared';
 
 let refreshingPromise = null;
 

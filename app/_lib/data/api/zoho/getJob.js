@@ -15,7 +15,7 @@
 
 import { revalidateZoho } from '@data/indexServer';
 
-import { validateString } from '@lib/helperShared';
+import { validateString } from '@helpers/indexShared';
 
 async function getJob(id) {
   try {

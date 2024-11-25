@@ -1,9 +1,15 @@
+// import {
+//   isValidEmail,
+//   isValidGMapsLink,
+//   isValidPhoneNumber,
+//   validateString,
+// } from '@helpers/indexShared';
 import {
   isValidEmail,
   isValidGMapsLink,
   isValidPhoneNumber,
   validateString,
-} from '@lib/helperShared';
+} from '@helpers/indexShared';
 
 import { IoPhonePortrait, IoMail, IoLocationSharp } from 'react-icons/io5';
 

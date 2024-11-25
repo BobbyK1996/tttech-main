@@ -2,7 +2,8 @@
 
 import { useSubmitForm } from '@/app/context/submitFormContext';
 
-import { validateFields } from '@lib/helperShared';
+// import { validateFields } from '@helpers/indexShared';
+import { validateFields } from '@helpers/indexShared';
 
 import Spinner from '@components/reusable/Spinner';
 import SubmitFormFieldsRequired from '@components/reusable/SubmitFormFieldsRequired';

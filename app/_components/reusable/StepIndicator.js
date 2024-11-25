@@ -1,4 +1,5 @@
-import { validateNumber } from '@lib/helperShared';
+// import { validateNumber } from '@helpers/indexShared';
+import { validateNumber } from '@helpers/indexShared';
 import { useState } from 'react';
 
 function StepIndicator({ step, setStep, length = 3 }) {

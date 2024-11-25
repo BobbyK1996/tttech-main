@@ -31,7 +31,8 @@
  */
 
 import { revalidateZoho, attachResumeToZoho } from '@data/indexServer';
-import { isTokenValid } from '@lib/helperShared';
+import { isTokenValid } from '@helpers/indexShared';
+// import { isTokenValid } from '@lib/helperShared';
 
 async function attachBatchResumeToZoho(
   matchedApplicants,

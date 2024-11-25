@@ -6,7 +6,7 @@ import {
   isValidEmail,
   isValidType,
   isValidMessage,
-} from '@lib/helperShared';
+} from '@helpers/indexShared';
 import { sendMail } from '@lib/mail/mail';
 import { generateEmailBody } from '@lib/mail/generateEmailBody';
 

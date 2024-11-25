@@ -45,7 +45,7 @@ import supabase from '@lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import { randomBytes } from 'crypto';
 
-import { calculateExpirationTime } from '@lib/helperShared';
+import { calculateExpirationTime } from '@helpers/indexShared';
 
 async function createApplicantEntryDB(formData) {
   const {

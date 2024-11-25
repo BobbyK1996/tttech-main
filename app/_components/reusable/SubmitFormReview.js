@@ -16,7 +16,7 @@ import {
   isValidPhoneNumber,
   isValidUrl,
   validateObject,
-} from '@lib/helperShared';
+} from '@helpers/indexShared';
 
 import SubmitFormReviewItem from '@components/reusable/SubmitFormReviewItem';
 

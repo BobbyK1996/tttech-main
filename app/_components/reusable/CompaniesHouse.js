@@ -1,8 +1,13 @@
+// import {
+//   validateNumber,
+//   validateObject,
+//   validateString,
+// } from '@helpers/indexShared';
 import {
   validateNumber,
   validateObject,
   validateString,
-} from '@lib/helperShared';
+} from '@helpers/indexShared';
 
 function CompaniesHouse({ details, customCSS = '' }) {
   validateObject(details, 'Details');
@@ -20,7 +25,7 @@ function CompaniesHouse({ details, customCSS = '' }) {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center col-span-4 pt-10 mx-auto text-xs text-center before:content-[''] before:border-2 before:border-transparent before:border-t-primary-500 before:w-8/12 before:min-w-10 before:-translate-y-3 ${customCSS}`}
+      className={`col-span-4 mx-auto flex flex-col items-center justify-center pt-10 text-center text-xs before:w-8/12 before:min-w-10 before:-translate-y-3 before:border-2 before:border-transparent before:border-t-primary-500 before:content-[''] ${customCSS}`}
     >
       <span>
         {companyName} is a registered company in {registrationLocation}

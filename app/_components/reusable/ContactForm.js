@@ -5,7 +5,12 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 import { initialState, reducer } from '@lib/reducers/emailFormReducer';
 import { sendContactForm as send } from '@lib/server-actions/sendContactForm';
-import { isValidEmail, isValidMessage, isValidName } from '@lib/helperShared';
+// import { isValidEmail, isValidMessage, isValidName } from '@helpers/indexShared';
+import {
+  isValidEmail,
+  isValidMessage,
+  isValidName,
+} from '@helpers/indexShared';
 
 import Spinner from '@components/reusable/Spinner';
 import useMediaQuery from '@lib/hooks/useMediaQuery';

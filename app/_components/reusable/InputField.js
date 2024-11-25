@@ -1,6 +1,7 @@
 import { memo } from 'react';
 
-import { validateFunction, validateString } from '@lib/helperShared';
+// import { validateFunction, validateString } from '@helpers/indexShared';
+import { validateFunction, validateString } from '@helpers/indexShared';
 
 function InputField({
   name,

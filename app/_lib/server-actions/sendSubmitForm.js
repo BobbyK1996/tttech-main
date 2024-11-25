@@ -2,7 +2,7 @@
 
 import { SUBMIT_FORM_VALIDATORS as validators } from '@lib/data';
 import { createApplicantEntryDB } from '@data/indexServer';
-import { returnTrimmed, validateFields } from '@lib/helperShared';
+import { returnTrimmed, validateFields } from '@helpers/indexShared';
 
 const { EMAIL_FORM_RECAPTCHA_SECRET_KEY } = process.env;
 
