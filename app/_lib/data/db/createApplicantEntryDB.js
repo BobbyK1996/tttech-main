@@ -69,24 +69,29 @@ async function createApplicantEntryDB(formData) {
   const expirationTime = calculateExpirationTime(900);
   const expirationTimeISO = new Date(expirationTime).toISOString();
 
-  const { data, error } = await supabase.from('tempResume').insert([
-    {
-      email,
-      resumeLink: resumePath,
-      givenName,
-      number,
-      currentJobTitle,
-      surname,
-      linkedinLink,
-      portfolioLink,
-      message,
-      verificationToken: token,
-      tokenExpiry: expirationTimeISO,
-      jobId: idPath,
-      verified: false,
-      submitted: false,
-    },
-  ]);
+  const { data, error } = await supabase
+    .from('tempResume')
+    .insert([
+      {
+        email,
+        resumeLink: resumePath,
+        givenName,
+        number,
+        currentJobTitle,
+        surname,
+        linkedinLink,
+        portfolioLink,
+        message,
+        verificationToken: token,
+        tokenExpiry: expirationTimeISO,
+        jobId: idPath,
+        verified: false,
+        submitted: false,
+      },
+    ])
+    .select();
+
+  console.log('Data:', data);
 
   if (error) {
     console.error(error);
@@ -106,6 +111,8 @@ async function createApplicantEntryDB(formData) {
       'Resume could not be uploaded and the Resume Entry was not created',
     );
   }
+
+  console.log({ id: data[0].id, resumeLink: resumePath });
 
   return {
     id: data[0].id,

@@ -1,4 +1,4 @@
-import { validateString } from '@helpers/indexShared';
+import { validateString, validateObject } from '@helpers/indexShared';
 
 function validateLogoDescription({
   customCSS = '',

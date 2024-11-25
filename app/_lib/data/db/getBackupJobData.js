@@ -24,7 +24,7 @@ async function getBackupJobData(key, column) {
     console.error('Error getting backup data from database', error);
   }
 
-  // console.log(data);
+  console.log(data);
 
   const jobs = data[0]?.jobs || [];
 
