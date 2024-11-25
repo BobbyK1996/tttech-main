@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { isInputField } from '@lib/helperClient';
+import { isInputField } from '@helpers/indexClient';
 import {
   validateFunction,
   validateHTMLElement,

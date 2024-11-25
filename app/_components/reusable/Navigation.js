@@ -7,13 +7,13 @@ import {
   useFindCurrentNav,
   validateLinksArray,
   validateColors,
-} from '@lib/helperClient';
+} from '@helpers/indexClient';
 import { useNavigation } from '@/app/context/navigationContext';
 
 import { RiMenu5Fill } from 'react-icons/ri';
 const IoMdClose = dynamic(
   () => import('react-icons/io').then((mod) => mod.IoMdClose),
-  { ssr: false }
+  { ssr: false },
 );
 
 import NavLink from '@components/reusable/NavLink';
@@ -73,12 +73,12 @@ function Navigation({ type }) {
     <>
       <nav
         className={`z-10 ${
-          !isFooter ? 'text-xl header-class' : 'footer-class'
+          !isFooter ? 'header-class text-xl' : 'footer-class'
         }`}
       >
         {!isFooter && (
           <>
-            <ul className="items-center hidden gap-8 sm:flex lg:gap-12">
+            <ul className='hidden items-center gap-8 sm:flex lg:gap-12'>
               {links.map((link, index) => {
                 return (
                   <NavLink
@@ -94,19 +94,19 @@ function Navigation({ type }) {
 
             <div
               onClick={() => setMenuOpen(!menuOpen)}
-              className="relative z-30 text-3xl cursor-pointer sm:hidden"
+              className='relative z-30 cursor-pointer text-3xl sm:hidden'
             >
               {menuOpen ? <IoMdClose /> : <RiMenu5Fill />}
             </div>
 
             <div className={menuClass} onClick={() => setMenuOpen(!menuOpen)}>
               <div
-                className={`h-full ${defaultBackground} ${responsiveWidth} max-w-lg z-30 absolute`}
+                className={`h-full ${defaultBackground} ${responsiveWidth} absolute z-30 max-w-lg`}
               >
-                <ul className="flex flex-col items-center justify-end w-full pt-12 pb-4">
+                <ul className='flex w-full flex-col items-center justify-end pb-4 pt-12'>
                   <NavLink
-                    name="Home"
-                    address="/"
+                    name='Home'
+                    address='/'
                     colors={{ hoverText, currentNavColor }}
                     isActive={currentNav === '/'}
                     customCSSList={`${mobileListItemClass} ${
@@ -137,8 +137,8 @@ function Navigation({ type }) {
         {isFooter && (
           <ul>
             <NavLink
-              name="Home"
-              address="/"
+              name='Home'
+              address='/'
               isActive={currentNav === '/'}
               colors={{ hoverTextFooter, currentNavColorFooter }}
             />
@@ -150,7 +150,7 @@ function Navigation({ type }) {
                   address={link.address}
                   isActive={currentNav === link.address}
                   colors={{ hoverTextFooter, currentNavColorFooter }}
-                  customCSS="pb-1"
+                  customCSS='pb-1'
                 />
               );
             })}
