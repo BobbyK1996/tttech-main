@@ -1,4 +1,3 @@
-//sharedHelpers
 export { default as validateString } from '@helpers/sharedHelpers/validateString';
 export { default as validateNumber } from '@helpers/sharedHelpers/validateNumber';
 export { default as validateFunction } from '@helpers/sharedHelpers/validateFunction';
