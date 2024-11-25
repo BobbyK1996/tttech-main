@@ -1,6 +1,6 @@
 import { RiMoneyPoundCircleLine } from 'react-icons/ri';
 
-import { formatToK, validateSalaryString } from '@lib/helper';
+import { formatToK, validateSalaryString } from '@helpers/indexServer';
 
 function Salary({ salary, customCSS }) {
   const salaryMin =
@@ -14,14 +14,14 @@ function Salary({ salary, customCSS }) {
 
   return (
     <div className={`flex items-center gap-3 text-xl ${customCSS}`}>
-      <div className="text-3xl text-primary-400">
+      <div className='text-3xl text-primary-400'>
         <RiMoneyPoundCircleLine />
       </div>
       <div>
-        <span className="font-bold">
+        <span className='font-bold'>
           £{formatToK(salaryMin)} - £{formatToK(salaryMax)}
         </span>
-        <span className="text-xs"> /year</span>
+        <span className='text-xs'> /year</span>
       </div>
     </div>
   );

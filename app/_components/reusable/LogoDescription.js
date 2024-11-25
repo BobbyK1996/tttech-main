@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { validateLogoDescription } from '@lib/helper';
+import { validateLogoDescription } from '@helpers/indexServer';
 
 function LogoDescription(props) {
   validateLogoDescription(props);
@@ -29,15 +29,15 @@ function LogoDescription(props) {
   return (
     <div className={`flex items-center justify-center gap-2 ${customCSS}`}>
       {logoContent && (
-        <div className="basis-4/12">
+        <div className='basis-4/12'>
           <div className={`relative ${logoWidth} ${logoHeight} mx-auto`}>
-            <Link href="/">
+            <Link href='/'>
               <Image src={logoContent} alt={logoAlt} />
             </Link>
           </div>
         </div>
       )}
-      <div className="basis-8/12">
+      <div className='basis-8/12'>
         <h1 className={`pb-4 font-extrabold ${headerColor}`}>
           {headerContent}
         </h1>

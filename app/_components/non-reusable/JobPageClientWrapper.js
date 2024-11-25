@@ -7,7 +7,7 @@ import JobIDText from '@components/reusable/JobIDText';
 import SubmitFormWrapper from '@components/reusable/SubmitFormWrapper';
 import Fade from '@components/reusable/Fade';
 
-import { formatDate } from '@lib/helper';
+import { formatDate } from '@helpers/indexServer';
 
 function JobPageClientWrapper({ job, utils }) {
   const [isOpen, setIsOpen] = useState(false);

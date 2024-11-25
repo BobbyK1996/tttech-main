@@ -12,7 +12,7 @@
  */
 
 import supabase from '@lib/supabase';
-import { convertToObject } from '@lib/helper';
+import { convertToObject } from '@helpers/indexServer';
 
 async function getCategories() {
   const { data, error } = await supabase
