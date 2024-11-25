@@ -69,9 +69,26 @@ async function createApplicantEntryDB(formData) {
   const expirationTime = calculateExpirationTime(900);
   const expirationTimeISO = new Date(expirationTime).toISOString();
 
+  //check if there is an existing entry:
+  const { data: existingEntry, error: fetchError } = await supabase
+    .from('tempResume')
+    .select('id, resumeLink')
+    .eq('email', email)
+    .single();
+
+  console.log('data:', existingEntry);
+  console.log('error:', fetchError);
+
+  if (fetchError && fetchError.code !== 'PGRST116')
+    throw new Error(`Error checking existing entry`);
+
+  const previousResumeLink = existingEntry ? existingEntry.resumeLink : null;
+
+  console.log('previous resume link', previousResumeLink);
+
   const { data, error } = await supabase
     .from('tempResume')
-    .insert([
+    .upsert(
       {
         email,
         resumeLink: resumePath,
@@ -88,7 +105,8 @@ async function createApplicantEntryDB(formData) {
         verified: false,
         submitted: false,
       },
-    ])
+      { onConflict: 'email' },
+    )
     .select();
 
   console.log('Data:', data);
@@ -111,8 +129,6 @@ async function createApplicantEntryDB(formData) {
       'Resume could not be uploaded and the Resume Entry was not created',
     );
   }
-
-  console.log({ id: data[0].id, resumeLink: resumePath });
 
   return {
     id: data[0].id,
