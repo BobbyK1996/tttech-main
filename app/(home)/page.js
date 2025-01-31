@@ -21,7 +21,7 @@ function Page() {
       <LandingBackgroundImage />
 
       {/* <section className="h-screen grid grid-cols-1 grid-rows-[1fr,auto,1.5fr] md:grid-rows-[1fr,auto,2fr] lg:grid-cols-2 lg:grid-rows-[1fr,1fr] lg:max-h-[1000px] lg:my-auto gap-4 z-10 md:text-xl 2xl:max-h-[1000px]"> */}
-      <section className="h-screen grid grid-cols-1 lg:grid-cols-2 lg:max-h-[1000px] lg:my-auto gap-4 z-10 md:text-xl 2xl:max-h-[1000px]">
+      <section className='z-10 grid h-screen grid-cols-1 gap-4 md:text-xl lg:my-auto lg:max-h-[1000px] lg:grid-cols-2 2xl:max-h-[1000px]'>
         <LandingText />
 
         {/* <DodgingImage className="relative order-3 row-span-2 lg:order-2">
@@ -36,18 +36,18 @@ function Page() {
 
         <Button
           customCSS={'flex self-center mx-auto lg:order-3 translate-y-32'}
-          href="/jobs"
+          href='/jobs'
         >
           Jobs
         </Button>
       </section>
 
-      <section className="z-10">
+      <section className='z-10'>
         <Carousel carouselCards={CAROUSEL_CARDS} />
       </section>
 
-      <section className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-[auto,1fr] gap-x-8 gap-y-16">
-        <h1 className="relative mx-auto text-center text-7xl md:col-span-2 lg:col-span-3 md:text-8xl after:absolute after:-bottom-3 after:left-1/2 after:w-24 after:h-1 after:bg-accent-500 after:-translate-x-2/4">
+      <section className='grid w-full grid-cols-1 grid-rows-[auto,1fr] gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-3'>
+        <h1 className='relative mx-auto text-center text-7xl after:absolute after:-bottom-3 after:left-1/2 after:h-1 after:w-24 after:-translate-x-2/4 after:bg-accent-500 md:col-span-2 md:text-8xl lg:col-span-3'>
           What We Offer
         </h1>
 
@@ -62,17 +62,17 @@ function Page() {
         ))}
       </section>
 
-      <section className="flex flex-col gap-6 font-dmsans md:flex-row md:items-center">
-        <div className="flex flex-col max-w-md gap-16 lg:max-w-xl">
+      <section className='flex flex-col gap-6 font-dmsans md:flex-row md:items-center'>
+        <div className='flex max-w-md flex-col gap-16 lg:max-w-xl'>
           <div>
-            <h1 className="text-5xl lg:text-6xl">Talk to a consultant</h1>
-            <p className="mt-6 text-xl">
+            <h1 className='text-5xl lg:text-6xl'>Talk to a consultant</h1>
+            <p className='mt-6 text-xl'>
               Submit the form and a member of our team will get back to you
             </p>
           </div>
           <ContactDetails contact={CONTACT_DATA} />
         </div>
-        <div className="flex-grow max-w-md sm:ml-2 md:ml-auto">
+        <div className='max-w-md flex-grow sm:ml-2 md:ml-auto'>
           <ContactForm />
         </div>
       </section>
