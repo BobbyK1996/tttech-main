@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 
 import JobPageClientWrapper from '@components/non-reusable/JobPageClientWrapper';
-import { getJob, createZohoEntry } from '@data/indexServer';
-import { convertToObject, formatDate } from '@helpers/indexServer';
+import { getJob } from '@data/indexServer';
+import { convertToObject } from '@helpers/indexServer';
 
 const TEMP_DATA = {
   Client_Name: { name: 'TTTechSolutionsLtd', id: '31464000000284047' },
@@ -128,7 +128,6 @@ const TEMP_DATA = {
 
 async function Page({ params }) {
   const zohoId = params.jobId.split('-')[1];
-  // await createZohoEntry();
 
   try {
     const { data: job, resStatus, notFound: isNotFound } = await getJob(zohoId);

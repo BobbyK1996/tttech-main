@@ -11,13 +11,29 @@ export async function sendMail({ to, subject, body }) {
       'subject and body must be valid strings. Subject can be an interpolated header. Body needs to be valid html',
     );
 
-  const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
+  const {
+    SMTP_HOST,
+    SMTP_EMAIL,
+    SMTP_CLIENT_ID,
+    SMTP_CLIENT_SECRET,
+    SMTP_REFRESH_TOKEN,
+    SMTP_ACCESS_TOKEN,
+  } = process.env;
 
   const transport = nodemailer.createTransport({
-    service: 'gmail',
+    host: SMTP_HOST,
+    secure: false,
+    port: 587,
     auth: {
-      user: SMTP_EMAIL,
-      pass: SMTP_PASSWORD,
+      type: 'OAuth2',
+      user: 'bobby@tttechrec.com',
+      clientId: SMTP_CLIENT_ID,
+      clientSecret: SMTP_CLIENT_SECRET,
+      refreshToken: SMTP_REFRESH_TOKEN,
+      accessToken: SMTP_ACCESS_TOKEN,
+    },
+    tls: {
+      ciphers: 'SSLv3',
     },
   });
 
