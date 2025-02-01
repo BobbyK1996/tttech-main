@@ -26,7 +26,7 @@ export async function sendMail({ to, subject, body }) {
     port: 587,
     auth: {
       type: 'OAuth2',
-      user: 'bobby@tttechrec.com',
+      user: SMTP_EMAIL,
       clientId: SMTP_CLIENT_ID,
       clientSecret: SMTP_CLIENT_SECRET,
       refreshToken: SMTP_REFRESH_TOKEN,
